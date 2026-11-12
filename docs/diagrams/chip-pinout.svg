@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="441" viewBox="0 0 760 441" role="img" aria-labelledby="chip-pinout-title chip-pinout-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+<title id="chip-pinout-title">DYNAMIXEL pinout, TTL servo</title>
+<desc id="chip-pinout-desc">Pinout of the DYNAMIXEL in TTL servo, top view: 3 pins, each with its name, its electrical type as a colour and the driver hook that uses it.</desc>
+<rect x="0.5" y="0.5" width="759" height="440" rx="16" fill="#FFFFFF" stroke="#E2E7EE"/>
+<text x="32" y="44" font-size="12.5" font-weight="700" letter-spacing="1.2" fill="#7A360E">HARDWARE</text>
+<text x="32" y="77.3" font-size="26" font-weight="700" fill="#0E1726">DYNAMIXEL pinout, TTL servo</text>
+<text x="32" y="103.8" font-size="15" fill="#566070">Top view, pin 1 marked. Colour is the pin's electrical type; the mono text outside is the port</text>
+<text x="32" y="125.5" font-size="15" fill="#566070">hook the driver uses for it. Datasheet: 4.5 Connector Information, p. 1.</text>
+<rect x="32" y="141.6" width="696" height="1" fill="#E2E7EE"/>
+<rect x="250" y="179.6" width="260" height="200" rx="8" fill="#F5F7FA" stroke="#2B3442" stroke-width="2"/>
+<path d="M364 179.6 A16 16 0 0 0 396 179.6" fill="#FFFFFF" stroke="#2B3442" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="270" cy="199.6" r="6" fill="#2B3442"/>
+<rect x="220" y="235.6" width="30" height="20" rx="3" fill="#F1F4F8" stroke="#64748B" stroke-width="1.4"/>
+<rect x="220" y="269.6" width="30" height="20" rx="3" fill="#FFEEF2" stroke="#DB2752" stroke-width="1.4"/>
+<rect x="220" y="303.6" width="30" height="20" rx="3" fill="#FFF5E3" stroke="#C26A05" stroke-width="1.4"/>
+<text x="380" y="269.6" font-size="20" font-weight="700" text-anchor="middle" fill="#0E1726">DYNAMIXEL</text>
+<text x="380" y="293.6" font-size="13" text-anchor="middle" fill="#566070">TTL servo, top view</text>
+<text x="235" y="249.7" font-size="11.5" font-weight="700" text-anchor="middle" fill="#334155">1</text>
+<text x="210" y="250.6" font-size="14" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#0E1726">GND</text>
+<text x="235" y="283.7" font-size="11.5" font-weight="700" text-anchor="middle" fill="#9F1239">2</text>
+<text x="210" y="284.6" font-size="14" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#0E1726">VDD</text>
+<text x="235" y="317.7" font-size="11.5" font-weight="700" text-anchor="middle" fill="#8A3C0B">3</text>
+<text x="210" y="318.6" font-size="14" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#0E1726">DATA</text>
+<text x="156.4" y="317.9" font-size="12" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#566070">Write()</text>
+<rect x="32" y="394.9" width="14" height="14" rx="4" fill="#FFEEF2" stroke="#DB2752" stroke-width="1.4"/>
+<text x="54" y="406.6" font-size="12.5" fill="#566070">power</text>
+<rect x="117.6" y="394.9" width="14" height="14" rx="4" fill="#F1F4F8" stroke="#64748B" stroke-width="1.4"/>
+<text x="139.6" y="406.6" font-size="12.5" fill="#566070">ground</text>
+<rect x="208.5" y="394.9" width="14" height="14" rx="4" fill="#FFF5E3" stroke="#C26A05" stroke-width="1.4"/>
+<text x="230.5" y="406.6" font-size="12.5" fill="#566070">open drain</text>
+</svg>

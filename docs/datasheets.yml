@@ -1,0 +1,204 @@
+---
+# The vendor documents this driver was written against (handbook ADR-0019), and where the driver relies on them.
+# Never commit a copy of a document: `sha256` identifies the exact file that was used, so a reader can confirm they
+# hold the same revision. ROBOTIS publishes the protocol and the servos' control tables as web pages of its e-Manual
+# (https://emanual.robotis.com), not as PDFs, so there is no `pdf` link and the pages carry no printed page numbers:
+# `page: 1` stands for the web page itself, and the section is the page's own heading. The `sha256` is that of the
+# page's HTML as downloaded; the e-Manual changes without a revision mark, so a reader whose hash differs should
+# compare the sections named below with the live page before trusting a difference.
+#
+# The README card, docs/datasheet.md and the "Datasheet" box on each page are generated from this file by
+# tools/docs/generators/datasheet.py (`kokeb-docs gen`).
+documents:
+  - id: p2
+    vendor: ROBOTIS
+    title: "DYNAMIXEL Protocol 2.0 (e-Manual)"
+    kind: Protocol specification
+    number: "e-Manual, DYNAMIXEL Protocol 2.0"
+    revision: "web page, no revision mark"
+    date: "2026-11-12"
+    url: https://emanual.robotis.com/docs/en/dxl/protocol2/
+    pdf: null
+    page_offset: 0
+    sha256: "e0b32dde396a855b001bf3ff265410a0d5e40b7c8c16679834f80f0686d3ca4a"
+  - id: p1
+    vendor: ROBOTIS
+    title: "DYNAMIXEL Protocol 1.0 (e-Manual)"
+    kind: Protocol specification
+    number: "e-Manual, DYNAMIXEL Protocol 1.0"
+    revision: "web page, no revision mark"
+    date: "2026-11-12"
+    url: https://emanual.robotis.com/docs/en/dxl/protocol1/
+    pdf: null
+    page_offset: 0
+    sha256: "8d65b87322f05e57feac86cfd824c507b99078003d15f5c332c25d6e27b6baeb"
+  - id: crc
+    vendor: ROBOTIS
+    title: "CRC Calculation (e-Manual)"
+    kind: Protocol specification
+    number: "e-Manual, CRC Calculation"
+    revision: "web page, no revision mark"
+    date: "2026-11-12"
+    url: https://emanual.robotis.com/docs/en/dxl/crc/
+    pdf: null
+    page_offset: 0
+    sha256: "b69cb7d863877004f6dd9f299b7c05673cfc1dceedbfe6a590b527bfdedbaed4"
+  - id: xm430
+    vendor: ROBOTIS
+    title: "XM430-W350 (e-Manual): the X series reference"
+    kind: Servo manual
+    number: "e-Manual, XM430-W350"
+    revision: "web page, no revision mark"
+    date: "2026-11-12"
+    url: https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/
+    pdf: null
+    page_offset: 0
+    sha256: "38038f5b32cbbb7e3c26570658855986be33589b06eb6d15e6259db338caafd3"
+  - id: ax12
+    vendor: ROBOTIS
+    title: "AX-12A (e-Manual): the protocol 1.0 reference"
+    kind: Servo manual
+    number: "e-Manual, AX-12A"
+    revision: "web page, no revision mark"
+    date: "2026-11-12"
+    url: https://emanual.robotis.com/docs/en/dxl/ax/ax-12a/
+    pdf: null
+    page_offset: 0
+    sha256: "b1314eb58659d1f0a179dcfe23eefb9af429521a947401cb601da091388c2520"
+  - id: xl320
+    vendor: ROBOTIS
+    title: "XL-320 (e-Manual)"
+    kind: Servo manual
+    number: "e-Manual, XL-320"
+    revision: "web page, no revision mark"
+    date: "2026-11-12"
+    url: https://emanual.robotis.com/docs/en/dxl/x/xl320/
+    pdf: null
+    page_offset: 0
+    sha256: "40b018bb1610de0ec1939e51c5011623f9de57adf771eb0be013e2af20dec622"
+
+# One row per thing the driver takes from a document: the document's own section names, the driver API that
+# implements it, and the docs pages that explain it (file names in docs/). The other families' control tables
+# (MX 1.0, MX 2.0, XL430, XL330, XM540, XW) are read from their own e-Manual pages; they are listed in
+# docs/control-tables.md with the page each one comes from.
+topics:
+  - topic: Half duplex line and Tx/Rx direction
+    doc: p2
+    section: 1.4 Half Duplex; 1.5 Tx, Rx Direction
+    page: 1
+    driver: "`UartInterface::Write()`, `Config::echo`, `EchoMode::Loopback`"
+    docs: [hardware, porting]
+  - topic: Byte to byte time and the packet gap
+    doc: p2
+    section: 1.6 Byte to Byte Time
+    page: 1
+    driver: "`kInstructionByteGapMaxUsV2`, `Config::gap_timeout_us`"
+    docs: [porting, configuration, quickstart]
+  - topic: Instruction packet layout
+    doc: p2
+    section: 2 Instruction Packet
+    page: 1
+    driver: "`protocol::FrameWriter`, `DYNAMIXEL::Read()`, `Write()`"
+    docs: [protocol, architecture]
+  - topic: Status packet, error byte and alert bit
+    doc: p2
+    section: 3 Status Packet; 3.2 Error
+    page: 1
+    driver: "`Protocol2Error`, `Error::DeviceError`, `Error::DeviceFault`, `GetLastReply()`"
+    docs: [api-guide, troubleshooting, protocol]
+  - topic: Response policy and the broadcast ID
+    doc: p2
+    section: 3.4 Response Policy
+    page: 1
+    driver: "`Config::status_return`, `StatusReturn`, `BroadcastPing()`"
+    docs: [configuration, protocol]
+  - topic: Packet process, header and byte stuffing
+    doc: p2
+    section: 4 Packet Process
+    page: 1
+    driver: "`protocol::Scan()`, `protocol::Destuff()`, `DYNAMIXEL::Resync()`"
+    docs: [protocol, architecture, contract]
+  - topic: Ping, Read, Write, Reg Write, Action
+    doc: p2
+    section: 5.1 Ping to 5.5 Action
+    page: 1
+    driver: "`Ping()`, `Read()`, `Write()`, `RegWrite()`, `Action()`"
+    docs: [api-guide, protocol]
+  - topic: Factory Reset, Reboot, Clear, Control Table Backup
+    doc: p2
+    section: 5.6 Factory Reset to 5.9 Control Table Backup
+    page: 1
+    driver: "`FactoryReset()`, `Reboot()`, `Clear()`, `Backup()`, `Config::allow_destructive`"
+    docs: [api-guide, protocol, contract]
+  - topic: Sync Read, Sync Write, Fast Sync Read
+    doc: p2
+    section: 5.10 Sync Read; 5.11 Sync Write; 5.12 Fast Sync Read
+    page: 1
+    driver: "`SyncRead()`, `SyncWrite()`, `FastSyncRead()`"
+    docs: [api-guide, protocol]
+  - topic: Bulk Read, Bulk Write, Fast Bulk Read
+    doc: p2
+    section: 5.13 Bulk Read; 5.14 Bulk Write; 5.15 Fast Bulk Read
+    page: 1
+    driver: "`BulkRead()`, `BulkWrite()`, `FastBulkRead()`"
+    docs: [api-guide, protocol]
+  - topic: CRC-16 of protocol 2.0 packets
+    doc: crc
+    section: CRC Calculation
+    page: 1
+    driver: "`protocol::Crc16()`, `Error::Crc`"
+    docs: [protocol, architecture]
+  - topic: Protocol 1.0 packets and checksum
+    doc: p1
+    section: 2 Instruction Packet; 2.6 Checksum; 3 Status Packet; 3.2 Checksum
+    page: 1
+    driver: "`protocol::Checksum1()`, `protocol::FrameWriter`, `Protocol::V1`"
+    docs: [protocol, architecture]
+  - topic: Protocol 1.0 instructions
+    doc: p1
+    section: 4 Instruction Details (Ping to Bulk Read)
+    page: 1
+    driver: "`Ping()`, `Read()`, `Write()`, `RegWrite()`, `Action()`, `FactoryReset()`, `Reboot()`, `SyncWrite()`, `BulkRead()`"
+    docs: [api-guide, protocol]
+  - topic: Protocol 1.0 error byte
+    doc: p1
+    section: 3.1 Error
+    page: 1
+    driver: "`p1_error`, `Error::DeviceError`, `Error::DeviceFault`"
+    docs: [troubleshooting, protocol]
+  - topic: Control table, X series (addresses, sizes, units)
+    doc: xm430
+    section: 2 Control Table; 2.1 Control Table of EEPROM Area; 2.2 Control Table of RAM Area
+    page: 1
+    driver: "`Reg`, `Lookup()`, `Family::X430`, `ReadRegister()`, `WriteRegister()`"
+    docs: [control-tables, api-guide, quickstart]
+  - topic: Specifications, baud rates and ID range
+    doc: xm430
+    section: 1 Specifications
+    page: 1
+    driver: "`kMaxBaudRate`, `kMaxIdV2`, `Info()`"
+    docs: [hardware, control-tables]
+  - topic: Connector, power and communication circuit
+    doc: xm430
+    section: 4.5 Connector Information; 4.6 Communication Circuit
+    page: 1
+    driver: "`UartInterface`, `EchoMode`"
+    docs: [hardware, platforms]
+  - topic: Control table, AX / RX / DX series (protocol 1.0)
+    doc: ax12
+    section: 2 Control Table; 2.2 EEPROM Area; 2.3 RAM Area
+    page: 1
+    driver: "`Family::AxRxDx`, `Lookup()`, `LegacyBusPreset()`"
+    docs: [control-tables, api-guide]
+  - topic: Connector and half-duplex circuit, protocol 1.0 servos
+    doc: ax12
+    section: 5.2 Connector Information; 5.4 Communication Circuit
+    page: 1
+    driver: "`EchoMode::Loopback`, `LegacyBusPreset()`"
+    docs: [hardware, porting]
+  - topic: Control table, XL-320
+    doc: xl320
+    section: 2 Control Table; 2.2 EEPROM Area; 2.3 RAM Area
+    page: 1
+    driver: "`Family::Xl320`, `Lookup()`"
+    docs: [control-tables]

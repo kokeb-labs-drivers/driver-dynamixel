@@ -1,0 +1,7 @@
+DYNAMIXEL driver 0.1.0 on the host
+dynamixel: initialised
+servo 1: model 1020, firmware 46
+servo 2: model 1020, firmware 46
+servo 1: 31 C
+servo 2: 25 C
+torque off

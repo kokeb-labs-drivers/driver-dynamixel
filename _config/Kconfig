@@ -1,0 +1,48 @@
+# Kconfig for the DYNAMIXEL driver. The root CMakeLists.txt registers it with ESP-IDF
+# (idf_component_register(... KCONFIG _config/Kconfig)), so `idf.py menuconfig` shows
+# "DYNAMIXEL servo bus". The values reach the code only through inc/dynamixel_kconfig.hpp;
+# no public driver signature uses them.
+menuconfig DYNAMIXEL
+    bool "DYNAMIXEL servo bus"
+    default y
+    help
+      Defaults for dynamixel::KconfigDefaults(). The driver itself does not
+      need Kconfig; outside ESP-IDF the same defaults come from Config{}.
+
+if DYNAMIXEL
+
+choice DYNAMIXEL_PROTOCOL
+    prompt "Packet protocol of the bus"
+    default DYNAMIXEL_PROTOCOL_2
+    help
+      Every servo on one bus must use the same protocol version.
+
+config DYNAMIXEL_PROTOCOL_1
+    bool "Protocol 1.0 (AX, MX 1.0, RX, EX)"
+config DYNAMIXEL_PROTOCOL_2
+    bool "Protocol 2.0 (X, P, Pro, MX 2.0)"
+
+endchoice
+
+config DYNAMIXEL_BAUD
+    int "Bus bit rate (bit/s)"
+    range 9600 10500000
+    default 57600
+    help
+      The factory rate of the X series is 57600; protocol 1.0 servos ship at 1000000.
+
+config DYNAMIXEL_REPLY_TIMEOUT_US
+    int "Wait for the first byte of a reply (us)"
+    range 100 1000000
+    default 20000
+
+config DYNAMIXEL_RETRIES
+    int "Repeats of a ping or read after a bad or missing reply"
+    range 0 5
+    default 1
+
+config DYNAMIXEL_ECHO_LOOPBACK
+    bool "TX and RX tied together (every sent byte is read back)"
+    default n
+
+endif

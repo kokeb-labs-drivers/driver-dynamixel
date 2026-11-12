@@ -1,0 +1,19 @@
+---
+# How this repository was made from kokeb-labs/driver-template. The template's drift check
+# (tools/scaffold.py --check-drift, CI: kokeb-labs/ci-tools ru-template-drift) scaffolds the template again
+# with these arguments and compares the files it manages. List a file under `local` only when it differs on
+# purpose, with the reason.
+template: unknown
+kind: "driver"
+name: "dynamixel"
+bus: "uart"
+namespace: "dynamixel"
+description: "C++20 driver for the ROBOTIS DYNAMIXEL servo protocols 1.0 and 2.0 over a half-duplex UART."
+include_root: null
+org: "kokeb-labs-drivers"
+repo: "driver-dynamixel"
+author: "The driver-dynamixel authors"
+license: "MIT"
+datasheet: "https://emanual.robotis.com/docs/en/dxl/protocol2/"
+platforms: [host, esp32]
+local: []

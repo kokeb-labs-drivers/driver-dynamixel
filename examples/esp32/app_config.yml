@@ -1,0 +1,48 @@
+---
+# DYNAMIXEL ESP32 examples: the app matrix read by the build scripts, the CI and the docs Examples page.
+version: "1.0"
+
+metadata:
+  project: "ESP32 DYNAMIXEL Driver Examples"
+  default_app: "dynamixel_basic_example"
+  target: "esp32c6"
+  idf_versions: ["release/v5.5"]
+  build_types: [["Debug", "Release"]]
+
+apps:
+  dynamixel_basic_example:
+    description: "Find the servos on the bus and log the feedback of each twice a second, with the torque off"
+    source_file: "dynamixel_basic_example.cpp"
+    category: "example"
+    idf_versions: ["release/v5.5"]
+    build_types: ["Debug", "Release"]
+    ci_enabled: true
+    featured: true
+    hardware_required: true
+    features:
+      - "ESP-IDF UART port in RS-485 half-duplex mode with the optional baud and log hooks"
+      - "Config from Kconfig (menuconfig) through dynamixel_kconfig.hpp"
+      - "Broadcast ping or ID scan, then one feedback read per servo; every Result checked and logged by name"
+
+build_config:
+  build_types:
+    Debug:
+      description: "Debug build"
+      cmake_build_type: "Debug"
+      optimization: "-O0"
+      debug_level: "-g3"
+      defines: ["DEBUG"]
+    Release:
+      description: "Release build"
+      cmake_build_type: "Release"
+      optimization: "-O2"
+      debug_level: "-g0"
+      defines: ["NDEBUG"]
+  build_directory_pattern: "build-app-{app_type}-type-{build_type}-target-{target}-idf-{idf_version}"
+  project_name_pattern: "esp32_dynamixel_{app_type}_app"
+
+ci_config:
+  timeout_minutes: 30
+  fail_fast: false
+  exclude_combinations: []
+  special_apps: []

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1098" height="938" viewBox="0 0 1098 938" role="img" aria-labelledby="chip-outline-title chip-outline-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+<title id="chip-outline-title">DYNAMIXEL package, TTL servo</title>
+<desc id="chip-outline-desc">Outline of the DYNAMIXEL in TTL servo drawn to scale from above: body 28.5 x 46.5 x 34.0 mm, pitch 2.5 mm, 3 pins.</desc>
+<rect x="0.5" y="0.5" width="1097" height="937" rx="16" fill="#FFFFFF" stroke="#E2E7EE"/>
+<text x="32" y="44" font-size="12.5" font-weight="700" letter-spacing="1.2" fill="#7A360E">HARDWARE</text>
+<text x="32" y="77.3" font-size="26" font-weight="700" fill="#0E1726">DYNAMIXEL package, TTL servo</text>
+<text x="32" y="103.8" font-size="15" fill="#566070">Package body from above, to scale, pin 1 marked; arrows give the datasheet's dimensions. The pads are centred on each side at the</text>
+<text x="32" y="125.5" font-size="15" fill="#566070">stated pitch: the land pattern is in the datasheet. Datasheet: 1 Specifications, p. 1.</text>
+<rect x="32" y="141.6" width="1034" height="1" fill="#E2E7EE"/>
+<path d="M644.7 177.6 L685.5 177.6" fill="none" stroke="#8893A2" stroke-width="1" stroke-dasharray="3 3"/>
+<path d="M644.7 451.1 L685.5 451.1" fill="none" stroke="#8893A2" stroke-width="1" stroke-dasharray="3 3"/>
+<path d="M194.3 455.1 L194.3 495.9" fill="none" stroke="#8893A2" stroke-width="1" stroke-dasharray="3 3"/>
+<path d="M640.7 455.1 L640.7 495.9" fill="none" stroke="#8893A2" stroke-width="1" stroke-dasharray="3 3"/>
+<path d="M173.5 290.4 L147.5 290.4" fill="none" stroke="#8893A2" stroke-width="1" stroke-dasharray="3 3"/>
+<path d="M173.5 314.4 L147.5 314.4" fill="none" stroke="#8893A2" stroke-width="1" stroke-dasharray="3 3"/>
+<path d="M170.3 870.3 L664.7 870.3" fill="none" stroke="#8893A2" stroke-width="1.2"/>
+<path d="M644.7 544 L676.7 544" fill="none" stroke="#8893A2" stroke-width="1" stroke-dasharray="3 3"/>
+<path d="M644.7 870.3 L676.7 870.3" fill="none" stroke="#8893A2" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="194.3" y="177.6" width="446.4" height="273.6" rx="8" fill="#F5F7FA" stroke="#2B3442" stroke-width="2"/>
+<rect x="177.5" y="283.8" width="16.8" height="13.2" rx="2" fill="#F1F4F8" stroke="#64748B" stroke-width="1.4"/>
+<rect x="177.5" y="307.8" width="16.8" height="13.2" rx="2" fill="#FFEEF2" stroke="#DB2752" stroke-width="1.4"/>
+<rect x="177.5" y="331.8" width="16.8" height="13.2" rx="2" fill="#FFF5E3" stroke="#C26A05" stroke-width="1.4"/>
+<circle cx="208.3" cy="191.6" r="6" fill="#2B3442"/>
+<path d="M679.5 177.6 L679.5 451.1" fill="none" stroke="#2B3442" stroke-width="1.2"/>
+<path d="M679.5 177.6 L682.5 184.6 L676.5 184.6 Z" fill="#2B3442"/>
+<path d="M679.5 451.1 L676.5 444.1 L682.5 444.1 Z" fill="#2B3442"/>
+<path d="M194.3 489.9 L640.7 489.9" fill="none" stroke="#2B3442" stroke-width="1.2"/>
+<path d="M194.3 489.9 L201.3 486.9 L201.3 492.9 Z" fill="#2B3442"/>
+<path d="M640.7 489.9 L633.7 492.9 L633.7 486.9 Z" fill="#2B3442"/>
+<path d="M141.5 290.4 L141.5 314.4" fill="none" stroke="#2B3442" stroke-width="1.2"/>
+<path d="M141.5 290.4 L144.5 297.4 L138.5 297.4 Z" fill="#2B3442"/>
+<path d="M141.5 314.4 L138.5 307.4 L144.5 307.4 Z" fill="#2B3442"/>
+<rect x="194.3" y="544" width="446.4" height="326.4" rx="2" fill="#F5F7FA" stroke="#2B3442" stroke-width="2"/>
+<path d="M670.7 544 L670.7 870.3" fill="none" stroke="#2B3442" stroke-width="1.2"/>
+<path d="M670.7 544 L673.7 551 L667.7 551 Z" fill="#2B3442"/>
+<path d="M670.7 870.3 L667.7 863.3 L673.7 863.3 Z" fill="#2B3442"/>
+<text x="417.5" y="306.4" font-size="20" font-weight="700" text-anchor="middle" fill="#0E1726">DYNAMIXEL</text>
+<text x="417.5" y="328.4" font-size="13" text-anchor="middle" fill="#566070">TTL servo</text>
+<text x="689.5" y="318.9" font-size="12.5" font-weight="600" fill="#2B3442">28.5 mm</text>
+<text x="417.5" y="507.9" font-size="12.5" font-weight="600" text-anchor="middle" fill="#2B3442">46.5 mm</text>
+<text x="131.5" y="306.9" font-size="12.5" font-weight="600" text-anchor="end" fill="#2B3442">pitch 2.5 mm</text>
+<text x="680.7" y="711.6" font-size="12.5" font-weight="600" fill="#2B3442">34.0 mm</text>
+<text x="180.3" y="711.6" font-size="12.5" text-anchor="end" fill="#566070">Side view</text>
+<text x="808.9" y="199.6" font-size="22" font-weight="700" fill="#0E1726">28.5 x 46.5 x 34.0 mm</text>
+<text x="808.9" y="227.6" font-size="13.5" fill="#566070">TTL servo, 3 pins</text>
+<text x="808.9" y="249.6" font-size="13.5" fill="#566070">Leads reach out of the body</text>
+<text x="808.9" y="271.6" font-size="13.5" fill="#566070">Pitch 2.5 mm</text>
+<text x="808.9" y="293.6" font-size="13.5" fill="#566070">1 other package: RS-485 servo</text>
+<rect x="32" y="891.7" width="14" height="14" rx="4" fill="#FFEEF2" stroke="#DB2752" stroke-width="1.4"/>
+<text x="54" y="903.3" font-size="12.5" fill="#566070">power</text>
+<rect x="117.6" y="891.7" width="14" height="14" rx="4" fill="#F1F4F8" stroke="#64748B" stroke-width="1.4"/>
+<text x="139.6" y="903.3" font-size="12.5" fill="#566070">ground</text>
+<rect x="208.5" y="891.7" width="14" height="14" rx="4" fill="#FFF5E3" stroke="#C26A05" stroke-width="1.4"/>
+<text x="230.5" y="903.3" font-size="12.5" fill="#566070">open drain</text>
+</svg>
