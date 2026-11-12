@@ -21,6 +21,20 @@ foreach(src ${DYNAMIXEL_FUZZ_TARGETS})
   add_test(NAME dynamixel_${name}_corpus
     COMMAND fuzz_replay_${name} ${CMAKE_CURRENT_SOURCE_DIR}/corpus/${name})
 
+  if(name STREQUAL "fuzz_dynamixel")
+    # The same target with one edit (the port stops counting writes). Its corpus run must abort,
+    # which proves the promise "a stop or a reboot writes at least once" is checked under every
+    # compiler, whatever order it evaluates the arguments of a call in.
+    add_executable(fuzz_mutant_${name} ${src} replay_main.cpp)
+    dynamixel_test_target(fuzz_mutant_${name})
+    target_include_directories(fuzz_mutant_${name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..)
+    target_compile_definitions(fuzz_mutant_${name} PRIVATE DYNAMIXEL_FUZZ_MUTANT_UNCOUNTED_WRITES)
+    add_test(NAME dynamixel_${name}_mutant_uncounted_writes
+      COMMAND ${CMAKE_COMMAND} -DEXE=$<TARGET_FILE:fuzz_mutant_${name}>
+        -DCORPUS=${CMAKE_CURRENT_SOURCE_DIR}/corpus/${name}
+        -P ${CMAKE_CURRENT_SOURCE_DIR}/expect_broken_promise.cmake)
+  endif()
+
   if(DYNAMIXEL_BUILD_FUZZERS)
     add_executable(${name} ${src})
     dynamixel_test_target(${name})

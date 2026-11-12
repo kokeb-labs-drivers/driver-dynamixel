@@ -16,6 +16,7 @@
 #ifndef DYNAMIXEL_TABLES_HPP
 #define DYNAMIXEL_TABLES_HPP
 
+#include <algorithm>
 #include <array>
 #include <cstddef>
 #include <cstdint>
@@ -909,12 +910,10 @@ inline constexpr std::array<FamilyInfo, 13> kFamilyInfo{{
  * @return A pointer into the family's table, or `nullptr` when the family has no such register.
  */
 [[nodiscard]] constexpr const RegInfo* Lookup(Family family, Reg reg) noexcept {
-  for (const RegInfo& info : Table(family)) {
-    if (info.reg == reg) {
-      return &info;
-    }
-  }
-  return nullptr;
+  const std::span<const RegInfo> table = Table(family);
+  const auto found = std::find_if(table.begin(), table.end(),
+                                  [reg](const RegInfo& info) noexcept { return info.reg == reg; });
+  return (found != table.end()) ? &*found : nullptr;
 }
 
 /** @brief The area an indirect pair lives in. */
@@ -1124,6 +1123,12 @@ inline constexpr std::array<ModelInfo, 47> kModels{{
 }
 
 namespace detail {
+/// The last enumerator of `Kind`; with the others in the file that declares the enumeration
+/// (MISRA C++:2023 Rule 6.2.3).
+template <>
+struct EnumLast<Kind> {
+  static constexpr Kind kValue = Kind::Offset2048;
+};
 /// The last enumerator of `Reg` (KB-CPP20-026).
 template <>
 struct EnumLast<Reg> {
