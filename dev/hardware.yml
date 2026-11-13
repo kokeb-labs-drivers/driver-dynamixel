@@ -1,0 +1,112 @@
+---
+# The servo's hardware in one file: connector, pins, the driver hook of each pin, the blocks inside and the reference
+# circuits. `kokeb-docs figures` draws the pinout, the outline, the block diagram and the circuits from it,
+# `kokeb-docs gen` writes the chip card of the README and the tables of docs/hardware.md, and
+# `kokeb-docs hardware --check` validates it. Schema: docs/chip-diagrams.md in kokeb-labs/ci-tools.
+#
+# The driver talks to a whole family of servos, not to one chip. The reference part is the XM430-W350, the X-series
+# servo whose e-Manual page the driver follows for the control table and the connector; the other families differ in
+# the connector housing and the supply range (docs/control-tables.md lists them). The part is a servo module with a
+# JST EH connector, not a leaded package: the figure system draws it as a body with the connector pins in one row,
+# and the outline gets the module's width and height. The 3-pin TTL connector is the one drawn; the 4-pin RS-485
+# variant has the same pins 1 and 2 and splits the data line into DATA+ and DATA- (pin 3 and 4).
+# The e-Manual has no block diagram: the blocks below are the ones its specification table names (MCU, encoder,
+# motor) and are marked `unverified` where the page does not draw them.
+schema: 1
+chip: DYNAMIXEL
+
+refs:
+  pinout: {doc: xm430, section: "4.5 Connector Information", page: 1}
+  spec: {doc: xm430, section: "1 Specifications", page: 1}
+  circuit: {doc: xm430, section: "4.6 Communication Circuit", page: 1}
+  duplex: {doc: p2, section: "1.4 Half Duplex; 1.5 Tx, Rx Direction", page: 1}
+  gap: {doc: p2, section: "1.6 Byte to Byte Time", page: 1}
+  drawing: {doc: xm430, section: "4.7 Drawings", page: 1}
+
+package:
+  type: "TTL servo"
+  pins: 3
+  layout: dual
+  sides: {left: [1, 2, 3]}
+  ref: pinout
+  outline: {length_mm: 28.5, width_mm: 46.5, height_mm: 34, pitch_mm: 2.5, ref: spec, pitch_ref: pinout}
+  variants:
+    - {id: rs485, type: "RS-485 servo", pins: 4,
+       size: "28.5 x 46.5 x 34 mm, 82 g", ordering: "XM430-W350 (RS-485 port)",
+       note: "pin 3 DATA+, pin 4 DATA-; JST EHR-04", ref: pinout}
+
+supply:
+  - {name: VDD, min_v: 10.0, max_v: 14.8, ref: spec}
+
+hooks:
+  - {id: tx, call: "Write()", kind: uart, source: inc/dynamixel_uart_interface.hpp, symbol: UartInterface}
+  - {id: rx, call: "Read()", kind: uart, source: inc/dynamixel_uart_interface.hpp, symbol: UartInterface}
+
+pins:
+  - {number: 1, name: GND, type: ground, function: "Ground and the negative supply (pin 1 of the connector)",
+     ref: pinout}
+  - {number: 2, name: VDD, type: power, domain: VDD,
+     function: "Positive supply, 10.0 V to 14.8 V, 12.0 V recommended (XM430-W350)", ref: spec}
+  - {number: 3, name: DATA, type: open-drain, domain: "TTL, 5 V in the circuit",
+     function: "Half-duplex TTL data line, 8N1: the master and every servo share it. The master's TX and RX meet here
+       (single wire), so a sent byte is also read back unless the adapter gates it. The page text gives no voltage
+       level; the circuit figure shows a 10 kOhm pull-up to 5 V. Unverified: the drive type (open drain) is not stated",
+     hook: tx, ref: pinout}
+
+block_diagram:
+  ref: spec
+  blocks:
+    - {id: line, ref: duplex, label: "Half-duplex line", detail: "TTL or RS-485, 9600 to 4.5 Mbit/s", at: [0, 0],
+       tone: blue, pins: [DATA]}
+    - {id: mcu, ref: spec, label: "MCU and control table", detail: "ARM Cortex-M3, EEPROM and RAM registers",
+       at: [1, 0], tone: slate, unverified: "the e-Manual has no block diagram: named from its specification table"}
+    - {id: enc, ref: spec, label: "Absolute encoder", detail: "12 bit, 360 degrees", at: [2, 0], tone: teal,
+       unverified: "the e-Manual has no block diagram: named from its specification table"}
+    - {id: motor, ref: spec, label: "Motor and gear", detail: "coreless motor, 353.5 : 1", at: [2, 1], tone: amber,
+       unverified: "the e-Manual has no block diagram: named from its specification table"}
+    - {id: pwr, ref: spec, label: "Supply", detail: "10.0 V to 14.8 V", at: [0, 1], tone: slate, pins: [VDD, GND]}
+  links:
+    - {from: line, to: mcu, label: "packets", both: true}
+    - {from: enc, to: mcu, label: position}
+    - {from: mcu, to: motor, label: drive}
+    - {from: pwr, to: mcu, label: power}
+
+circuits:
+  - id: typical
+    title: servo bus on an MCU's UART through a half-duplex stage
+    description: >-
+      The MCU's UART TX and RX are joined to the servos' single DATA line by a half-duplex stage (the recommended
+      circuit of the e-Manual: a tri-state buffer pair with a direction pin, or the UART's own
+      half-duplex mode). Every servo on the bus is wired in parallel: GND, VDD and DATA. The servos take their power
+      from their own supply, not from the MCU. The stage shown here is a block, not a part: the e-Manual's circuit
+      (a figure only: it is not in the page text) is a 74LVC2G241 tri-state buffer pair on a 5 V supply with 10 kOhm
+      pull-ups on RXD and DATA and a 10 kOhm pull-down on the direction line, and the page says it is designed for
+      a 5 V or 5 V tolerant MCU: a 3.3 V MCU needs a level shifter.
+    ref: circuit
+    parts:
+      - {id: U1, kind: chip}
+      - id: U2
+        kind: mcu
+        label: MCU
+        pins:
+          - {name: TX, label: UART TX}
+          - {name: RX, label: UART RX}
+          - {name: DIR, label: GPIO (direction)}
+          - GND
+      - id: U3
+        kind: ic
+        label: Half-duplex stage
+        pins:
+          - {name: TXI, label: TX in}
+          - {name: RXO, label: RX out}
+          - {name: DIR, label: Direction}
+          - {name: DATA, label: Data line}
+          - GND
+      - {id: C1, kind: capacitor, value: 100 µF, unverified: "an example bulk capacitor at the servo supply, not an e-Manual value"}
+    nets:
+      - {name: "+12V", kind: supply, nodes: [U1.VDD, C1.1]}
+      - {name: GND, kind: ground, nodes: [U1.GND, C1.2, U2.GND, U3.GND]}
+      - {name: "UART TX", nodes: [U2.TX, U3.TXI]}
+      - {name: "UART RX", nodes: [U2.RX, U3.RXO]}
+      - {name: "Direction", nodes: [U2.DIR, U3.DIR]}
+      - {name: "DATA", nodes: [U3.DATA, U1.DATA]}
