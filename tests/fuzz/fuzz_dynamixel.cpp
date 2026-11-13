@@ -31,6 +31,10 @@
  * - the statistics only grow, and every log line is a non-empty plain-text
  * message.
  *
+ * `DYNAMIXEL_FUZZ_MUTANT_UNCOUNTED_WRITES` is the one-edit mutant the build runs to prove the
+ * safety check can fail (tests/fuzz/CMakeLists.txt): the port stops counting writes, so a stop that
+ * did write looks as if it sent nothing, and the target must abort.
+ *
  * Built two ways (tests/fuzz/CMakeLists.txt): with libFuzzer (Clang,
  * `-DDYNAMIXEL_BUILD_FUZZERS=ON`), and as a plain executable that replays the
  * corpus in tests/fuzz/corpus/ as a CTest on any compiler.
@@ -99,7 +103,9 @@ public:
 
   bool Write(const uint8_t* data, std::size_t len) noexcept {
     Check(data != nullptr && len >= 6 && len <= kTxMax);
+#ifndef DYNAMIXEL_FUZZ_MUTANT_UNCOUNTED_WRITES
     ++writes_;
+#endif
     const uint8_t action = nextAction();
     if (action == kFail) {
       return false;
@@ -174,6 +180,26 @@ private:
 };
 
 using Driver = dynamixel::DYNAMIXEL<FuzzPort>;
+
+/// What the port saw since a call began, read when a check runs and not when its arguments are
+/// built. The order in which the arguments of one call are evaluated is unspecified (GCC on x86-64
+/// goes right to left, Clang left to right), so a count passed as a plain value next to the call
+/// that changes it would be read before that call ran. A `Probe` is passed by reference and read
+/// inside the check, after every argument is evaluated.
+struct Probe {
+  const FuzzPort& port;
+  int writes_before;
+  int ensure_failures_before;
+
+  /// Packets written since the call began.
+  [[nodiscard]] int Sent() const noexcept {
+    return port.Writes() - writes_before;
+  }
+  /// Times the port reported it could not start since the call began.
+  [[nodiscard]] int EnsureFailed() const noexcept {
+    return port.EnsureFailures() - ensure_failures_before;
+  }
+};
 
 bool KnownError(Error e) noexcept {
   switch (e) {
@@ -320,7 +346,8 @@ std::size_t BulkBytes(const Batch& b) noexcept {
 }
 
 /// The promises of any call.
-void CheckCall(const Driver& d, Error error, bool was_up, int sent) noexcept {
+void CheckCall(const Driver& d, Error error, bool was_up, const Probe& probe) noexcept {
+  const int sent = probe.Sent();
   Check(KnownError(error));
   if (!was_up) {
     // An argument or permission the call refuses before it needs the bus is
@@ -339,7 +366,9 @@ void CheckCall(const Driver& d, Error error, bool was_up, int sent) noexcept {
 /// (nothing sent) or a port that cannot start; otherwise at least one packet goes out, whatever
 /// the initialisation, flush, read and earlier failures were. `list` is a call for several servos,
 /// which reports the first failure although a later servo was served.
-void CheckStop(Error error, int sent, int ensure_failures, bool list = false) noexcept {
+void CheckStop(Error error, const Probe& probe, bool list = false) noexcept {
+  const int sent = probe.Sent();
+  const int ensure_failures = probe.EnsureFailed();
   Check(KnownError(error));
   Check(error != Error::NotInitialized && error != Error::NotPermitted &&
         error != Error::Unsupported);
@@ -363,8 +392,8 @@ void CheckValue(const dynamixel::Result<dynamixel::PingInfo>& r) noexcept {
 
 /// A multi-device read: an overall `Ok` means every device answered.
 void CheckMulti(const Driver& d, const dynamixel::Result<void>& r, const Batch& b, bool was_up,
-                int sent) noexcept {
-  CheckCall(d, r.error, was_up, sent);
+                const Probe& probe) noexcept {
+  CheckCall(d, r.error, was_up, probe);
   if (r.ok()) {
     for (std::size_t i = 0; i < b.count; ++i) {
       Check(b.replies[i].result == Error::Ok);
@@ -377,8 +406,7 @@ void RunOne(Driver& d, FuzzPort& port, mock::Bus& bus, Input& in) noexcept {
   const bool was_up = d.IsInitialized();
   const int before = port.Writes();
   const int ensure_before = port.EnsureFailures();
-  const auto sent = [&] { return port.Writes() - before; };
-  const auto ensure_failed = [&] { return port.EnsureFailures() - ensure_before; };
+  const Probe probe{port, before, ensure_before};
   const uint8_t id = in.Byte() % 8U;
   const dynamixel::Family family =
       in.Byte() % 2U == 0U ? dynamixel::Family::X430 : dynamixel::Family::AxRxDx;
@@ -394,11 +422,11 @@ void RunOne(Driver& d, FuzzPort& port, mock::Bus& bus, Input& in) noexcept {
     Check(d.Deinitialize().ok() && !d.IsInitialized());
     break;
   case 2:
-    CheckCall(d, d.Resync().error, was_up, sent());
+    CheckCall(d, d.Resync().error, was_up, probe);
     break;
   case 3: {
     const auto r = d.Ping(id);
-    CheckCall(d, r.error, was_up, sent());
+    CheckCall(d, r.error, was_up, probe);
     CheckValue(r);
     break;
   }
@@ -406,28 +434,29 @@ void RunOne(Driver& d, FuzzPort& port, mock::Bus& bus, Input& in) noexcept {
     const auto r = d.Identify(id);
     // Protocol 1.0 pings first and may answer `Unsupported` after it (status
     // return level ping only).
-    CheckCall(d, r.error == Error::Unsupported && sent() > 0 ? Error::Ok : r.error, was_up, sent());
+    CheckCall(d, r.error == Error::Unsupported && probe.Sent() > 0 ? Error::Ok : r.error, was_up,
+              probe);
     CheckValue(r);
     break;
   }
   case 5: {
     std::array<dynamixel::PingInfo, 4> found{};
     const auto r = d.BroadcastPing(found);
-    CheckCall(d, r.error, was_up, sent());
+    CheckCall(d, r.error, was_up, probe);
     Check(!r || r.value <= found.size());
     break;
   }
   case 6: {
     std::array<dynamixel::PingInfo, 4> found{};
     const auto r = d.ScanIds(id, static_cast<uint8_t>(id + (in.Byte() % 4U)), found);
-    CheckCall(d, r.error, was_up, sent());
+    CheckCall(d, r.error, was_up, probe);
     Check(!r || r.value <= found.size());
     break;
   }
   case 7: {
     std::array<uint8_t, 16> out{};
     const std::size_t n = in.Byte() % 17U;
-    CheckCall(d, d.Read(id, word % 1100U, std::span<uint8_t>(out.data(), n)).error, was_up, sent());
+    CheckCall(d, d.Read(id, word % 1100U, std::span<uint8_t>(out.data(), n)).error, was_up, probe);
     break;
   }
   case 8: {
@@ -437,7 +466,7 @@ void RunOne(Driver& d, FuzzPort& port, mock::Bus& bus, Input& in) noexcept {
     }
     CheckCall(
         d, d.Write(id, word % 1100U, std::span<const uint8_t>(data.data(), in.Byte() % 17U)).error,
-        was_up, sent());
+        was_up, probe);
     break;
   }
   case 9: {
@@ -446,29 +475,29 @@ void RunOne(Driver& d, FuzzPort& port, mock::Bus& bus, Input& in) noexcept {
         d,
         d.RegWrite(id, word % 1100U, std::span<const uint8_t>(data.data(), 1U + (in.Byte() % 4U)))
             .error,
-        was_up, sent());
+        was_up, probe);
     break;
   }
   case 10:
-    CheckCall(d, d.Action(id).error, was_up, sent());
+    CheckCall(d, d.Action(id).error, was_up, probe);
     break;
   case 11:
     // NOLINTNEXTLINE(clang-analyzer-optin.core.EnumCastOutOfRange)
     CheckCall(d, d.FactoryReset(id, static_cast<dynamixel::ResetOption>(in.Byte() % 4U)).error,
-              was_up, sent());
+              was_up, probe);
     break;
   case 12:
-    CheckStop(d.Reboot(id).error, sent(), ensure_failed());
+    CheckStop(d.Reboot(id).error, probe);
     break;
   case 13:
     // NOLINTNEXTLINE(clang-analyzer-optin.core.EnumCastOutOfRange)
     CheckCall(d, d.Clear(id, static_cast<dynamixel::ClearOption>(in.Byte() % 4U)).error, was_up,
-              sent());
+              probe);
     break;
   case 14:
     // NOLINTNEXTLINE(clang-analyzer-optin.core.EnumCastOutOfRange)
     CheckCall(d, d.Backup(id, static_cast<dynamixel::BackupOption>(in.Byte() % 4U)).error, was_up,
-              sent());
+              probe);
     break;
   case 15: {
     const Batch b = FuzzBatch(in);
@@ -476,21 +505,21 @@ void RunOne(Driver& d, FuzzPort& port, mock::Bus& bus, Input& in) noexcept {
         d,
         d.SyncWrite(b.address, b.length, std::span<const uint8_t>(b.ids.data(), b.count), b.data)
             .error,
-        was_up, sent());
+        was_up, probe);
     break;
   }
   case 16: {
     const Batch b = FuzzBatch(in);
     CheckCall(
         d, d.BulkWrite(std::span<const dynamixel::BulkWriteItem>(b.writes.data(), b.count)).error,
-        was_up, sent());
+        was_up, probe);
     break;
   }
   case 17: {
     Batch b = FuzzBatch(in);
     const auto r = d.SyncRead(b.address, b.length, std::span<const uint8_t>(b.ids.data(), b.count),
                               b.out, std::span<dynamixel::DeviceReply>(b.replies.data(), b.count));
-    CheckMulti(d, r, b, was_up, sent());
+    CheckMulti(d, r, b, was_up, probe);
     break;
   }
   case 18: {
@@ -498,7 +527,7 @@ void RunOne(Driver& d, FuzzPort& port, mock::Bus& bus, Input& in) noexcept {
     const auto r =
         d.FastSyncRead(b.address, b.length, std::span<const uint8_t>(b.ids.data(), b.count), b.out,
                        std::span<dynamixel::DeviceReply>(b.replies.data(), b.count));
-    CheckMulti(d, r, b, was_up, sent());
+    CheckMulti(d, r, b, was_up, probe);
     break;
   }
   case 19: {
@@ -507,7 +536,7 @@ void RunOne(Driver& d, FuzzPort& port, mock::Bus& bus, Input& in) noexcept {
         std::span<const dynamixel::BulkReadItem>(b.reads.data(), b.count),
         std::span<uint8_t>(b.out.data(), BulkBytes(b) <= b.out.size() ? BulkBytes(b) : 0U),
         std::span<dynamixel::DeviceReply>(b.replies.data(), b.count));
-    CheckMulti(d, r, b, was_up, sent());
+    CheckMulti(d, r, b, was_up, probe);
     break;
   }
   case 20: {
@@ -516,12 +545,12 @@ void RunOne(Driver& d, FuzzPort& port, mock::Bus& bus, Input& in) noexcept {
         std::span<const dynamixel::BulkReadItem>(b.reads.data(), b.count),
         std::span<uint8_t>(b.out.data(), BulkBytes(b) <= b.out.size() ? BulkBytes(b) : 0U),
         std::span<dynamixel::DeviceReply>(b.replies.data(), b.count));
-    CheckMulti(d, r, b, was_up, sent());
+    CheckMulti(d, r, b, was_up, probe);
     break;
   }
   case 21: {
     const auto r = d.ReadRegister(servo, static_cast<dynamixel::Reg>(word % 90U));
-    CheckCall(d, r.error, was_up, sent());
+    CheckCall(d, r.error, was_up, probe);
     CheckValue(r);
     break;
   }
@@ -530,48 +559,47 @@ void RunOne(Driver& d, FuzzPort& port, mock::Bus& bus, Input& in) noexcept {
               d.WriteRegister(servo, static_cast<dynamixel::Reg>(word % 90U),
                               static_cast<int32_t>(static_cast<int16_t>(in.Word())) * 3)
                   .error,
-              was_up, sent());
+              was_up, probe);
     break;
   case 23:
-    CheckCall(d, d.SetTorque(servo, (word & 1U) != 0U).error, was_up, sent());
+    CheckCall(d, d.SetTorque(servo, (word & 1U) != 0U).error, was_up, probe);
     break;
   case 24: {
     const auto r = d.ReadFeedback(servo);
-    CheckCall(d, r.error, was_up, sent());
+    CheckCall(d, r.error, was_up, probe);
     break;
   }
   case 25:
     CheckCall(d,
               d.SetGoalPosition(servo, static_cast<int32_t>(static_cast<int16_t>(word)) * 2).error,
-              was_up, sent());
+              was_up, probe);
     break;
   case 26:
-    CheckCall(d, d.SetId(servo, static_cast<uint8_t>(in.Byte() % 8U)).error, was_up, sent());
+    CheckCall(d, d.SetId(servo, static_cast<uint8_t>(in.Byte() % 8U)).error, was_up, probe);
     break;
   case 27:
     CheckCall(d, d.SetServoBaudRate(servo, (word & 1U) != 0U ? 1'000'000U : word * 100U).error,
-              was_up, sent());
+              was_up, probe);
     break;
   case 28:
     CheckCall(d,
               d.SetStatusReturnLevel(servo, static_cast<dynamixel::StatusReturn>(word % 4U)).error,
-              was_up, sent());
+              was_up, probe);
     break;
   case 29:
-    CheckStop(d.DisableTorque(servo).error, sent(), ensure_failed());
+    CheckStop(d.DisableTorque(servo).error, probe);
     break;
   case 30:
-    CheckStop(d.DisableTorqueAll(family).error, sent(), ensure_failed());
+    CheckStop(d.DisableTorqueAll(family).error, probe);
     break;
   case 31: {
     const std::array<dynamixel::ServoRef, 2> two{
         servo, dynamixel::ServoRef{static_cast<uint8_t>(id + 1U), family}};
-    CheckStop(d.DisableTorqueEach(two).error, sent(), ensure_failed(), true);
+    CheckStop(d.DisableTorqueEach(two).error, probe, true);
     break;
   }
   case 32:
-    CheckStop(d.DisableTorqueAt(id, static_cast<uint16_t>(word % 300U)).error, sent(),
-              ensure_failed());
+    CheckStop(d.DisableTorqueAt(id, static_cast<uint16_t>(word % 300U)).error, probe);
     break;
   default:
     FuzzBus(bus, in);

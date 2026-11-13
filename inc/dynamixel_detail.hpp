@@ -11,7 +11,10 @@
 #ifndef DYNAMIXEL_DETAIL_HPP
 #define DYNAMIXEL_DETAIL_HPP
 
+#include <algorithm>
+#include <array>
 #include <concepts>
+#include <cstddef>
 #include <cstdint>
 #include <limits>
 #include <type_traits>
@@ -24,6 +27,89 @@ namespace dynamixel::detail {
  */
 void LiteralOutOfRange() noexcept;
 
+/// Returned by `LiteralDigit()` for a character that is no digit.
+inline constexpr std::uint64_t kNotADigit = 99U;
+
+/// The digit characters in order of value: the index of a character is its value.
+inline constexpr std::array<char, 16> kLowerDigits{'0', '1', '2', '3', '4', '5', '6', '7',
+                                                   '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+/// The same with capital letters.
+inline constexpr std::array<char, 16> kUpperDigits{'0', '1', '2', '3', '4', '5', '6', '7',
+                                                   '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+/// The characters after a leading `0` that mark a hexadecimal literal.
+inline constexpr std::array<char, 2> kHexMarks{'x', 'X'};
+/// The characters after a leading `0` that mark a binary literal.
+inline constexpr std::array<char, 2> kBinMarks{'b', 'B'};
+
+/**
+ * @brief The value of a digit character, 0 to 15 (`0`-`9`, `a`-`f`, `A`-`F`).
+ * @details The character is looked up in a table with `std::find`, never converted to a number
+ * (MISRA C++:2023 Rule 7.0.3).
+ * @param c The character.
+ * @return Its value, or `kNotADigit`.
+ */
+consteval std::uint64_t LiteralDigit(char c) noexcept {
+  const auto* const lower = std::find(kLowerDigits.begin(), kLowerDigits.end(), c);
+  if (lower != kLowerDigits.end()) {
+    return static_cast<std::uint64_t>(lower - kLowerDigits.begin());
+  }
+  const auto* const upper = std::find(kUpperDigits.begin(), kUpperDigits.end(), c);
+  if (upper != kUpperDigits.end()) {
+    return static_cast<std::uint64_t>(upper - kUpperDigits.begin());
+  }
+  return kNotADigit;
+}
+
+/**
+ * @brief The base a literal's second character selects after a leading `0`.
+ * @param c The character after the `0`.
+ * @return 16 for `x` or `X`, 2 for `b` or `B`, 0 for any other character (an octal literal).
+ */
+consteval std::uint64_t LiteralPrefixBase(char c) noexcept {
+  if (std::find(kHexMarks.begin(), kHexMarks.end(), c) != kHexMarks.end()) {
+    return 16U;
+  }
+  if (std::find(kBinMarks.begin(), kBinMarks.end(), c) != kBinMarks.end()) {
+    return 2U;
+  }
+  return 0U;
+}
+
+/**
+ * @brief The value of an integer literal given as its characters, for the raw literal operators
+ * below: decimal, `0x` hexadecimal, `0b` binary or `0` octal, with digit separators (`'`).
+ * @tparam Digits The characters of the literal, as written.
+ * @param maximum The largest value the literal's type holds.
+ * @return The value; a literal larger than `maximum` does not compile.
+ */
+template <char... Digits>
+consteval std::uint64_t RawLiteralValue(std::uint64_t maximum) noexcept {
+  constexpr std::array<char, sizeof...(Digits)> kText{Digits...};
+  std::uint64_t base = 10U;
+  std::size_t first = 0U;
+  if ((kText.size() > 1U) && (LiteralDigit(kText[0]) == 0U)) {
+    base = LiteralPrefixBase(kText[1]);
+    first = 2U;
+    if (base == 0U) {
+      base = 8U; // no prefix: the leading 0 only marks octal
+      first = 1U;
+    }
+  }
+  std::uint64_t value = 0U;
+  for (std::size_t i = first; i < kText.size(); ++i) {
+    const std::uint64_t digit = LiteralDigit(kText[i]);
+    if (digit == kNotADigit) {
+      continue; // a digit separator: the compiler has accepted the literal, so nothing else is left
+    }
+    // Checked before the multiplication, so a long literal cannot wrap round to a small value.
+    if ((digit >= base) || (value > ((maximum - digit) / base))) {
+      LiteralOutOfRange();
+    }
+    value = (value * base) + digit;
+  }
+  return value;
+}
+
 } // namespace dynamixel::detail
 
 namespace dynamixel::inline literals {
@@ -33,39 +119,36 @@ namespace dynamixel::inline literals {
 /**
  * @brief An integer constant of type `uint8_t`, for an argument whose parameter is `uint8_t`
  * (MISRA C++:2023 Rule 7.0.6). `0xFF_u8` compiles; `0x100_u8` does not.
- * @param v The literal's value.
- * @return `v` as `uint8_t`.
+ * @tparam Digits The characters of the literal.
+ * @return The literal's value as `uint8_t`.
  */
-consteval std::uint8_t operator""_u8(unsigned long long v) noexcept {
-  if (v > 0xFFULL) {
-    detail::LiteralOutOfRange();
-  }
-  return static_cast<std::uint8_t>(v);
+template <char... Digits>
+consteval std::uint8_t operator""_u8() noexcept {
+  return static_cast<std::uint8_t>(
+      detail::RawLiteralValue<Digits...>(std::numeric_limits<std::uint8_t>::max()));
 }
 
 /**
  * @brief An integer constant of type `uint16_t` (Rule 7.0.6); out of range does not compile.
- * @param v The literal's value.
- * @return `v` as `uint16_t`.
+ * @tparam Digits The characters of the literal.
+ * @return The literal's value as `uint16_t`.
  */
-consteval std::uint16_t operator""_u16(unsigned long long v) noexcept {
-  if (v > 0xFFFFULL) {
-    detail::LiteralOutOfRange();
-  }
-  return static_cast<std::uint16_t>(v);
+template <char... Digits>
+consteval std::uint16_t operator""_u16() noexcept {
+  return static_cast<std::uint16_t>(
+      detail::RawLiteralValue<Digits...>(std::numeric_limits<std::uint16_t>::max()));
 }
 
 /**
  * @brief An integer constant of type `uint32_t` (Rule 7.0.6): on targets where `uint32_t` is
  * `unsigned long`, a `U` literal is still `unsigned int`. Out of range does not compile.
- * @param v The literal's value.
- * @return `v` as `uint32_t`.
+ * @tparam Digits The characters of the literal.
+ * @return The literal's value as `uint32_t`.
  */
-consteval std::uint32_t operator""_u32(unsigned long long v) noexcept {
-  if (v > 0xFFFF'FFFFULL) {
-    detail::LiteralOutOfRange();
-  }
-  return static_cast<std::uint32_t>(v);
+template <char... Digits>
+consteval std::uint32_t operator""_u32() noexcept {
+  return static_cast<std::uint32_t>(
+      detail::RawLiteralValue<Digits...>(std::numeric_limits<std::uint32_t>::max()));
 }
 
 } // namespace dynamixel::inline literals

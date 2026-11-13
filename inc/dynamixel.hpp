@@ -113,6 +113,15 @@ struct FastCursor {
   Error stop;       ///< The result of the devices after the packet ended or broke.
 };
 
+/// What the attempts of a torque-off have shown so far. Outside the class so that Doxygen's class
+/// page has no nested-class section (its link check fails on the anchor that section would need).
+struct StopTally {
+  Error last{Error::Bus};  ///< The outcome of the latest attempt.
+  bool sent{false};        ///< At least one attempt was carried out on the line.
+  bool confirmed{false};   ///< A trusted answer says the write was carried out.
+  bool flush_fault{false}; ///< The flush before an attempt failed: answers are not trusted.
+};
+
 } // namespace detail
 
 /**
@@ -649,16 +658,9 @@ private:
                      bool stop, std::span<uint8_t>& data) noexcept;
   [[nodiscard]] const RegInfo* lookup(Family family, Reg reg) const noexcept;
   bool startForStop() noexcept;
-  /// What the attempts of a torque-off have shown so far.
-  struct StopTally {
-    Error last{Error::Bus};  ///< The outcome of the latest attempt.
-    bool sent{false};        ///< At least one attempt was carried out on the line.
-    bool confirmed{false};   ///< A trusted answer says the write was carried out.
-    bool flush_fault{false}; ///< The flush before an attempt failed: answers are not trusted.
-  };
   Error stopOnce(uint16_t address, uint8_t id, bool answer) noexcept;
-  bool noteStop(StopTally& tally, Error attempt, bool answer) const noexcept;
-  Result<void> stopOutcome(const StopTally& tally, bool answer) noexcept;
+  bool noteStop(detail::StopTally& tally, Error attempt, bool answer) const noexcept;
+  Result<void> stopOutcome(const detail::StopTally& tally, bool answer) noexcept;
   Error pingReply(std::size_t frame_size, std::span<const PingInfo> known, PingInfo& info) noexcept;
   Error transact(std::size_t len, uint8_t id, bool expect_reply, std::size_t expect_params,
                  bool idempotent, std::span<uint8_t>& data) noexcept;

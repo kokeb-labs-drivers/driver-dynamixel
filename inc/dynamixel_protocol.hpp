@@ -563,12 +563,4 @@ static_assert(Checksum1(std::array<uint8_t, 6>{0x01, 0x05, 0x03, 0x0C, 0x64, 0xA
 
 } // namespace dynamixel::protocol
 
-namespace dynamixel::detail {
-/// Last enumerator of `Kind`.
-template <>
-struct EnumLast<Kind> {
-  static constexpr Kind kValue = Kind::Offset2048; ///< The last enumerator.
-};
-} // namespace dynamixel::detail
-
 #endif // DYNAMIXEL_PROTOCOL_HPP

@@ -109,8 +109,8 @@ void DYNAMIXEL<Port, FrameBytes>::dropFront(std::size_t count) noexcept {
     return;
   }
   if (count > 0U) {
-    std::copy(rx_.begin() + static_cast<std::ptrdiff_t>(count),
-              rx_.begin() + static_cast<std::ptrdiff_t>(rx_have_), rx_.begin());
+    static_cast<void>(std::copy(rx_.begin() + static_cast<std::ptrdiff_t>(count),
+                                rx_.begin() + static_cast<std::ptrdiff_t>(rx_have_), rx_.begin()));
     rx_have_ -= count;
   }
 }
@@ -563,7 +563,7 @@ Result<void> DYNAMIXEL<Port, FrameBytes>::Read(uint8_t id, uint16_t address,
   if (error != Error::Ok) {
     return Result<void>::Failure(error);
   }
-  std::copy(data.begin(), data.end(), out.begin());
+  static_cast<void>(std::copy(data.begin(), data.end(), out.begin()));
   return Result<void>::Success();
 }
 
@@ -858,7 +858,8 @@ Error DYNAMIXEL<Port, FrameBytes>::collectSeparate(const detail::MultiRequest& r
     reply.error_byte = answered ? last_reply_.error_byte : 0U;
     reply.alert = answered && last_reply_.alert;
     if (error == Error::Ok) {
-      std::copy(data.begin(), data.end(), out.begin() + static_cast<std::ptrdiff_t>(offset));
+      static_cast<void>(
+          std::copy(data.begin(), data.end(), out.begin() + static_cast<std::ptrdiff_t>(offset)));
     }
     offset += rq.LengthAt(k);
     if ((error != Error::Ok) && (first_error == Error::Ok)) {
@@ -896,8 +897,8 @@ void DYNAMIXEL<Port, FrameBytes>::fastAccept(uint8_t id, std::size_t want, std::
     reply.result = Error::DeviceFault;
   } else {
     reply.result = Error::Ok;
-    std::copy_n(rx_.begin() + static_cast<std::ptrdiff_t>(pos + 2U), want,
-                out.begin() + static_cast<std::ptrdiff_t>(offset));
+    static_cast<void>(std::copy_n(rx_.begin() + static_cast<std::ptrdiff_t>(pos + 2U), want,
+                                  out.begin() + static_cast<std::ptrdiff_t>(offset)));
   }
 }
 
@@ -1161,7 +1162,7 @@ Error DYNAMIXEL<Port, FrameBytes>::stopOnce(uint16_t address, uint8_t id, bool a
 }
 
 template <UartPort Port, std::size_t FrameBytes>
-bool DYNAMIXEL<Port, FrameBytes>::noteStop(StopTally& tally, Error attempt,
+bool DYNAMIXEL<Port, FrameBytes>::noteStop(detail::StopTally& tally, Error attempt,
                                            bool answer) const noexcept {
   tally.last = attempt;
   tally.flush_fault = tally.flush_fault || flush_fault_;
@@ -1172,11 +1173,11 @@ bool DYNAMIXEL<Port, FrameBytes>::noteStop(StopTally& tally, Error attempt,
   tally.confirmed = carried_out && answer && !tally.flush_fault;
   // A refusal ends the attempts (repeating changes nothing), unless the flush failed: the answer
   // may be an old one.
-  return !((attempt == Error::DeviceError) && !tally.flush_fault);
+  return (attempt != Error::DeviceError) || tally.flush_fault;
 }
 
 template <UartPort Port, std::size_t FrameBytes>
-Result<void> DYNAMIXEL<Port, FrameBytes>::stopOutcome(const StopTally& tally,
+Result<void> DYNAMIXEL<Port, FrameBytes>::stopOutcome(const detail::StopTally& tally,
                                                       bool answer) noexcept {
   if (tally.confirmed) {
     return Result<void>::Success();
@@ -1209,7 +1210,7 @@ Result<void> DYNAMIXEL<Port, FrameBytes>::DisableTorqueAt(uint8_t id,
     return fail(Error::Bus, "dynamixel: port start-up failed during a stop");
   }
   const bool answer = replyExpected(ReplyRule::WriteLevel, id);
-  StopTally tally{};
+  detail::StopTally tally{};
   for (uint32_t attempt = 0; (attempt < kStopAttempts) && !tally.confirmed; ++attempt) {
     const Error once = stopOnce(torque_address, id, answer);
     if (once == Error::InvalidArgument) {
@@ -1270,7 +1271,7 @@ Result<Feedback> DYNAMIXEL<Port, FrameBytes>::ReadFeedback(ServoRef servo) noexc
   if (!read.ok()) {
     return Result<Feedback>::Failure(read.error);
   }
-  const auto decode = [&](const RegInfo& reg) noexcept {
+  const auto decode = [&block, first](const RegInfo& reg) noexcept {
     return protocol::DecodeValue(reg.kind,
                                  std::span<const uint8_t>{block}.subspan(
                                      static_cast<std::size_t>(reg.address) - first, reg.size));
