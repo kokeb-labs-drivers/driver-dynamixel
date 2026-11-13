@@ -11,6 +11,7 @@
 #ifndef DYNAMIXEL_DETAIL_HPP
 #define DYNAMIXEL_DETAIL_HPP
 
+#include <algorithm>
 #include <array>
 #include <concepts>
 #include <cstddef>
@@ -29,55 +30,34 @@ void LiteralOutOfRange() noexcept;
 /// Returned by `LiteralDigit()` for a character that is no digit.
 inline constexpr std::uint64_t kNotADigit = 99U;
 
+/// The digit characters in order of value: the index of a character is its value.
+inline constexpr std::array<char, 16> kLowerDigits{'0', '1', '2', '3', '4', '5', '6', '7',
+                                                   '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+/// The same with capital letters.
+inline constexpr std::array<char, 16> kUpperDigits{'0', '1', '2', '3', '4', '5', '6', '7',
+                                                   '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+/// The characters after a leading `0` that mark a hexadecimal literal.
+inline constexpr std::array<char, 2> kHexMarks{'x', 'X'};
+/// The characters after a leading `0` that mark a binary literal.
+inline constexpr std::array<char, 2> kBinMarks{'b', 'B'};
+
 /**
  * @brief The value of a digit character, 0 to 15 (`0`-`9`, `a`-`f`, `A`-`F`).
- * @details A `switch` on the character, not arithmetic on it (MISRA C++:2023 Rule 7.0.3).
+ * @details The character is looked up in a table with `std::find`, never converted to a number
+ * (MISRA C++:2023 Rule 7.0.3).
  * @param c The character.
  * @return Its value, or `kNotADigit`.
  */
 consteval std::uint64_t LiteralDigit(char c) noexcept {
-  switch (c) {
-  case '0':
-    return 0U;
-  case '1':
-    return 1U;
-  case '2':
-    return 2U;
-  case '3':
-    return 3U;
-  case '4':
-    return 4U;
-  case '5':
-    return 5U;
-  case '6':
-    return 6U;
-  case '7':
-    return 7U;
-  case '8':
-    return 8U;
-  case '9':
-    return 9U;
-  case 'a':
-  case 'A':
-    return 10U;
-  case 'b':
-  case 'B':
-    return 11U;
-  case 'c':
-  case 'C':
-    return 12U;
-  case 'd':
-  case 'D':
-    return 13U;
-  case 'e':
-  case 'E':
-    return 14U;
-  case 'f':
-  case 'F':
-    return 15U;
-  default:
-    return kNotADigit;
+  const auto* const lower = std::find(kLowerDigits.begin(), kLowerDigits.end(), c);
+  if (lower != kLowerDigits.end()) {
+    return static_cast<std::uint64_t>(lower - kLowerDigits.begin());
   }
+  const auto* const upper = std::find(kUpperDigits.begin(), kUpperDigits.end(), c);
+  if (upper != kUpperDigits.end()) {
+    return static_cast<std::uint64_t>(upper - kUpperDigits.begin());
+  }
+  return kNotADigit;
 }
 
 /**
@@ -86,16 +66,13 @@ consteval std::uint64_t LiteralDigit(char c) noexcept {
  * @return 16 for `x` or `X`, 2 for `b` or `B`, 0 for any other character (an octal literal).
  */
 consteval std::uint64_t LiteralPrefixBase(char c) noexcept {
-  switch (c) {
-  case 'x':
-  case 'X':
+  if (std::find(kHexMarks.begin(), kHexMarks.end(), c) != kHexMarks.end()) {
     return 16U;
-  case 'b':
-  case 'B':
-    return 2U;
-  default:
-    return 0U;
   }
+  if (std::find(kBinMarks.begin(), kBinMarks.end(), c) != kBinMarks.end()) {
+    return 2U;
+  }
+  return 0U;
 }
 
 /**
