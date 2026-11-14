@@ -1,66 +1,151 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="696" viewBox="0 0 760 696" role="img" aria-labelledby="chip-circuit-typical-title chip-circuit-typical-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1072" height="898" viewBox="0 0 1072 898" role="img" aria-labelledby="chip-circuit-typical-title chip-circuit-typical-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
 <title id="chip-circuit-typical-title">DYNAMIXEL: servo bus on an MCU's UART through a half-duplex stage</title>
-<desc id="chip-circuit-typical-desc">Schematic of the DYNAMIXEL servo bus on an mcu's uart through a half-duplex stage: the chip with U2 MCU + buffer, C1 capacitor 100 µF; the MCU wires carry the port hooks Write().</desc>
-<rect x="0.5" y="0.5" width="759" height="695" rx="16" fill="#0E131A" stroke="#283241"/>
+<desc id="chip-circuit-typical-desc">Schematic of the DYNAMIXEL servo bus on an mcu's uart through a half-duplex stage: the chip with U2 MCU (5 V), U3 74LVC2G241 buffers, R1 resistor 10 kΩ, R2 resistor 10 kΩ, R3 resistor 10 kΩ, C1 capacitor 100 µF; the MCU wires carry the port hooks Write().</desc>
+<rect x="0.5" y="0.5" width="1071" height="897" rx="16" fill="#0E131A" stroke="#283241"/>
 <text x="32" y="44" font-size="12.5" font-weight="700" letter-spacing="1.2" fill="#F8D27A">HARDWARE</text>
 <text x="32" y="77.3" font-size="26" font-weight="700" fill="#E8EDF3">DYNAMIXEL: servo bus on an MCU's UART through a half-duplex stage</text>
-<text x="32" y="103.8" font-size="15" fill="#9AA6B5">The MCU's UART TX and RX are joined to the servos' single DATA line by a half-duplex</text>
-<text x="32" y="125.5" font-size="15" fill="#9AA6B5">stage (the recommended circuit of the e-Manual: a tri-state buffer pair with a direction pin,</text>
-<text x="32" y="147.3" font-size="15" fill="#9AA6B5">or the UART's own half-duplex mode). Every servo on the bus is wired in parallel: GND, VDD</text>
-<text x="32" y="169.1" font-size="15" fill="#9AA6B5">and DATA. The servos take their power from their own supply, not from the MCU. The stage</text>
-<text x="32" y="190.8" font-size="15" fill="#9AA6B5">is drawn with the MCU, as one part: the e-Manual's circuit (a figure only: it is not in the page</text>
-<text x="32" y="212.6" font-size="15" fill="#9AA6B5">text) is a 74LVC2G241 tri-state buffer pair on a 5 V supply with 10 kOhm pull-ups on RXD</text>
-<text x="32" y="234.3" font-size="15" fill="#9AA6B5">and DATA and a 10 kOhm pull-down on the direction line, and the page says it is designed</text>
-<text x="32" y="256.1" font-size="15" fill="#9AA6B5">for a 5 V or 5 V tolerant MCU: a 3.3 V MCU needs a level shifter. Above each MCU wire: the</text>
-<text x="32" y="277.8" font-size="15" fill="#9AA6B5">port hook that drives it. Datasheet: 4.6 Communication Circuit, p. 1.</text>
-<rect x="32" y="293.8" width="696" height="1" fill="#252F3C"/>
-<path d="M512 359.8 L512 447.8" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
-<path d="M512 383.8 L560 383.8" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
-<path d="M328 503.8 L440 503.8" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
-<rect x="464" y="471.8" width="200" height="80" rx="4" fill="#151C26" stroke="#F4B942" stroke-width="1.8"/>
-<path d="M464 503.8 L440 503.8" fill="none" stroke="#FBBF24" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
-<path d="M512 471.8 L512 447.8" fill="none" stroke="#FB7185" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
-<path d="M568 551.8 L568 575.8" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
-<rect x="32" y="455.8" width="272" height="80" rx="4" fill="#18202B" stroke="#D2DAE4" stroke-width="1.8"/>
-<path d="M304 503.8 L328 503.8" fill="none" stroke="#60A5FA" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
-<path d="M280 535.8 L280 559.8" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
-<path d="M512 359.8 L512 348.8" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M503 348.8 L521 348.8" fill="none" stroke="#FB7185" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M560 383.8 L560 404.3" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M560 411.3 L560 431.8" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M550 404.3 L570 404.3" fill="none" stroke="#E8EDF3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M550 411.3 L570 411.3" fill="none" stroke="#E8EDF3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M560 431.8 L560 439.8" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M552 439.8 L568 439.8" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M555 443.3 L565 443.3" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M558 446.8 L562 446.8" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M568 575.8 L568 583.8" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M560 583.8 L576 583.8" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M563 587.3 L573 587.3" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M566 590.8 L570 590.8" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M280 559.8 L280 567.8" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M272 567.8 L288 567.8" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M275 571.3 L285 571.3" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M278 574.8 L282 574.8" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="470" y="508.3" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#E8EDF3">DATA</text>
-<text x="460" y="499.8" font-size="11" text-anchor="end" fill="#9AA6B5">3</text>
-<text x="512" y="487.8" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="middle" fill="#E8EDF3">VDD</text>
-<text x="516" y="465.8" font-size="11" fill="#9AA6B5">2</text>
-<text x="568" y="544.8" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="middle" fill="#E8EDF3">GND</text>
-<text x="572" y="566.6" font-size="11" fill="#9AA6B5">1</text>
-<text x="564" y="508.8" font-size="15" font-weight="700" text-anchor="middle" fill="#F8D27A">DYNAMIXEL</text>
-<text x="564" y="526.8" font-size="12" text-anchor="middle" fill="#9AA6B5">U1</text>
-<text x="298" y="508.3" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#E8EDF3">UART TX and RX</text>
-<text x="280" y="528.8" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="middle" fill="#E8EDF3">GND</text>
-<text x="44" y="477.8" font-size="15" font-weight="700" fill="#E8EDF3">MCU + buffer</text>
-<text x="44" y="495.8" font-size="12" fill="#9AA6B5">U2</text>
-<text x="512" y="342.8" font-size="12" font-weight="700" text-anchor="middle" fill="#FECDD3">+12V</text>
-<text x="575" y="404.8" font-size="12" font-weight="700" fill="#E8EDF3">C1</text>
-<text x="575" y="419.2" font-size="12" fill="#9AA6B5">100 µF *</text>
-<text x="336" y="497.8" font-size="12" font-weight="500" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#BFDBFE">Write()</text>
-<circle cx="512" cy="383.8" r="3.2" fill="#D2DAE4"/>
-<text x="32" y="612.8" font-size="12.5" fill="#9AA6B5">* Not confirmed in the datasheet: C1 100 µF: an example bulk capacitor at the servo supply, not an e-Manual</text>
-<text x="32" y="630.8" font-size="12.5" fill="#9AA6B5">value.</text>
-<rect x="32" y="649.9" width="14" height="14" rx="4" fill="#13233A" stroke="#60A5FA" stroke-width="1.4"/>
-<text x="54" y="661.5" font-size="12.5" fill="#9AA6B5">bus hook (SPI, I2C, UART)</text>
+<text x="32" y="103.8" font-size="15" fill="#9AA6B5">The e-Manual's recommended circuit (a figure only: it is not in the page text): a 74LVC2G241 pair of tri-state buffers on 5 V joins the</text>
+<text x="32" y="125.5" font-size="15" fill="#9AA6B5">MCU's UART TX and RX to the servos' single DATA line. One direction pin drives both enables: high enables the transmit buffer (TXD</text>
+<text x="32" y="147.3" font-size="15" fill="#9AA6B5">to DATA), low the receive buffer (DATA to RXD). Write() raises it while it sends. 10 kOhm pull-ups to 5 V hold RXD and DATA, and a 10</text>
+<text x="32" y="169.1" font-size="15" fill="#9AA6B5">kOhm pull-down keeps the direction pin low (listening) while the MCU pin is not driven. The page says the circuit is designed for a 5 V</text>
+<text x="32" y="190.8" font-size="15" fill="#9AA6B5">or 5 V tolerant MCU: a 3.3 V MCU needs a level shifter. Every servo on the bus is wired in parallel: GND, VDD and DATA, with its own</text>
+<text x="32" y="212.6" font-size="15" fill="#9AA6B5">supply. Above each MCU wire: the port hook that drives it. Datasheet: 4.6 Communication Circuit, p. 1.</text>
+<rect x="32" y="228.6" width="1008" height="1" fill="#252F3C"/>
+<path d="M440 294.6 L440 382.6" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M440 318.6 L488 318.6" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M392 710.5 L392 726.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M744 446.6 L744 454.6" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M744 454.6 L760 454.6" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M704 438.6 L728 438.6" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M728 430.6 L728 438.6" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M616 438.6 L656 438.6" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M616 438.6 L616 574.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M616 574.5 L760 574.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M760 574.5 L760 598.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M472 774.5 L472 790.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M744 622.5 L760 622.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M744 622.5 L744 630.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M312 454.6 L368 454.6" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M368 454.6 L368 534.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M368 534.5 L752 534.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M376 534.5 L376 774.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M376 774.5 L392 774.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M752 502.6 L760 502.6" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M752 502.6 L752 534.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M312 326.6 L624 326.6" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M312 326.6 L312 430.6" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M624 326.6 L624 478.6" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M624 478.6 L760 478.6" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M312 478.6 L312 550.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M312 550.5 L760 550.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M472 550.5 L472 726.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<path d="M760 526.5 L760 550.5" fill="none" stroke="#D2DAE4" stroke-width="1.5"/>
+<rect x="392" y="406.6" width="200" height="80" rx="4" fill="#151C26" stroke="#F4B942" stroke-width="1.8"/>
+<path d="M592 438.6 L616 438.6" fill="none" stroke="#FBBF24" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M440 406.6 L440 382.6" fill="none" stroke="#FB7185" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M496 486.6 L496 510.6" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<rect x="32" y="374.6" width="256" height="136" rx="4" fill="#18202B" stroke="#D2DAE4" stroke-width="1.8"/>
+<path d="M288 430.6 L312 430.6" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M288 454.6 L312 454.6" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M288 478.6 L312 478.6" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M264 374.6 L264 350.6" fill="none" stroke="#FB7185" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M264 510.6 L264 534.5" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M440 294.6 L440 283.6" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M431 283.6 L449 283.6" fill="none" stroke="#FB7185" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M488 318.6 L488 339.1" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M488 346.1 L488 366.6" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M478 339.1 L498 339.1" fill="none" stroke="#E8EDF3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M478 346.1 L498 346.1" fill="none" stroke="#E8EDF3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M488 366.6 L488 374.6" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M480 374.6 L496 374.6" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M483 378.1 L493 378.1" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M486 381.6 L490 381.6" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M496 510.6 L496 518.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M488 518.5 L504 518.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M491 522 L501 522" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M494 525.5 L498 525.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M264 350.6 L264 339.6" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M255 339.6 L273 339.6" fill="none" stroke="#FB7185" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M264 534.5 L264 542.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M256 542.5 L272 542.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M259 546 L269 546" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M262 549.5 L266 549.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M704 438.6 L691 438.6" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M669 438.6 L656 438.6" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M691 443.6 L669 443.6 L669 433.6 L691 433.6 Z" fill="#151C26" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M728 430.6 L728 419.6" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M719 419.6 L737 419.6" fill="none" stroke="#FB7185" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="784" y="406.6" width="240" height="240" rx="4" fill="#18202B" stroke="#D2DAE4" stroke-width="1.8"/>
+<path d="M784 454.6 L760 454.6" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M784 478.6 L760 478.6" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M784 502.6 L760 502.6" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M784 526.5 L760 526.5" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M784 550.5 L760 550.5" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M784 574.5 L760 574.5" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M784 598.5 L760 598.5" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M784 622.5 L760 622.5" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M392 726.5 L392 739.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M392 761.5 L392 774.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M387 739.5 L387 761.5 L397 761.5 L397 739.5 Z" fill="#151C26" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M472 726.5 L472 739.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M472 761.5 L472 774.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M467 739.5 L467 761.5 L477 761.5 L477 739.5 Z" fill="#151C26" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M744 446.6 L744 435.6" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M735 435.6 L753 435.6" fill="none" stroke="#FB7185" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M392 710.5 L392 699.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M383 699.5 L401 699.5" fill="none" stroke="#FB7185" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M744 630.5 L744 638.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M736 638.5 L752 638.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M739 642 L749 642" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M742 645.5 L746 645.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M472 790.5 L472 798.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M464 798.5 L480 798.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M467 802 L477 802" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M470 805.5 L474 805.5" fill="none" stroke="#E8EDF3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="586" y="443.1" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#E8EDF3">DATA</text>
+<text x="596" y="434.6" font-size="11" fill="#9AA6B5">3</text>
+<text x="440" y="422.6" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="middle" fill="#E8EDF3">VDD</text>
+<text x="444" y="400.6" font-size="11" fill="#9AA6B5">2</text>
+<text x="496" y="479.6" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="middle" fill="#E8EDF3">GND</text>
+<text x="500" y="501.4" font-size="11" fill="#9AA6B5">1</text>
+<text x="492" y="443.6" font-size="15" font-weight="700" text-anchor="middle" fill="#F8D27A">DYNAMIXEL</text>
+<text x="492" y="461.6" font-size="12" text-anchor="middle" fill="#9AA6B5">U1</text>
+<text x="282" y="435.1" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#E8EDF3">UART TX</text>
+<text x="282" y="459.1" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#E8EDF3">UART RX</text>
+<text x="282" y="483.1" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#E8EDF3">GPIO (direction)</text>
+<text x="264" y="390.6" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="middle" fill="#E8EDF3">VDD</text>
+<text x="264" y="503.6" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="middle" fill="#E8EDF3">GND</text>
+<text x="44" y="396.6" font-size="15" font-weight="700" fill="#E8EDF3">MCU (5 V)</text>
+<text x="44" y="414.6" font-size="12" fill="#9AA6B5">U2</text>
+<text x="440" y="277.6" font-size="12" font-weight="700" text-anchor="middle" fill="#FECDD3">+12V</text>
+<text x="503" y="339.6" font-size="12" font-weight="700" fill="#E8EDF3">C1</text>
+<text x="503" y="354" font-size="12" fill="#9AA6B5">100 µF *</text>
+<text x="264" y="333.6" font-size="12" font-weight="700" text-anchor="middle" fill="#FECDD3">+5V</text>
+<text x="680" y="428.6" font-size="12" font-weight="600" text-anchor="middle" fill="#D2DAE4">R1  10 kΩ  *</text>
+<text x="728" y="413.6" font-size="12" font-weight="700" text-anchor="middle" fill="#FECDD3">+5V</text>
+<text x="790" y="459.1" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#E8EDF3">VCC</text>
+<text x="790" y="483.1" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#E8EDF3">2A</text>
+<text x="790" y="507.1" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#E8EDF3">1Y</text>
+<text x="790" y="531" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#E8EDF3">1OE</text>
+<text x="790" y="555" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#E8EDF3">2OE</text>
+<text x="790" y="579" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#E8EDF3">2Y</text>
+<text x="790" y="603" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#E8EDF3">1A</text>
+<text x="790" y="627" font-size="12.5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#E8EDF3">GND</text>
+<text x="796" y="428.6" font-size="15" font-weight="700" fill="#E8EDF3">74LVC2G241 buffers</text>
+<text x="796" y="446.6" font-size="12" fill="#9AA6B5">U3</text>
+<text x="402" y="747.5" font-size="12" font-weight="700" fill="#E8EDF3">R2</text>
+<text x="402" y="762" font-size="12" fill="#9AA6B5">10 kΩ *</text>
+<text x="482" y="747.5" font-size="12" font-weight="700" fill="#E8EDF3">R3</text>
+<text x="482" y="762" font-size="12" fill="#9AA6B5">10 kΩ *</text>
+<text x="744" y="429.6" font-size="12" font-weight="700" text-anchor="middle" fill="#FECDD3">+5V</text>
+<text x="392" y="693.5" font-size="12" font-weight="700" text-anchor="middle" fill="#FECDD3">+5V</text>
+<circle cx="440" cy="318.6" r="3.2" fill="#D2DAE4"/>
+<circle cx="616" cy="438.6" r="3.2" fill="#D2DAE4"/>
+<circle cx="760" cy="574.5" r="3.2" fill="#D2DAE4"/>
+<circle cx="376" cy="534.5" r="3.2" fill="#D2DAE4"/>
+<circle cx="472" cy="550.5" r="3.2" fill="#D2DAE4"/>
+<circle cx="760" cy="550.5" r="3.2" fill="#D2DAE4"/>
+<text x="32" y="827.5" font-size="12.5" fill="#9AA6B5">* Not confirmed in the datasheet: U3: the part is read from the e-Manual's circuit figure; the pin names are the 74LVC2G241's own; R1 10 kΩ: the DATA pull-up of</text>
+<text x="32" y="845.5" font-size="12.5" fill="#9AA6B5">the e-Manual's circuit figure; R2 10 kΩ: the RXD pull-up of the e-Manual's circuit figure; R3 10 kΩ: the direction pull-down of the e-Manual's circuit figure; never a</text>
+<text x="32" y="863.5" font-size="12.5" fill="#9AA6B5">pull-up; C1 100 µF: an example bulk capacitor at the servo supply, not an e-Manual value.</text>
 </svg>

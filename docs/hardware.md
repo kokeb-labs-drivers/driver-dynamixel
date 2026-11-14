@@ -99,7 +99,8 @@ and 1 000 000 bit/s. `Config::baud` must match; a wrong rate looks like silence 
   <source media="(prefers-color-scheme: dark)" srcset="diagrams/chip-circuit-typical.dark.svg">
   <img src="diagrams/chip-circuit-typical.svg"
     alt="Schematic of the DYNAMIXEL servo bus on an mcu's uart through a half-duplex stage: the chip with U2
-    MCU + buffer, C1 capacitor 100 µF; the MCU wires carry the port hooks Write().">
+    MCU (5 V), U3 74LVC2G241 buffers, R1 resistor 10 kΩ, R2 resistor 10 kΩ, R3 resistor 10 kΩ, C1
+    capacitor 100 µF; the MCU wires carry the port hooks Write().">
 </picture>
 <!-- /figure -->
 
@@ -112,10 +113,10 @@ kilohm pull-**down** to ground on `TX_Enable`, so that the stage listens while t
 copy the enable resistor as a pull-up: a pull-up on the direction pin would enable the transmit buffer and drive DATA
 high at idle, against the servos' own answers. **A 3.3 V MCU therefore needs a level shifter**; the e-Manual shows no
 3.3 V circuit. What is read from the figure (the part name, the 5 V supply, the pull-ups and the pull-down) is
-unverified against a second source. The stage drawn here is a block, not a part; any circuit that gives
-the same behaviour (an RS-485 transceiver with the right level, or a UART's own half-duplex mode) works the same way
-for the driver. Add a bulk capacitor on the servo supply; the 100 microfarad of the drawing is an example, not a
-datasheet value.
+unverified against a second source. The drawing shows the buffer pair as a part, with the 74LVC2G241's pin names;
+any circuit that gives the same behaviour (an RS-485 transceiver with the right level, or a UART's own half-duplex
+mode) works the same way for the driver. Add a bulk capacitor on the servo supply; the 100 microfarad of the drawing
+is an example, not a datasheet value.
 
 ## Inside the servo
 

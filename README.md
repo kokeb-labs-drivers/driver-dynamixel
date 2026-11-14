@@ -53,12 +53,12 @@ The site at <https://kokeb-labs-drivers.github.io/driver-dynamixel/> opens when 
 ## Where it is used
 
 <!-- generated: chip-uses -->
-- Articulated robot joints (2.4, p. 1)
-- Wheel-type robots (2.4, p. 1)
-- Grippers (2.4, p. 1)
-- Multi-turn wrists and conveyor systems (2.4, p. 1)
+- Articulated robot joints
+- Wheel-type robots
+- Grippers
+- Multi-turn wrists and conveyor systems
 
-Uses named by the datasheet (1 Specifications, p. 1).
+Uses named by the datasheet (2.4 Control Table Description, Operating Mode(11), p. 1).
 <!-- /generated -->
 
 ## Inside the device
@@ -87,9 +87,10 @@ Uses named by the datasheet (1 Specifications, p. 1).
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/chip-wiring-typical.dark.svg">
   <img src="docs/diagrams/chip-wiring-typical.svg"
-    alt="Wiring of the DYNAMIXEL for the servo bus on an MCU's UART through a half-duplex stage: MCU + buffer
-    UART TX and RX to DATA (Write()). Supplies, grounds and the support parts are listed under the
-    drawing.">
+    alt="Wiring of the DYNAMIXEL for the servo bus on an MCU's UART through a half-duplex stage: MCU (5 V)
+    UART TX to 74LVC2G241 buffers 2A (Write()); MCU (5 V) UART RX to 74LVC2G241 buffers 1Y (Read()); MCU
+    (5 V) GPIO (direction) to 74LVC2G241 buffers 1OE, 2OE (Write()); 74LVC2G241 buffers 2Y, 1A to DATA
+    (Write() and Read()). Supplies, grounds and the support parts are listed under the drawing.">
 </picture>
 <!-- /figure -->
 
