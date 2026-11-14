@@ -22,6 +22,16 @@ refs:
   duplex: {doc: p2, section: "1.4 Half Duplex; 1.5 Tx, Rx Direction", page: 1}
   gap: {doc: p2, section: "1.6 Byte to Byte Time", page: 1}
   drawing: {doc: xm430, section: "4.7 Drawings", page: 1}
+  opmode: {doc: xm430, section: "2.4 Control Table Description, Operating Mode(11)", page: 1}
+  ident: {doc: xm430, section: "2.4 Control Table Description, ID(7) and Baud Rate(8)", page: 1}
+  torque: {doc: xm430, section: "2.4 Control Table Description, Torque Enable(64)", page: 1}
+  hwerr: {doc: xm430, section: "2.4 Control Table Description, Hardware Error Status(70)", page: 1}
+  profile: {doc: xm430, section: "2.4 Control Table Description, Profile Velocity(112)", page: 1}
+  goalpos: {doc: xm430, section: "2.4 Control Table Description, Goal Position(116)", page: 1}
+  present: {doc: xm430, section: "2.4 Control Table Description, Present Position(132)", page: 1}
+  ping: {doc: p2, section: "5.1 Ping (0x01)", page: 1}
+  sync: {doc: p2, section: "5.10 Sync Read (0x82)", page: 1}
+  reset: {doc: p2, section: "5.6 Factory Reset (0x06)", page: 1}
 
 package:
   type: "TTL servo"
@@ -37,6 +47,78 @@ package:
 
 supply:
   - {name: VDD, min_v: 10.0, max_v: 14.8, ref: spec}
+
+# The chip-first README: what a servo is and does, where it is used, how the driver covers each function. The
+# reference part is the XM430-W350; the driver covers the control tables of 47 models. The bus is a variable-length
+# packet exchange, so there is no `frames` entry.
+overview:
+  summary: >-
+    a family of smart servo actuators: each one has a motor, a gearbox, an absolute position sensor and a controller
+    that runs its position, velocity or current loop, and all of them share one half-duplex data line, each with its
+    own ID
+  category: Smart servo actuator
+  ref: spec
+  applications:
+    - {label: Articulated robot joints, ref: opmode}
+    - {label: Wheel-type robots, ref: opmode}
+    - {label: Grippers, ref: opmode}
+    - {label: Multi-turn wrists and conveyor systems, ref: opmode}
+  specs:
+    - {value: "10 to 14.8 V", label: "XM430-W350 supply, 12 V recommended", ref: spec}
+    - {value: "4096 / rev", label: "position resolution, 12 bit", ref: spec}
+    - {value: "4.5 Mbit/s", label: "fastest baud rate, from 9600", ref: spec}
+    - {value: "253 IDs", label: "on one bus, 0 to 252", ref: spec}
+    - {value: "4.1 N.m", label: "stall torque at 12 V", ref: spec}
+  system:
+    host: MCU
+    bus: "TTL or RS-485"
+    drives:
+      - {label: "Motor and gear", detail: "coreless motor, 353.5 : 1", ref: spec}
+    senses:
+      - {label: Absolute encoder, detail: "12 bit, 360 degrees", ref: spec}
+      - {label: "Temperature, voltage, current", detail: "reported as feedback", ref: spec}
+
+# Headers the capability `api` and `registers` names are checked against.
+driver:
+  api: [inc/dynamixel.hpp, inc/dynamixel_types.hpp]
+  registers: [inc/dynamixel_tables.hpp]
+
+capabilities:
+  - {id: position, title: Position control, icon: motion, status: supported, ref: goalpos, docs: control-tables.md,
+     what: "Moves to a goal position in counts, within the position limits and the profile velocity and acceleration",
+     api: [SetGoalPosition, WriteRegister],
+     registers: [GoalPosition, MinPositionLimit, MaxPositionLimit, ProfileVelocity, ProfileAcceleration]}
+  - {id: modes, title: "Velocity, current and PWM modes", icon: current, status: supported, ref: opmode,
+     docs: control-tables.md,
+     what: "Selects the operating mode and sets a velocity, current or PWM goal, by register name with units",
+     note: "no motion helper: written through the register calls",
+     api: [WriteRegister, ReadRegister],
+     registers: [OperatingMode, GoalVelocity, GoalCurrent, GoalPwm]}
+  - {id: feedback, title: Feedback, icon: gauge, status: supported, ref: present, docs: control-tables.md,
+     what: "Reads position, velocity, load or current, voltage and temperature in one call",
+     api: [ReadFeedback, ReadRegister],
+     registers: [PresentPosition, PresentVelocity, PresentCurrent, PresentVoltage, PresentTemperature]}
+  - {id: torque, title: Torque enable, icon: stop, status: supported, ref: torque, docs: api-guide.md,
+     what: "Switches the motor on or off; the torque-off stop is always available, even with guards on",
+     api: [SetTorque, DisableTorque, DisableTorqueAll, DisableTorqueEach], registers: [TorqueEnable]}
+  - {id: scan, title: Find servos, icon: tag, status: supported, ref: ping, docs: protocol.md,
+     what: "Pings one ID or the whole bus, and reads each servo's model number and firmware",
+     api: [Ping, BroadcastPing, ScanIds, Identify], registers: [ModelNumber, FirmwareVersion]}
+  - {id: multi, title: Many servos at once, icon: chain, status: supported, ref: sync, docs: protocol.md,
+     what: "Reads or writes the same registers of many servos in one transaction, with an outcome for each servo",
+     api: [SyncRead, SyncWrite, BulkRead, BulkWrite, FastSyncRead, FastBulkRead]}
+  - {id: config, title: "ID, baud rate and status level", icon: settings, status: supported, ref: ident,
+     docs: api-guide.md,
+     what: "Gives a servo its ID and baud rate, moves the bus to match, and sets which replies a servo returns",
+     api: [SetId, SetServoBaudRate, ChangeBusBaud, SetStatusReturnLevel],
+     registers: [Id, BaudRate, StatusReturnLevel]}
+  - {id: reset, title: "Reboot, reset and backup", icon: lock, status: guarded, ref: reset, docs: protocol.md,
+     what: "Reboots a servo, resets its control table, clears the multi-turn count and stores or restores a backup",
+     note: "destructive instructions need one configuration flag",
+     api: [Reboot, FactoryReset, Clear, Backup]}
+  - {id: alerts, title: Hardware errors, icon: alert, status: supported, ref: hwerr, docs: protocol.md,
+     what: "Decodes the error byte and the hardware error status, and latches an alert until it is cleared",
+     api: [GetLatchedAlert, ClearLatchedAlert, Resync], registers: [HardwareErrorStatus, Shutdown]}
 
 hooks:
   - {id: tx, call: "Write()", kind: uart, source: inc/dynamixel_uart_interface.hpp, symbol: UartInterface}
@@ -78,7 +160,7 @@ circuits:
       The MCU's UART TX and RX are joined to the servos' single DATA line by a half-duplex stage (the recommended
       circuit of the e-Manual: a tri-state buffer pair with a direction pin, or the UART's own
       half-duplex mode). Every servo on the bus is wired in parallel: GND, VDD and DATA. The servos take their power
-      from their own supply, not from the MCU. The stage shown here is a block, not a part: the e-Manual's circuit
+      from their own supply, not from the MCU. The stage is drawn with the MCU, as one part: the e-Manual's circuit
       (a figure only: it is not in the page text) is a 74LVC2G241 tri-state buffer pair on a 5 V supply with 10 kOhm
       pull-ups on RXD and DATA and a 10 kOhm pull-down on the direction line, and the page says it is designed for
       a 5 V or 5 V tolerant MCU: a 3.3 V MCU needs a level shifter.
@@ -87,26 +169,12 @@ circuits:
       - {id: U1, kind: chip}
       - id: U2
         kind: mcu
-        label: MCU
+        label: MCU + buffer
         pins:
-          - {name: TX, label: UART TX}
-          - {name: RX, label: UART RX}
-          - {name: DIR, label: GPIO (direction)}
-          - GND
-      - id: U3
-        kind: ic
-        label: Half-duplex stage
-        pins:
-          - {name: TXI, label: TX in}
-          - {name: RXO, label: RX out}
-          - {name: DIR, label: Direction}
-          - {name: DATA, label: Data line}
+          - {name: TX, label: UART TX and RX}
           - GND
       - {id: C1, kind: capacitor, value: 100 µF, unverified: "an example bulk capacitor at the servo supply, not an e-Manual value"}
     nets:
       - {name: "+12V", kind: supply, nodes: [U1.VDD, C1.1]}
-      - {name: GND, kind: ground, nodes: [U1.GND, C1.2, U2.GND, U3.GND]}
-      - {name: "UART TX", nodes: [U2.TX, U3.TXI]}
-      - {name: "UART RX", nodes: [U2.RX, U3.RXO]}
-      - {name: "Direction", nodes: [U2.DIR, U3.DIR]}
-      - {name: "DATA", nodes: [U3.DATA, U1.DATA]}
+      - {name: GND, kind: ground, nodes: [U1.GND, C1.2, U2.GND]}
+      - {name: "DATA", nodes: [U2.TX, U1.DATA]}

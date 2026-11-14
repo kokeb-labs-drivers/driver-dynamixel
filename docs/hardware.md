@@ -99,7 +99,7 @@ and 1 000 000 bit/s. `Config::baud` must match; a wrong rate looks like silence 
   <source media="(prefers-color-scheme: dark)" srcset="diagrams/chip-circuit-typical.dark.svg">
   <img src="diagrams/chip-circuit-typical.svg"
     alt="Schematic of the DYNAMIXEL servo bus on an mcu's uart through a half-duplex stage: the chip with U2
-    MCU, U3 Half-duplex stage, C1 capacitor 100 µF; the MCU wires carry the port hooks Write().">
+    MCU + buffer, C1 capacitor 100 µF; the MCU wires carry the port hooks Write().">
 </picture>
 <!-- /figure -->
 

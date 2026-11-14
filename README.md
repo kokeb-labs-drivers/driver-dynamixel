@@ -1,5 +1,11 @@
 # DYNAMIXEL Driver
 
+<!-- generated: chip-summary -->
+The **DYNAMIXEL** is a family of smart servo actuators: each one has a motor, a gearbox, an absolute position sensor and
+a controller that runs its position, velocity or current loop, and all of them share one half-duplex data line, each
+with its own ID (1 Specifications, p. 1).
+<!-- /generated -->
+
 C++20 driver for the ROBOTIS DYNAMIXEL servo protocols 1.0 and 2.0 over a half-duplex UART.
 
 [![CI](https://github.com/kokeb-labs-drivers/driver-dynamixel/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kokeb-labs-drivers/driver-dynamixel/actions/workflows/ci.yml)
@@ -9,32 +15,64 @@ C++20 driver for the ROBOTIS DYNAMIXEL servo protocols 1.0 and 2.0 over a half-d
 **Documentation: [`docs/`](docs/index.md)**, with the API reference built by Doxygen ([how](docs/api-reference.md)).
 The site at <https://kokeb-labs-drivers.github.io/driver-dynamixel/> opens when the repository is public.
 
-
-A DYNAMIXEL bus is one half-duplex data line shared by a master and up to 252 servos. This driver is the master: it
-finds the servos, reads and writes their control tables by register name, reads many servos in one transaction and
-turns a damaged, missing or refused reply into an error you can act on. It runs on any MCU: you give it a small class
-that moves bytes on your UART, and it does the rest.
-
-<!-- figure: driver-layers -->
+<!-- figure: chip-hero -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/driver-layers.dark.svg">
-  <img src="docs/diagrams/driver-layers.svg"
-    alt="Layer diagram: your application calls the DYNAMIXEL core, which sends register reads and writes
-    through the UART port contract to the port class you write, which drives the chip; the core and the
-    contract are the same on every MCU.">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/chip-hero.dark.svg">
+  <img src="docs/diagrams/chip-hero.svg"
+    alt="Overview of the DYNAMIXEL, a family of smart servo actuators: each one has a motor, a gearbox, an
+    absolute position sensor and a controller that runs its position, velocity or current loop, and all
+    of them share one half-duplex data line, each with its own ID. A MCU talks to it over TTL or RS-485;
+    it drives Motor and gear; it reads back Absolute encoder, Temperature, voltage, current. Headline
+    figures: 10 to 14.8 V XM430-W350 supply, 12 V recommended; 4096 / rev position resolution, 12 bit;
+    4.5 Mbit/s fastest baud rate, from 9600; 253 IDs on one bus, 0 to 252; 4.1 N.m stall torque at 12 V.">
 </picture>
 <!-- /figure -->
 
-## At a glance
+## What it does
 
-| | |
-| --- | --- |
-| **Servos** | ROBOTIS DYNAMIXEL: AX, RX, DX, MX, XL-320, XL330, XL430, XM, XH, XD, XW (47 model numbers); other models by raw address |
-| **Bus** | Half-duplex TTL or RS-485 UART, 8N1, 9 600 to 4.5 Mbit/s; protocol 2.0 (CRC-16) or 1.0 (checksum), one per bus |
-| **Does** | Ping and ID scan, Read, Write, Reg Write, Action, Reboot, Factory Reset, Clear, Backup, Sync and Bulk Read and Write, Fast Sync and Bulk Read |
-| **Driver** | Header-only C++20; no heap, exceptions, RTTI or virtual calls; every call returns `Result<T>` |
-| **Runs on** | Any MCU with a UART and a C++20 compiler; the host example runs on any PC ([Platforms](docs/platforms.md)) |
-| **Status** | 0.1.0, not yet verified on hardware: host-tested against a bus model written separately from the driver |
+<!-- figure: chip-capabilities -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/chip-capabilities.dark.svg">
+  <img src="docs/diagrams/chip-capabilities.svg"
+    alt="Capability map of the DYNAMIXEL: Position control (supported): Moves to a goal position in counts,
+    within the position limits and the profile velocity and acceleration; Velocity, current and PWM
+    modes (supported): Selects the operating mode and sets a velocity, current or PWM goal, by register
+    name with units; Feedback (supported): Reads position, velocity, load or current, voltage and
+    temperature in one call; Torque enable (supported): Switches the motor on or off; the torque-off
+    stop is always available, even with guards on; Find servos (supported): Pings one ID or the whole
+    bus, and reads each servo's model number and firmware; Many servos at once (supported): Reads or
+    writes the same registers of many servos in one transaction, with an outcome for each servo; ID,
+    baud rate and status level (supported): Gives a servo its ID and baud rate, moves the bus to match,
+    and sets which replies a servo returns; Reboot, reset and backup (guarded): Reboots a servo, resets
+    its control table, clears the multi-turn count and stores or restores a backup; Hardware errors
+    (supported): Decodes the error byte and the hardware error status, and latches an alert until it is
+    cleared.">
+</picture>
+<!-- /figure -->
+
+## Where it is used
+
+<!-- generated: chip-uses -->
+- Articulated robot joints (2.4, p. 1)
+- Wheel-type robots (2.4, p. 1)
+- Grippers (2.4, p. 1)
+- Multi-turn wrists and conveyor systems (2.4, p. 1)
+
+Uses named by the datasheet (1 Specifications, p. 1).
+<!-- /generated -->
+
+## Inside the device
+
+<!-- figure: chip-blocks -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/chip-blocks.dark.svg">
+  <img src="docs/diagrams/chip-blocks.svg"
+    alt="Block diagram of the DYNAMIXEL: its function blocks, how they connect and which package pins reach
+    each block.">
+</picture>
+<!-- /figure -->
+
+## Pins and wiring
 
 <!-- figure: chip-pinout -->
 <picture>
@@ -45,21 +83,29 @@ that moves bytes on your UART, and it does the rest.
 </picture>
 <!-- /figure -->
 
+<!-- figure: chip-wiring-typical -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/chip-wiring-typical.dark.svg">
+  <img src="docs/diagrams/chip-wiring-typical.svg"
+    alt="Wiring of the DYNAMIXEL for the servo bus on an MCU's UART through a half-duplex stage: MCU + buffer
+    UART TX and RX to DATA (Write()). Supplies, grounds and the support parts are listed under the
+    drawing.">
+</picture>
+<!-- /figure -->
+
+| MCU | Servo bus | Notes |
+| --- | --- | --- |
+| UART TX and RX | DATA, through a half-duplex stage | 57 600 8N1 for an X-series servo at the factory settings |
+| A GPIO or the UART's RTS | The stage's direction input | High while the MCU sends |
+| GND | GND | Common with the servo supply |
+| | VDD | 10.0 V to 14.8 V from its own supply (XM430-W350), never from the MCU board |
+
 <!-- figure: chip-outline -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/chip-outline.dark.svg">
   <img src="docs/diagrams/chip-outline.svg"
     alt="Outline of the DYNAMIXEL in TTL servo drawn to scale from above: body 28.5 x 46.5 x 34.0 mm, pitch
     2.5 mm, 3 pins.">
-</picture>
-<!-- /figure -->
-
-<!-- figure: chip-blocks -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/chip-blocks.dark.svg">
-  <img src="docs/diagrams/chip-blocks.svg"
-    alt="Block diagram of the DYNAMIXEL: its function blocks, how they connect and which package pins reach
-    each block.">
 </picture>
 <!-- /figure -->
 
@@ -81,6 +127,105 @@ Also sold as:
 
 From [`docs/hardware.yml`](docs/hardware.yml); pins, circuits and the block diagram: [Hardware](docs/hardware.md).
 <!-- /generated -->
+
+## Quick start
+
+**1. Wire it** as in [Pins and wiring](#pins-and-wiring).
+
+**2. Write the port**: a class with `EnsureInitialized()` (bring the UART up), `Write()` (send the whole packet, wait
+for the last stop bit, listen again), `Read()` with a time-out in microseconds, `FlushInput()` and `DelayUs()`, about
+30 lines on most SDKs. [Porting](docs/porting.md) has the contract and a complete example.
+
+**3. Move a servo:**
+
+<!-- generated: quickstart-code -->
+```cpp
+#include "dynamixel.hpp"
+
+int move_first_servo(MyPort& port) {
+  dynamixel::DYNAMIXEL<MyPort> servos(port); // protocol 2.0, 57 600 bit/s; no I/O yet
+
+  if (auto r = servos.EnsureInitialized(); !r) { // 1. UART up
+    return static_cast<int>(r.error);            //    Bus: check the UART and the wiring
+  }
+  const auto found = servos.Ping(1); // 2. who is there? model, firmware, family
+  if (!found) {
+    return static_cast<int>(found.error); //    Timeout: wrong ID, baud rate or protocol
+  }
+  const dynamixel::ServoRef servo{found.value.id, found.value.family};
+  if (auto r = servos.SetTorque(servo, true); !r) { // 3. torque on
+    return static_cast<int>(r.error);
+  }
+  return static_cast<int>(servos.SetGoalPosition(servo, 2048).error); // 4. half a turn
+}
+```
+<!-- /generated -->
+
+`EnsureInitialized()` brings the UART up and sends nothing on the bus. Every call that uses the bus returns
+`Error::NotInitialized` until it has succeeded (argument and permission errors come first, and the torque-off calls
+are never refused), and no call starts the driver on its own.
+
+## Driver coverage
+
+<!-- generated: chip-coverage -->
+| Capability | What the chip does | Driver API | Registers | Status | Datasheet |
+| --- | --- | --- | --- | --- | --- |
+| [Position control](docs/control-tables.md) | Moves to a goal position in counts, within the position limits and the profile velocity and acceleration | `SetGoalPosition`, `WriteRegister` | `GoalPosition`, `MinPositionLimit`, `MaxPositionLimit`, `ProfileVelocity`, `ProfileAcceleration` | Supported | 2.4, p. 1 |
+| [Velocity, current and PWM modes](docs/control-tables.md) | Selects the operating mode and sets a velocity, current or PWM goal, by register name with units (no motion helper: written through the register calls) | `WriteRegister`, `ReadRegister` | `OperatingMode`, `GoalVelocity`, `GoalCurrent`, `GoalPwm` | Supported | 2.4, p. 1 |
+| [Feedback](docs/control-tables.md) | Reads position, velocity, load or current, voltage and temperature in one call | `ReadFeedback`, `ReadRegister` | `PresentPosition`, `PresentVelocity`, `PresentCurrent`, `PresentVoltage`, `PresentTemperature` | Supported | 2.4, p. 1 |
+| [Torque enable](docs/api-guide.md) | Switches the motor on or off; the torque-off stop is always available, even with guards on | `SetTorque`, `DisableTorque`, `DisableTorqueAll`, `DisableTorqueEach` | `TorqueEnable` | Supported | 2.4, p. 1 |
+| [Find servos](docs/protocol.md) | Pings one ID or the whole bus, and reads each servo's model number and firmware | `Ping`, `BroadcastPing`, `ScanIds`, `Identify` | `ModelNumber`, `FirmwareVersion` | Supported | 5.1, p. 1 |
+| [Many servos at once](docs/protocol.md) | Reads or writes the same registers of many servos in one transaction, with an outcome for each servo | `SyncRead`, `SyncWrite`, `BulkRead`, `BulkWrite`, `FastSyncRead`, `FastBulkRead` | - | Supported | 5.10, p. 1 |
+| [ID, baud rate and status level](docs/api-guide.md) | Gives a servo its ID and baud rate, moves the bus to match, and sets which replies a servo returns | `SetId`, `SetServoBaudRate`, `ChangeBusBaud`, `SetStatusReturnLevel` | `Id`, `BaudRate`, `StatusReturnLevel` | Supported | 2.4, p. 1 |
+| [Reboot, reset and backup](docs/protocol.md) | Reboots a servo, resets its control table, clears the multi-turn count and stores or restores a backup (destructive instructions need one configuration flag) | `Reboot`, `FactoryReset`, `Clear`, `Backup` | - | Guarded | 5.6, p. 1 |
+| [Hardware errors](docs/protocol.md) | Decodes the error byte and the hardware error status, and latches an alert until it is cleared | `GetLatchedAlert`, `ClearLatchedAlert`, `Resync` | `HardwareErrorStatus`, `Shutdown` | Supported | 2.4, p. 1 |
+
+**Supported**: the driver covers it and a host test checks it; **Guarded**: covered, behind an explicit acknowledgement
+because a wrong value can do harm.
+
+From [`docs/hardware.yml`](docs/hardware.yml); `kokeb-docs hardware --check` confirms that every API name is in
+`inc/dynamixel.hpp`, `inc/dynamixel_types.hpp` and every register in `inc/dynamixel_tables.hpp`.
+<!-- /generated -->
+
+This driver is the master: it finds the servos, reads and writes their control tables by register name, reads many
+servos in one transaction and turns a damaged, missing or refused reply into an error you can act on. It runs on any
+MCU: you give it a small class that moves bytes on your UART, and it does the rest.
+
+| | |
+| --- | --- |
+| **Servos** | ROBOTIS DYNAMIXEL: AX, RX, DX, MX, XL-320, XL330, XL430, XM, XH, XD, XW (47 model numbers); other models by raw address |
+| **Bus** | Half-duplex TTL or RS-485 UART, 8N1, 9 600 to 4.5 Mbit/s; protocol 2.0 (CRC-16) or 1.0 (checksum), one per bus |
+| **Does** | Ping and ID scan, Read, Write, Reg Write, Action, Reboot, Factory Reset, Clear, Backup, Sync and Bulk Read and Write, Fast Sync and Bulk Read |
+| **Driver** | Header-only C++20; no heap, exceptions, RTTI or virtual calls; every call returns `Result<T>` |
+| **Runs on** | Any MCU with a UART and a C++20 compiler; the host example runs on any PC ([Platforms](docs/platforms.md)) |
+| **Status** | 0.1.0, not yet verified on hardware: host-tested against a bus model written separately from the driver |
+
+- Speaks protocol 2.0 (CRC-16, byte stuffing) and protocol 1.0 (checksum) with Ping, Read, Write, Reg Write, Action,
+  Reboot, Factory Reset, Clear, Control Table Backup, Sync and Bulk Read and Write, and Fast Sync and Bulk Read.
+- Finds the reply in noisy bytes, the echo of a single-wire bus and late packets, and reports a stuck or floating
+  line as `LineFault`, not as a timeout.
+- Knows the control tables of 47 models in 9 families (AX, RX, DX, MX, XL-320, XL330, XL430, XM, XH, XD, XW), with
+  units, ranges, signed and sign-magnitude decoding, indirect addresses and baud schemes.
+- Reads many servos at once and gives each its own outcome, so one damaged part does not lose the others.
+- Keeps destructive instructions (Factory Reset, Restore, Clear, an ID write to every servo) behind one
+  configuration flag, and keeps the torque-off stop always available.
+- Returns `Result<T>` with an `Error` from every call: no exceptions, no heap, no RTTI, no virtual calls.
+
+## Documentation
+
+| Page | Read it when you want to |
+| --- | --- |
+| [Quickstart](docs/quickstart.md) | Go from a bare servo to a moving one on your MCU |
+| [Hardware](docs/hardware.md) | Wire the bus, set the direction control, check the timing and the power |
+| [Porting](docs/porting.md) | Write the port class for your MCU's SDK |
+| [Protocol](docs/protocol.md) | Know the two packet formats, the CRC and how a reply is found |
+| [Control tables](docs/control-tables.md) | Know the registers, units and families the driver supports |
+| [API guide](docs/api-guide.md) | Use each call: find servos, typed registers, Sync and Fast reads, the stop, errors |
+| [Configuration](docs/configuration.md) | Choose every setting, or start from a preset |
+| [Troubleshooting](docs/troubleshooting.md) | Find the cause of an error or a servo that does not answer |
+| [Contract](docs/contract.md) | Know exactly what the driver promises, needs and returns, and what is still open |
+| [Datasheet map](docs/datasheet.md) | Find the e-Manual page behind each part of the driver |
+| [API reference](docs/api-reference.md) | Look up a class or member (Doxygen; built by CI and locally) |
 
 ## Datasheet
 
@@ -133,63 +278,6 @@ You need git, CMake 3.16+ and a C++20 compiler (GCC 10+, Clang 13+ or MSVC 2022)
 
 To run the whole test suite instead: `cmake -S . -B build -DDYNAMIXEL_BUILD_TESTS=ON && cmake --build build && ctest
 --test-dir build`.
-
-## Use it on your MCU
-
-**1. Wire it** ([Hardware](docs/hardware.md) has the pins, the circuit, the timing and the power):
-
-| MCU | Servo bus | Notes |
-| --- | --- | --- |
-| UART TX and RX | DATA, through a half-duplex stage | 57 600 8N1 for an X-series servo at the factory settings |
-| A GPIO or the UART's RTS | The stage's direction input | High while the MCU sends |
-| GND | GND | Common with the servo supply |
-| | VDD | 10.0 V to 14.8 V from its own supply (XM430-W350), never from the MCU board |
-
-**2. Write the port**: a class with `EnsureInitialized()` (bring the UART up), `Write()` (send the whole packet, wait
-for the last stop bit, listen again), `Read()` with a time-out in microseconds, `FlushInput()` and `DelayUs()`, about
-30 lines on most SDKs. [Porting](docs/porting.md) has the contract and a complete example.
-
-**3. Move a servo:**
-
-<!-- generated: quickstart-code -->
-```cpp
-#include "dynamixel.hpp"
-
-int move_first_servo(MyPort& port) {
-  dynamixel::DYNAMIXEL<MyPort> servos(port); // protocol 2.0, 57 600 bit/s; no I/O yet
-
-  if (auto r = servos.EnsureInitialized(); !r) { // 1. UART up
-    return static_cast<int>(r.error);            //    Bus: check the UART and the wiring
-  }
-  const auto found = servos.Ping(1); // 2. who is there? model, firmware, family
-  if (!found) {
-    return static_cast<int>(found.error); //    Timeout: wrong ID, baud rate or protocol
-  }
-  const dynamixel::ServoRef servo{found.value.id, found.value.family};
-  if (auto r = servos.SetTorque(servo, true); !r) { // 3. torque on
-    return static_cast<int>(r.error);
-  }
-  return static_cast<int>(servos.SetGoalPosition(servo, 2048).error); // 4. half a turn
-}
-```
-<!-- /generated -->
-
-`EnsureInitialized()` brings the UART up and sends nothing on the bus. Every call that uses the bus returns
-`Error::NotInitialized` until it has succeeded (argument and permission errors come first, and the torque-off calls
-are never refused), and no call starts the driver on its own.
-
-## What it does
-
-- Speaks protocol 2.0 (CRC-16, byte stuffing) and protocol 1.0 (checksum) with Ping, Read, Write, Reg Write, Action,
-  Reboot, Factory Reset, Clear, Control Table Backup, Sync and Bulk Read and Write, and Fast Sync and Bulk Read.
-- Finds the reply in noisy bytes, the echo of a single-wire bus and late packets, and reports a stuck or floating
-  line as `LineFault`, not as a timeout.
-- Knows the control tables of 47 models in 9 families (AX, RX, DX, MX, XL-320, XL330, XL430, XM, XH, XD, XW), with
-  units, ranges, signed and sign-magnitude decoding, indirect addresses and baud schemes.
-- Reads many servos at once and gives each its own outcome, so one damaged part does not lose the others.
-- Keeps destructive instructions (Factory Reset, Restore, Clear, an ID write to every servo) behind one
-  configuration flag, and keeps the torque-off stop always available.
-- Returns `Result<T>` with an `Error` from every call: no exceptions, no heap, no RTTI, no virtual calls.
 
 ## Add it to your project
 
@@ -249,22 +337,6 @@ details.
    ```
 
 The target is `dynamixel::dynamixel` every way, so switching later changes nothing else.
-
-## Documentation
-
-| Page | Read it when you want to |
-| --- | --- |
-| [Quickstart](docs/quickstart.md) | Go from a bare servo to a moving one on your MCU |
-| [Hardware](docs/hardware.md) | Wire the bus, set the direction control, check the timing and the power |
-| [Porting](docs/porting.md) | Write the port class for your MCU's SDK |
-| [Protocol](docs/protocol.md) | Know the two packet formats, the CRC and how a reply is found |
-| [Control tables](docs/control-tables.md) | Know the registers, units and families the driver supports |
-| [API guide](docs/api-guide.md) | Use each call: find servos, typed registers, Sync and Fast reads, the stop, errors |
-| [Configuration](docs/configuration.md) | Choose every setting, or start from a preset |
-| [Troubleshooting](docs/troubleshooting.md) | Find the cause of an error or a servo that does not answer |
-| [Contract](docs/contract.md) | Know exactly what the driver promises, needs and returns, and what is still open |
-| [Datasheet map](docs/datasheet.md) | Find the e-Manual page behind each part of the driver |
-| [API reference](docs/api-reference.md) | Look up a class or member (Doxygen; built by CI and locally) |
 
 ## Tests and quality
 

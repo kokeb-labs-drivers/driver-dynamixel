@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="842" viewBox="0 0 1200 842" role="img" aria-labelledby="chip-hero-title chip-hero-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+<title id="chip-hero-title">DYNAMIXEL</title>
+<desc id="chip-hero-desc">Overview of the DYNAMIXEL, a family of smart servo actuators: each one has a motor, a gearbox, an absolute position sensor and a controller that runs its position, velocity or current loop, and all of them share one half-duplex data line, each with its own ID. A MCU talks to it over TTL or RS-485; it drives Motor and gear; it reads back Absolute encoder, Temperature, voltage, current. Headline figures: 10 to 14.8 V XM430-W350 supply, 12 V recommended; 4096 / rev position resolution, 12 bit; 4.5 Mbit/s fastest baud rate, from 9600; 253 IDs on one bus, 0 to 252; 4.1 N.m stall torque at 12 V.</desc>
+<defs><marker id="fk-arrow-amber-strong" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#FBBF24"/></marker><marker id="fk-arrow-blue-strong" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#60A5FA"/></marker><marker id="fk-arrow-teal-strong" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2BB3A3"/></marker></defs>
+<rect x="0.5" y="0.5" width="1199" height="841" rx="16" fill="#0E131A" stroke="#283241"/>
+<text x="32" y="46.8" font-size="16" font-weight="700" letter-spacing="1.2" fill="#F8D27A">SMART SERVO ACTUATOR</text>
+<text x="32" y="85.6" font-size="32" font-weight="700" fill="#E8EDF3">DYNAMIXEL</text>
+<text x="32" y="115.4" font-size="18" fill="#9AA6B5">What talks to it, what it drives and what it reads back, with its headline numbers. Datasheet: 1, p. 1.</text>
+<rect x="32" y="131.4" width="1136" height="1" fill="#252F3C"/>
+<path d="M246 262.4 L414 262.4" fill="none" stroke="#60A5FA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#fk-arrow-blue-strong)" marker-start="url(#fk-arrow-blue-strong)"/>
+<path d="M676 262.4 L728 262.4" fill="none" stroke="#2BB3A3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#fk-arrow-teal-strong)"/>
+<path d="M545 427.4 L545 371.4" fill="none" stroke="#FBBF24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#fk-arrow-amber-strong)"/>
+<rect x="418" y="202.2" width="12" height="7" rx="2" fill="#1B232E" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="418" y="258.9" width="12" height="7" rx="2" fill="#1B232E" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="418" y="315.6" width="12" height="7" rx="2" fill="#1B232E" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="430" y="157.4" width="230" height="210" rx="10" fill="#18202B" stroke="#D2DAE4" stroke-width="2.2"/>
+<circle cx="450" cy="177.4" r="6" fill="#D2DAE4"/>
+<rect x="32" y="205.4" width="210" height="114" rx="12" fill="#13233A" stroke="#60A5FA" stroke-width="1.4"/>
+<rect x="32" y="213.4" width="4" height="98" rx="2" fill="#60A5FA"/>
+<rect x="732" y="217.9" width="260" height="89" rx="12" fill="#0F2A28" stroke="#2BB3A3" stroke-width="1.4"/>
+<rect x="732" y="225.9" width="4" height="73" rx="2" fill="#2BB3A3"/>
+<rect x="365" y="431.4" width="360" height="163" rx="12" fill="#2C2310" stroke="#FBBF24" stroke-width="1.4"/>
+<rect x="365" y="439.4" width="4" height="147" rx="2" fill="#FBBF24"/>
+<rect x="32" y="634.4" width="214.4" height="176.9" rx="12" fill="#18202B" stroke="#3A4657" stroke-width="1"/>
+<rect x="262.4" y="634.4" width="214.4" height="176.9" rx="12" fill="#18202B" stroke="#3A4657" stroke-width="1"/>
+<rect x="492.8" y="634.4" width="214.4" height="176.9" rx="12" fill="#18202B" stroke="#3A4657" stroke-width="1"/>
+<rect x="723.2" y="634.4" width="214.4" height="176.9" rx="12" fill="#18202B" stroke="#3A4657" stroke-width="1"/>
+<rect x="953.6" y="634.4" width="214.4" height="176.9" rx="12" fill="#18202B" stroke="#3A4657" stroke-width="1"/>
+<text x="545" y="256.4" font-size="30" font-weight="700" text-anchor="middle" fill="#E8EDF3">DYNAMIXEL</text>
+<text x="545" y="286.4" font-size="17" text-anchor="middle" fill="#9AA6B5">TTL servo</text>
+<text x="545" y="310.4" font-size="16" text-anchor="middle" fill="#9AA6B5">3 pins</text>
+<text x="56" y="240.4" font-size="20" font-weight="700" fill="#BFDBFE">MCU</text>
+<text x="56" y="271" font-size="17" fill="#D2DAE4">your firmware and</text>
+<text x="56" y="295.7" font-size="17" fill="#D2DAE4">this driver</text>
+<rect x="264.3" y="250.4" width="131.4" height="24" rx="12" fill="#0E131A"/>
+<text x="330" y="268.2" font-size="16" font-weight="500" text-anchor="middle" fill="#9AA6B5">TTL or RS-485</text>
+<text x="756" y="252.9" font-size="20" font-weight="700" fill="#A7F3E6">Motor and gear</text>
+<text x="756" y="283.5" font-size="17" fill="#D2DAE4">coreless motor, 353.5 : 1</text>
+<text x="389" y="466.4" font-size="20" font-weight="700" fill="#FDE68A">Reads back</text>
+<text x="389" y="497" font-size="17" fill="#D2DAE4">Absolute encoder (12 bit, 360</text>
+<text x="389" y="521.7" font-size="17" fill="#D2DAE4">degrees)</text>
+<text x="389" y="546.3" font-size="17" fill="#D2DAE4">Temperature, voltage, current</text>
+<text x="389" y="571" font-size="17" fill="#D2DAE4">(reported as feedback)</text>
+<text x="48" y="682.4" font-size="30" font-weight="700" fill="#E8EDF3">10 to 14.8 V</text>
+<text x="48" y="712" font-size="17" fill="#D2DAE4">XM430-W350</text>
+<text x="48" y="735" font-size="17" fill="#D2DAE4">supply, 12 V</text>
+<text x="48" y="757.9" font-size="17" fill="#D2DAE4">recommended</text>
+<text x="48" y="793.2" font-size="16" fill="#9AA6B5">1, p. 1</text>
+<text x="278.4" y="682.4" font-size="30" font-weight="700" fill="#E8EDF3">4096 / rev</text>
+<text x="278.4" y="712" font-size="17" fill="#D2DAE4">position resolution,</text>
+<text x="278.4" y="735" font-size="17" fill="#D2DAE4">12 bit</text>
+<text x="278.4" y="793.2" font-size="16" fill="#9AA6B5">1, p. 1</text>
+<text x="508.8" y="682.4" font-size="30" font-weight="700" fill="#E8EDF3">4.5 Mbit/s</text>
+<text x="508.8" y="712" font-size="17" fill="#D2DAE4">fastest baud rate,</text>
+<text x="508.8" y="735" font-size="17" fill="#D2DAE4">from 9600</text>
+<text x="508.8" y="793.2" font-size="16" fill="#9AA6B5">1, p. 1</text>
+<text x="739.2" y="682.4" font-size="30" font-weight="700" fill="#E8EDF3">253 IDs</text>
+<text x="739.2" y="712" font-size="17" fill="#D2DAE4">on one bus, 0 to 252</text>
+<text x="739.2" y="793.2" font-size="16" fill="#9AA6B5">1, p. 1</text>
+<text x="969.6" y="682.4" font-size="30" font-weight="700" fill="#E8EDF3">4.1 N.m</text>
+<text x="969.6" y="712" font-size="17" fill="#D2DAE4">stall torque at 12 V</text>
+<text x="969.6" y="793.2" font-size="16" fill="#9AA6B5">1, p. 1</text>
+</svg>
