@@ -1,0 +1,3 @@
+header_only:
+  dynamixel_protocol: constants and inline or constexpr functions only, nothing to compile separately
+  dynamixel_tables: template-only, every definition is a template and must be visible to the compiler
