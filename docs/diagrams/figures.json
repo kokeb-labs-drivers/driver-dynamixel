@@ -47,6 +47,23 @@
       "inc/dynamixel_uart_interface.hpp"
     ]
   },
+  "data-line-read": {
+    "title": "One read on the half-duplex data line",
+    "alt": "A read on the DYNAMIXEL data line: the controller sends an instruction packet for four bytes, the servo waits its return delay time and answers with a status packet carrying the bytes, an error byte and a CRC-16.",
+    "description": "Participants, left to right: MCU (driver) and Servo 1. The steps run from top to bottom. MCU (driver) sends Read 4 bytes at address 132 (instruction packet) to Servo 1. A note over MCU (driver) and Servo 1 says: Return Delay Time, factory 500 microseconds. Servo 1 returns Status packet with the 4 bytes (error byte, CRC-16) to MCU (driver).",
+    "profile": "detail",
+    "width": 554,
+    "source": "docs/model/data-line-read.seq.yml",
+    "sources": [
+      "docs/model/data-line-read.seq.yml"
+    ],
+    "kind": "seq",
+    "palette": 2,
+    "print": "landscape",
+    "adaptive": true,
+    "twin": false,
+    "font": ""
+  },
   "driver-layers": {
     "title": "The layers, one of them yours",
     "alt": "Layer diagram: your application calls the DYNAMIXEL core, which sends register reads and writes through the UART port contract to the port class you write, which drives the chip; the core and the contract are the same on every MCU.",
@@ -58,5 +75,22 @@
       "inc/dynamixel.hpp:public calls",
       "inc/dynamixel_uart_interface.hpp:UartInterface"
     ]
+  },
+  "one-call-through-the-layers": {
+    "title": "One call through the layers",
+    "alt": "One call through the layers: your code calls ReadRegister({1, X430}, PresentPosition), the core exchanges frames with the chip through your port and returns the result to your code.",
+    "description": "Participants, left to right: Your code, DYNAMIXEL<Port> and Your port. The steps run from top to bottom. Your code sends ReadRegister({1, X430}, PresentPosition) to DYNAMIXEL<Port>. A note over DYNAMIXEL<Port> says: table lookup: address 132, 4 bytes. DYNAMIXEL<Port> sends Write(instruction packet) to Your port. Your port returns true (last stop bit sent) to DYNAMIXEL<Port>. DYNAMIXEL<Port> sends Read(buffer, max, reply_timeout_us) to Your port. Your port returns n bytes to DYNAMIXEL<Port>. A note over DYNAMIXEL<Port> says: Scan: header, length, instruction, CRC-16. A note over DYNAMIXEL<Port> says: error byte, ID, parameter count. DYNAMIXEL<Port> returns Result<int32_t>{2048, Ok} to Your code.",
+    "profile": "detail",
+    "width": 737,
+    "source": "docs/model/one-call-through-the-layers.seq.yml",
+    "sources": [
+      "docs/model/one-call-through-the-layers.seq.yml"
+    ],
+    "kind": "seq",
+    "palette": 2,
+    "print": "landscape",
+    "adaptive": true,
+    "twin": false,
+    "font": ""
   }
 }

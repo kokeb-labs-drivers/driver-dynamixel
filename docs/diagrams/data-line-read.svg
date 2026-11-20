@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="554" height="307" viewBox="0 0 554 307" role="img" aria-labelledby="data-line-read-title data-line-read-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+<title id="data-line-read-title">One read on the half-duplex data line</title>
+<desc id="data-line-read-desc">A read on the DYNAMIXEL data line: the controller sends an instruction packet for four bytes, the servo waits its return delay time and answers with a status packet carrying the bytes, an error byte and a CRC-16.</desc>
+<defs><marker id="data-line-read-arrow-rail" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7C8798"/></marker></defs>
+<rect x="0.5" y="0.5" width="553" height="306" rx="16" fill="#FFFFFF" stroke="#E2E7EE"/>
+<text x="32" y="54.8" font-size="26" font-weight="700" fill="#0E1726">One read on the half-duplex data line</text>
+<rect x="32" y="70.8" width="490" height="1" fill="#E2E7EE"/>
+<path d="M110.7 144.8 L110.7 310.8" fill="none" stroke="#738093" stroke-width="1.2" stroke-dasharray="5 5"/>
+<path d="M449.4 144.8 L449.4 310.8" fill="none" stroke="#738093" stroke-width="1.2" stroke-dasharray="5 5"/>
+<path d="M114.7 180.8 L445.4 180.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#data-line-read-arrow-rail)"/>
+<path d="M445.4 276.8 L114.7 276.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#data-line-read-arrow-rail)"/>
+<rect x="39.6" y="88.8" width="142.3" height="52" rx="10" fill="#FFF5E3" stroke="#C26A05" stroke-width="1.4"/>
+<rect x="39.6" y="96.8" width="4" height="36" rx="2" fill="#C26A05"/>
+<rect x="384.4" y="88.8" width="130" height="52" rx="10" fill="#FFF5E3" stroke="#C26A05" stroke-width="1.4"/>
+<rect x="384.4" y="96.8" width="4" height="36" rx="2" fill="#C26A05"/>
+<rect x="40.7" y="208.8" width="478.6" height="41" rx="10" fill="#FFF5E3" stroke="#F1CF93" stroke-width="1"/>
+<text x="113.7" y="119.3" font-size="15" font-weight="700" text-anchor="middle" fill="#8A3C0B">MCU (driver)</text>
+<text x="452.4" y="119.3" font-size="15" font-weight="700" text-anchor="middle" fill="#8A3C0B">Servo 1</text>
+<rect x="127.1" y="156.8" width="305.9" height="20" rx="10" fill="#FFFFFF"/>
+<text x="280.1" y="171.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">Read 4 bytes at address 132 (instruction packet)</text>
+<text x="54.7" y="233.9" font-size="13" fill="#8A3C0B">Return Delay Time, factory 500 microseconds</text>
+<rect x="118.7" y="252.8" width="322.6" height="20" rx="10" fill="#FFFFFF"/>
+<text x="280.1" y="267.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">Status packet with the 4 bytes (error byte, CRC-16)</text>
+</svg>

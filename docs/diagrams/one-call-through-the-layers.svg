@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="737" height="587" viewBox="0 0 737 587" role="img" aria-labelledby="one-call-through-the-layers-title one-call-through-the-layers-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+<title id="one-call-through-the-layers-title">One call through the layers</title>
+<desc id="one-call-through-the-layers-desc">One call through the layers: your code calls ReadRegister({1, X430}, PresentPosition), the core exchanges frames with the chip through your port and returns the result to your code.</desc>
+<defs><marker id="one-call-through-the-layers-arrow-rail" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7C8798"/></marker></defs>
+<rect x="0.5" y="0.5" width="736" height="586" rx="16" fill="#FFFFFF" stroke="#E2E7EE"/>
+<text x="32" y="54.8" font-size="26" font-weight="700" fill="#0E1726">One call through the layers</text>
+<rect x="32" y="70.8" width="673" height="1" fill="#E2E7EE"/>
+<path d="M104.8 144.8 L104.8 590.8" fill="none" stroke="#738093" stroke-width="1.2" stroke-dasharray="5 5"/>
+<path d="M383.4 144.8 L383.4 590.8" fill="none" stroke="#738093" stroke-width="1.2" stroke-dasharray="5 5"/>
+<path d="M632.2 144.8 L632.2 590.8" fill="none" stroke="#738093" stroke-width="1.2" stroke-dasharray="5 5"/>
+<path d="M108.8 180.8 L379.4 180.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#one-call-through-the-layers-arrow-rail)"/>
+<path d="M387.4 276.8 L628.2 276.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#one-call-through-the-layers-arrow-rail)"/>
+<path d="M628.2 320.8 L387.4 320.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#one-call-through-the-layers-arrow-rail)"/>
+<path d="M387.4 364.8 L628.2 364.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#one-call-through-the-layers-arrow-rail)"/>
+<path d="M628.2 408.8 L387.4 408.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#one-call-through-the-layers-arrow-rail)"/>
+<path d="M379.4 556.8 L108.8 556.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#one-call-through-the-layers-arrow-rail)"/>
+<rect x="39.8" y="88.8" width="130" height="52" rx="10" fill="#FDF0FF" stroke="#A21CAF" stroke-width="1.4"/>
+<rect x="39.8" y="96.8" width="4" height="36" rx="2" fill="#A21CAF"/>
+<rect x="287" y="88.8" width="192.7" height="52" rx="10" fill="#EAF7EF" stroke="#15803D" stroke-width="1.4"/>
+<rect x="287" y="96.8" width="4" height="36" rx="2" fill="#15803D"/>
+<rect x="567.2" y="88.8" width="130" height="52" rx="10" fill="#E6F6F4" stroke="#0B7A72" stroke-width="1.4"/>
+<rect x="567.2" y="96.8" width="4" height="36" rx="2" fill="#0B7A72"/>
+<rect x="313.4" y="208.8" width="388.9" height="41" rx="10" fill="#FFF5E3" stroke="#F1CF93" stroke-width="1"/>
+<rect x="313.4" y="436.8" width="388.9" height="41" rx="10" fill="#FFF5E3" stroke="#F1CF93" stroke-width="1"/>
+<rect x="313.4" y="488.8" width="388.9" height="41" rx="10" fill="#FFF5E3" stroke="#F1CF93" stroke-width="1"/>
+<text x="107.8" y="119.3" font-size="15" font-weight="700" text-anchor="middle" fill="#86198F">Your code</text>
+<text x="386.4" y="119.3" font-size="15" font-weight="700" text-anchor="middle" fill="#14532D">DYNAMIXEL&lt;Port&gt;</text>
+<text x="635.2" y="119.3" font-size="15" font-weight="700" text-anchor="middle" fill="#0B5F59">Your port</text>
+<rect x="112.8" y="156.8" width="262.6" height="20" rx="10" fill="#FFFFFF"/>
+<text x="244.1" y="171.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">ReadRegister({1, X430}, PresentPosition)</text>
+<text x="327.4" y="233.9" font-size="13" fill="#8A3C0B">table lookup: address 132, 4 bytes</text>
+<rect x="426" y="252.8" width="163.6" height="20" rx="10" fill="#FFFFFF"/>
+<text x="507.8" y="267.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">Write(instruction packet)</text>
+<rect x="433.1" y="296.8" width="149.4" height="20" rx="10" fill="#FFFFFF"/>
+<text x="507.8" y="311.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">true (last stop bit sent)</text>
+<rect x="391.4" y="340.8" width="232.9" height="20" rx="10" fill="#FFFFFF"/>
+<text x="507.8" y="355.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">Read(buffer, max, reply_timeout_us)</text>
+<rect x="479.4" y="384.8" width="56.9" height="20" rx="10" fill="#FFFFFF"/>
+<text x="507.8" y="399.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">n bytes</text>
+<text x="327.4" y="461.9" font-size="13" fill="#8A3C0B">Scan: header, length, instruction, CRC-16</text>
+<text x="327.4" y="513.9" font-size="13" fill="#8A3C0B">error byte, ID, parameter count</text>
+<rect x="156.2" y="532.8" width="175.7" height="20" rx="10" fill="#FFFFFF"/>
+<text x="244.1" y="547.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">Result&lt;int32_t&gt;{2048, Ok}</text>
+</svg>

@@ -78,6 +78,24 @@ Drawn from:
 - [`docs/hardware.yml`](../hardware.yml)
 - [`inc/dynamixel_uart_interface.hpp`](../../inc/dynamixel_uart_interface.hpp)
 
+## One read on the half-duplex data line
+
+<!-- figure: data-line-read -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="data-line-read.dark.svg">
+  <img src="data-line-read.svg"
+    alt="A read on the DYNAMIXEL data line: the controller sends an instruction packet for four bytes, the
+    servo waits its return delay time and answers with a status packet carrying the bytes, an error byte
+    and a CRC-16.">
+</picture>
+<!-- /figure -->
+
+Hardware description: [`docs/model/data-line-read.seq.yml`](../model/data-line-read.seq.yml)
+
+Drawn from:
+
+- [`docs/model/data-line-read.seq.yml`](../model/data-line-read.seq.yml)
+
 ## The layers, one of them yours
 
 <!-- figure: driver-layers -->
@@ -96,3 +114,20 @@ Drawn from:
 
 - `public calls` in [`inc/dynamixel.hpp`](../../inc/dynamixel.hpp)
 - `UartInterface` in [`inc/dynamixel_uart_interface.hpp`](../../inc/dynamixel_uart_interface.hpp)
+
+## One call through the layers
+
+<!-- figure: one-call-through-the-layers -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="one-call-through-the-layers.dark.svg">
+  <img src="one-call-through-the-layers.svg"
+    alt="One call through the layers: your code calls ReadRegister({1, X430}, PresentPosition), the core
+    exchanges frames with the chip through your port and returns the result to your code.">
+</picture>
+<!-- /figure -->
+
+Hardware description: [`docs/model/one-call-through-the-layers.seq.yml`](../model/one-call-through-the-layers.seq.yml)
+
+Drawn from:
+
+- [`docs/model/one-call-through-the-layers.seq.yml`](../model/one-call-through-the-layers.seq.yml)

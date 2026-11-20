@@ -69,14 +69,15 @@ two the line must be turned round: the master stops driving it and listens.
 With `EchoMode::Loopback` the driver reads the echo of every packet it sent and compares it with the request:
 another talker on the line, or a short, shows as `Error::EchoMismatch` before any reply is waited for.
 
-```mermaid
-sequenceDiagram
-    participant Master as MCU (driver)
-    participant Servo as Servo 1
-    Master->>Servo: Read 4 bytes at address 132 (instruction packet)
-    Note over Master,Servo: Return Delay Time, factory 500 microseconds
-    Servo-->>Master: Status packet with the 4 bytes (error byte, CRC-16)
-```
+<!-- figure: data-line-read -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/data-line-read.dark.svg">
+  <img src="diagrams/data-line-read.svg"
+    alt="A read on the DYNAMIXEL data line: the controller sends an instruction packet for four bytes, the
+    servo waits its return delay time and answers with a status packet carrying the bytes, an error byte
+    and a CRC-16.">
+</picture>
+<!-- /figure -->
 
 ## Bus settings
 
