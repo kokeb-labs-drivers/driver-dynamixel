@@ -1216,7 +1216,7 @@ RS-485 variant has the same first two pins and splits the data into DATA+ and DA
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>The DYNAMIXEL seen from the top, in its TTL servo package. Pin 1 is marked by the dot; the numbers run counter-clockwise from it. Each pad is coloured by the pin's electrical type (legend below). Next to it is the pin's name and, in mono, the hook of the driver's port that drives or reads it; a pin without a hook is not used by the driver.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ce09883d463011010b78f03db930b1167c5314bd/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/f298d044c8f72e9f5cb6e428292e6b023ad66024/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
 </details>
 <!-- generated: chip-pins -->
 <p>TTL servo, 3 pins (4.5 Connector Information, p. 1).</p>
@@ -1347,7 +1347,7 @@ and 1 000 000 bit/s. <code>Config::baud</code> must match; a wrong rate looks li
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>A schematic. The MCU is on the left, each of its pins level with the chip pin it connects to; above each wire is the hook of the driver's port that drives or reads it. Supply pins point up to their supply and decoupling, ground pins down. Pins on the right carry the loads and the pins tied to a supply or ground; a cross marks a pin left open. A dot is a junction; wires that cross without a dot are not connected.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ce09883d463011010b78f03db930b1167c5314bd/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/f298d044c8f72e9f5cb6e428292e6b023ad66024/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
 </details>
 <p>The e-Manual's recommended TTL circuit is a pair of tri-state buffers (a 74LVC2G241 in the figure), one for each
 direction. One direction signal (<code>TX_Enable</code>) drives both enables: low enables the receive buffer (servo DATA to the
@@ -1371,7 +1371,7 @@ datasheet value.</p>
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>The DYNAMIXEL's function blocks inside its outline. Arrows between blocks carry signals or data in the direction they point (both ways where they have two heads). The package pins stand on the left and right edges with their numbers, each wired to the block it reaches.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ce09883d463011010b78f03db930b1167c5314bd/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/f298d044c8f72e9f5cb6e428292e6b023ad66024/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
 </details>
 <p>The e-Manual has no block diagram; this one is drawn from its specification table, and the blocks are marked as
 unverified in <a href="../hardware.yml"><code>hardware.yml</code></a>.</p>
@@ -1384,7 +1384,7 @@ unverified in <a href="../hardware.yml"><code>hardware.yml</code></a>.</p>
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>The DYNAMIXEL package seen from the top and, when the height is known, from the side, drawn to scale: 28.5 x 46.5 x 34.0 mm. The arrows carry the datasheet's dimensions, the dot marks pin 1 and the pads are numbered counter-clockwise from it, coloured by the pin's electrical type (legend below). Pads sit centred on each side at the stated pitch; the datasheet's land pattern is the reference for a board.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ce09883d463011010b78f03db930b1167c5314bd/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/f298d044c8f72e9f5cb6e428292e6b023ad66024/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
 </details>
 <h2 id="timing">Timing<a class="headerlink" href="#timing" title="Permanent link">&para;</a></h2>
 <table>
@@ -1515,11 +1515,11 @@ of the driver is in the datasheet: <a href="../datasheet/">Datasheet map</a>.</p
 </thead>
 <tbody>
 <tr>
-<td><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ce09883d463011010b78f03db930b1167c5314bd/inc/dynamixel_tables.hpp"><code>inc/dynamixel_tables.hpp</code></a></td>
+<td><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/f298d044c8f72e9f5cb6e428292e6b023ad66024/inc/dynamixel_tables.hpp"><code>inc/dynamixel_tables.hpp</code></a></td>
 <td>The control table of every family, with the e-Manual page of each</td>
 </tr>
 <tr>
-<td><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ce09883d463011010b78f03db930b1167c5314bd/inc/dynamixel_protocol.hpp"><code>inc/dynamixel_protocol.hpp</code></a></td>
+<td><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/f298d044c8f72e9f5cb6e428292e6b023ad66024/inc/dynamixel_protocol.hpp"><code>inc/dynamixel_protocol.hpp</code></a></td>
 <td>The packet layout, stuffing, CRC and the reply search</td>
 </tr>
 </tbody>
