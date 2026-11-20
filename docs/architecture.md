@@ -40,21 +40,14 @@ The protocol and table layers are pure functions of bytes and constants: they ha
 
 ## One call through the layers
 
-```mermaid
-sequenceDiagram
-    participant App as Your code
-    participant Core as DYNAMIXEL<Port>
-    participant Port as Your port
-    App->>Core: ReadRegister({1, X430}, PresentPosition)
-    Note over Core: table lookup: address 132, 4 bytes
-    Core->>Port: Write(instruction packet)
-    Port-->>Core: true (last stop bit sent)
-    Core->>Port: Read(buffer, max, reply_timeout_us)
-    Port-->>Core: n bytes
-    Note over Core: Scan: header, length, instruction, CRC-16
-    Note over Core: error byte, ID, parameter count
-    Core-->>App: Result<int32_t>{2048, Ok}
-```
+<!-- figure: one-call-through-the-layers -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/one-call-through-the-layers.dark.svg">
+  <img src="diagrams/one-call-through-the-layers.svg"
+    alt="One call through the layers: your code calls ReadRegister({1, X430}, PresentPosition), the core
+    exchanges frames with the chip through your port and returns the result to your code.">
+</picture>
+<!-- /figure -->
 
 A transaction is one `Write()` of the whole packet, then one or more `Read()` calls until a complete, valid status
 packet is in the buffer or a deadline passes. A ping or a read that fails for a bad or missing reply is repeated up

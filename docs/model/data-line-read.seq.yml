@@ -1,0 +1,20 @@
+---
+# Model of the figure 'data-line-read'. Edit this file; `kokeb-docs figures` draws it. Never edit the SVGs.
+kind: seq
+id: data-line-read
+title: "One read on the half-duplex data line"
+alt: >-
+  A read on the DYNAMIXEL data line: the controller sends an instruction packet for four bytes, the servo waits
+  its return delay time and answers with a status packet carrying the bytes, an error byte and a CRC-16.
+reads: >-
+  Participants, left to right: MCU (driver) and Servo 1. The steps run from top to bottom. MCU (driver) sends Read 4 bytes at address 132 (instruction packet) to Servo 1. A note over MCU (driver) and Servo 1 says: Return Delay Time, factory 500 microseconds. Servo 1 returns Status packet with the 4 bytes (error byte, CRC-16) to MCU (driver).
+print: landscape
+sources:
+  - docs/model/data-line-read.seq.yml
+participants:
+  - {id: master, label: "MCU (driver)", tone: amber}
+  - {id: servo, label: "Servo 1", tone: amber}
+steps:
+  - {from: master, to: servo, label: "Read 4 bytes at address 132 (instruction packet)"}
+  - {note: "Return Delay Time, factory 500 microseconds", over: [master, servo]}
+  - {from: servo, to: master, label: "Status packet with the 4 bytes (error byte, CRC-16)", return: true}
