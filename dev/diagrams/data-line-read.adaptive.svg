@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="554" height="307" viewBox="0 0 554 307" role="img" aria-labelledby="data-line-read-title data-line-read-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" class="fk">
+<title id="data-line-read-title">One read on the half-duplex data line</title>
+<desc id="data-line-read-desc">A read on the DYNAMIXEL data line: the controller sends an instruction packet for four bytes, the servo waits its return delay time and answers with a status packet carrying the bytes, an error byte and a CRC-16.</desc>
+<style>
+.fk{--fk-amber-soft:#F1CF93;--fk-amber-strong:#C26A05;--fk-amber-text:#8A3C0B;--fk-amber-tint:#FFF5E3;--fk-canvas:#FFFFFF;--fk-frame:#E2E7EE;--fk-hair:#E2E7EE;--fk-ink:#0E1726;--fk-line:#738093;--fk-muted:#566070;--fk-rail:#7C8798;}
+@media (prefers-color-scheme:dark){.fk{--fk-amber-soft:#6A5220;--fk-amber-strong:#FBBF24;--fk-amber-text:#FDE68A;--fk-amber-tint:#2C2310;--fk-canvas:#0E131A;--fk-frame:#283241;--fk-hair:#252F3C;--fk-ink:#E8EDF3;--fk-line:#6C7889;--fk-muted:#9AA6B5;--fk-rail:#6C7889;}}
+:root[data-theme="dark"] .fk,[data-md-color-scheme="slate"] .fk{--fk-amber-soft:#6A5220;--fk-amber-strong:#FBBF24;--fk-amber-text:#FDE68A;--fk-amber-tint:#2C2310;--fk-canvas:#0E131A;--fk-frame:#283241;--fk-hair:#252F3C;--fk-ink:#E8EDF3;--fk-line:#6C7889;--fk-muted:#9AA6B5;--fk-rail:#6C7889;}
+:root[data-theme="light"] .fk,[data-md-color-scheme="default"] .fk{--fk-amber-soft:#F1CF93;--fk-amber-strong:#C26A05;--fk-amber-text:#8A3C0B;--fk-amber-tint:#FFF5E3;--fk-canvas:#FFFFFF;--fk-frame:#E2E7EE;--fk-hair:#E2E7EE;--fk-ink:#0E1726;--fk-line:#738093;--fk-muted:#566070;--fk-rail:#7C8798;}
+.fk-f-amber-soft{fill:var(--fk-amber-soft)}.fk-s-amber-soft{stroke:var(--fk-amber-soft)}
+.fk-f-amber-strong{fill:var(--fk-amber-strong)}.fk-s-amber-strong{stroke:var(--fk-amber-strong)}
+.fk-f-amber-text{fill:var(--fk-amber-text)}.fk-s-amber-text{stroke:var(--fk-amber-text)}
+.fk-f-amber-tint{fill:var(--fk-amber-tint)}.fk-s-amber-tint{stroke:var(--fk-amber-tint)}
+.fk-f-canvas{fill:var(--fk-canvas)}.fk-s-canvas{stroke:var(--fk-canvas)}
+.fk-f-frame{fill:var(--fk-frame)}.fk-s-frame{stroke:var(--fk-frame)}
+.fk-f-hair{fill:var(--fk-hair)}.fk-s-hair{stroke:var(--fk-hair)}
+.fk-f-ink{fill:var(--fk-ink)}.fk-s-ink{stroke:var(--fk-ink)}
+.fk-f-line{fill:var(--fk-line)}.fk-s-line{stroke:var(--fk-line)}
+.fk-f-muted{fill:var(--fk-muted)}.fk-s-muted{stroke:var(--fk-muted)}
+.fk-f-rail{fill:var(--fk-rail)}.fk-s-rail{stroke:var(--fk-rail)}
+@media (forced-colors:active){.fk text{fill:CanvasText}.fk rect,.fk circle{fill:Canvas;stroke:CanvasText}.fk path{stroke:CanvasText}.fk marker path{fill:CanvasText;stroke:none}}
+</style>
+<defs><marker id="data-line-read-arrow-rail" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="fk-f-rail"/></marker></defs>
+<rect x="0.5" y="0.5" width="553" height="306" rx="16" class="fk-f-canvas fk-s-frame"/>
+<text x="32" y="54.8" font-size="26" font-weight="700" class="fk-f-ink">One read on the half-duplex data line</text>
+<rect x="32" y="70.8" width="490" height="1" class="fk-f-hair"/>
+<path d="M110.7 144.8 L110.7 310.8" fill="none" stroke-width="1.2" stroke-dasharray="5 5" class="fk-s-line"/>
+<path d="M449.4 144.8 L449.4 310.8" fill="none" stroke-width="1.2" stroke-dasharray="5 5" class="fk-s-line"/>
+<path d="M114.7 180.8 L445.4 180.8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#data-line-read-arrow-rail)" class="fk-s-rail"/>
+<path d="M445.4 276.8 L114.7 276.8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#data-line-read-arrow-rail)" class="fk-s-rail"/>
+<rect x="39.6" y="88.8" width="142.3" height="52" rx="10" stroke-width="1.4" class="fk-f-amber-tint fk-s-amber-strong"/>
+<rect x="39.6" y="96.8" width="4" height="36" rx="2" class="fk-f-amber-strong"/>
+<rect x="384.4" y="88.8" width="130" height="52" rx="10" stroke-width="1.4" class="fk-f-amber-tint fk-s-amber-strong"/>
+<rect x="384.4" y="96.8" width="4" height="36" rx="2" class="fk-f-amber-strong"/>
+<rect x="40.7" y="208.8" width="478.6" height="41" rx="10" stroke-width="1" class="fk-f-amber-tint fk-s-amber-soft"/>
+<text x="113.7" y="119.3" font-size="15" font-weight="700" text-anchor="middle" class="fk-f-amber-text">MCU (driver)</text>
+<text x="452.4" y="119.3" font-size="15" font-weight="700" text-anchor="middle" class="fk-f-amber-text">Servo 1</text>
+<rect x="127.1" y="156.8" width="305.9" height="20" rx="10" class="fk-f-canvas"/>
+<text x="280.1" y="171.1" font-size="12" font-weight="500" text-anchor="middle" class="fk-f-muted">Read 4 bytes at address 132 (instruction packet)</text>
+<text x="54.7" y="233.9" font-size="13" class="fk-f-amber-text">Return Delay Time, factory 500 microseconds</text>
+<rect x="118.7" y="252.8" width="322.6" height="20" rx="10" class="fk-f-canvas"/>
+<text x="280.1" y="267.1" font-size="12" font-weight="500" text-anchor="middle" class="fk-f-muted">Status packet with the 4 bytes (error byte, CRC-16)</text>
+</svg>

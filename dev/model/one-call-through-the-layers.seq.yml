@@ -1,0 +1,27 @@
+---
+# Model of the figure 'one-call-through-the-layers'. Edit this file; `kokeb-docs figures` draws it. Never edit the SVGs.
+kind: seq
+id: one-call-through-the-layers
+title: "One call through the layers"
+alt: >-
+  One call through the layers: your code calls ReadRegister({1, X430}, PresentPosition), the core exchanges frames
+  with the chip through your port and returns the result to your code.
+reads: >-
+  Participants, left to right: Your code, DYNAMIXEL<Port> and Your port. The steps run from top to bottom. Your code sends ReadRegister({1, X430}, PresentPosition) to DYNAMIXEL<Port>. A note over DYNAMIXEL<Port> says: table lookup: address 132, 4 bytes. DYNAMIXEL<Port> sends Write(instruction packet) to Your port. Your port returns true (last stop bit sent) to DYNAMIXEL<Port>. DYNAMIXEL<Port> sends Read(buffer, max, reply_timeout_us) to Your port. Your port returns n bytes to DYNAMIXEL<Port>. A note over DYNAMIXEL<Port> says: Scan: header, length, instruction, CRC-16. A note over DYNAMIXEL<Port> says: error byte, ID, parameter count. DYNAMIXEL<Port> returns Result<int32_t>{2048, Ok} to Your code.
+print: landscape
+sources:
+  - docs/model/one-call-through-the-layers.seq.yml
+participants:
+  - {id: app, label: "Your code", tone: magenta}
+  - {id: core, label: "DYNAMIXEL<Port>", tone: green}
+  - {id: port, label: "Your port", tone: teal}
+steps:
+  - {from: app, to: core, label: "ReadRegister({1, X430}, PresentPosition)"}
+  - {note: "table lookup: address 132, 4 bytes", over: [core, port]}
+  - {from: core, to: port, label: "Write(instruction packet)"}
+  - {from: port, to: core, label: "true (last stop bit sent)", return: true}
+  - {from: core, to: port, label: "Read(buffer, max, reply_timeout_us)"}
+  - {from: port, to: core, label: "n bytes", return: true}
+  - {note: "Scan: header, length, instruction, CRC-16", over: [core, port]}
+  - {note: "error byte, ID, parameter count", over: [core, port]}
+  - {from: core, to: app, label: "Result<int32_t>{2048, Ok}", return: true}
