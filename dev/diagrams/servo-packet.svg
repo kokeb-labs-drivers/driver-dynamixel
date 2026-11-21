@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="851" viewBox="0 0 640 851" role="img" aria-labelledby="servo-packet-title servo-packet-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+<title id="servo-packet-title">Instruction and status packets</title>
+<desc id="servo-packet-desc">Field layout of a DYNAMIXEL protocol 2.0 instruction packet and the status packet that answers it: header and reserved byte, packet ID, length, instruction, the status packet's error byte, parameters and CRC.</desc>
+<rect x="0.5" y="0.5" width="639" height="850" rx="16" fill="#FFFFFF" stroke="#E2E7EE"/>
+<text x="32" y="44.4" font-size="13" font-weight="700" letter-spacing="1.2" fill="#7A360E">PROTOCOL 2.0</text>
+<text x="32" y="76.2" font-size="24" font-weight="700" fill="#0E1726">Instruction and status packets</text>
+<text x="32" y="102.7" font-size="15" fill="#566070">Sources: p2 2.3 Packet ID, p. 1; p1 2.2 Packet ID, p. 1; p2 2.7 CRC, p. 1; p2 2</text>
+<text x="32" y="124.5" font-size="15" fill="#566070">Instruction Packet, p. 1; p2 2.4 Length, p. 1; p2 3 Status Packet, p. 1; p1 2</text>
+<text x="32" y="146.2" font-size="15" fill="#566070">Instruction Packet, p. 1.</text>
+<rect x="32" y="162.2" width="576" height="1" fill="#E2E7EE"/>
+<path d="M93.7 254.6 L93.7 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M125.5 254.6 L125.5 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M157.2 254.6 L157.2 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M189 254.6 L189 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M220.8 254.6 L220.8 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M252.5 254.6 L252.5 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M284.3 254.6 L284.3 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M316.1 254.6 L316.1 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M347.9 254.6 L347.9 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M379.6 254.6 L379.6 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M411.4 254.6 L411.4 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M443.2 254.6 L443.2 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M474.9 254.6 L474.9 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M506.7 254.6 L506.7 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M538.5 254.6 L538.5 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M570.2 254.6 L570.2 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M602 254.6 L602 338.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M32 384.7 L608 384.7" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M32 457.6 L608 457.6" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M32 530.4 L608 530.4" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M32 603.2 L608 603.2" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M32 676.1 L608 676.1" fill="none" stroke="#E2E7EE" stroke-width="1"/>
+<path d="M94.7 245.6 L94.7 240.6 L219.8 240.6 L219.8 245.6" fill="none" stroke="#64748B" stroke-width="1.4"/>
+<path d="M221.8 213.4 L221.8 208.4 L251.5 208.4 L251.5 213.4" fill="none" stroke="#64748B" stroke-width="1.4"/>
+<path d="M253.5 245.6 L253.5 240.6 L315.1 240.6 L315.1 245.6" fill="none" stroke="#64748B" stroke-width="1.4"/>
+<path d="M317.1 213.4 L317.1 208.4 L378.6 208.4 L378.6 213.4" fill="none" stroke="#64748B" stroke-width="1.4"/>
+<path d="M538.5 272.6 L570.2 272.6" fill="none" stroke="#7C8798" stroke-width="2"/>
+<path d="M570.2 272.6 L602 272.6" fill="none" stroke="#7C8798" stroke-width="2"/>
+<path d="M93.7 272.6 L98.7 259.6 L215.8 259.6 L220.8 272.6 L215.8 285.6 L98.7 285.6 Z" fill="#F1F4F8" stroke="#64748B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M220.8 272.6 L225.8 259.6 L247.5 259.6 L252.5 272.6 L247.5 285.6 L225.8 285.6 Z" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M252.5 272.6 L257.5 259.6 L311.1 259.6 L316.1 272.6 L311.1 285.6 L257.5 285.6 Z" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M316.1 272.6 L321.1 259.6 L374.6 259.6 L379.6 272.6 L374.6 285.6 L321.1 285.6 Z" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M379.6 272.6 L384.6 259.6 L469.9 259.6 L474.9 272.6 L469.9 285.6 L384.6 285.6 Z" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M474.9 272.6 L479.9 259.6 L533.5 259.6 L538.5 272.6 L533.5 285.6 L479.9 285.6 Z" fill="#E6F6F4" stroke="#0B7A72" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M93.7 320.6 L98.7 307.6 L215.8 307.6 L220.8 320.6 L215.8 333.6 L98.7 333.6 Z" fill="#F1F4F8" stroke="#64748B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M220.8 320.6 L225.8 307.6 L247.5 307.6 L252.5 320.6 L247.5 333.6 L225.8 333.6 Z" fill="#E6F6F4" stroke="#0B7A72" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M252.5 320.6 L257.5 307.6 L311.1 307.6 L316.1 320.6 L311.1 333.6 L257.5 333.6 Z" fill="#E6F6F4" stroke="#0B7A72" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M316.1 320.6 L321.1 307.6 L374.6 307.6 L379.6 320.6 L374.6 333.6 L321.1 333.6 Z" fill="#E6F6F4" stroke="#0B7A72" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M379.6 320.6 L384.6 307.6 L438.2 307.6 L443.2 320.6 L438.2 333.6 L384.6 333.6 Z" fill="#FFF5E3" stroke="#C26A05" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M443.2 320.6 L448.2 307.6 L533.5 307.6 L538.5 320.6 L533.5 333.6 L448.2 333.6 Z" fill="#E6F6F4" stroke="#0B7A72" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M538.5 320.6 L543.5 307.6 L597 307.6 L602 320.6 L597 333.6 L543.5 333.6 Z" fill="#E6F6F4" stroke="#0B7A72" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="32" y="690.1" width="576" height="130.3" rx="10" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="157.2" y="229.7" font-size="14" font-weight="600" text-anchor="middle" fill="#334155">header and reserved</text>
+<text x="236.7" y="197.5" font-size="14" font-weight="600" text-anchor="middle" fill="#334155">packet ID</text>
+<text x="284.3" y="229.7" font-size="14" font-weight="600" text-anchor="middle" fill="#334155">length</text>
+<text x="347.9" y="197.5" font-size="14" font-weight="600" text-anchor="middle" fill="#334155">instruction</text>
+<text x="32" y="278" font-size="15" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">Host</text>
+<text x="157.2" y="277.6" font-size="14" font-weight="600" text-anchor="middle" fill="#334155">FF FF FD 00</text>
+<text x="236.7" y="277.6" font-size="14" font-weight="600" text-anchor="middle" fill="#1E429F">ID</text>
+<text x="284.3" y="277.6" font-size="14" font-weight="600" text-anchor="middle" fill="#1E429F">Length</text>
+<text x="347.9" y="277.6" font-size="14" font-weight="600" text-anchor="middle" fill="#1E429F">INST</text>
+<text x="427.3" y="277.6" font-size="14" font-weight="600" text-anchor="middle" fill="#1E429F">Param 1…N</text>
+<text x="506.7" y="277.6" font-size="14" font-weight="600" text-anchor="middle" fill="#0B5F59">CRC</text>
+<text x="32" y="326" font-size="15" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">Servo</text>
+<text x="157.2" y="325.6" font-size="14" font-weight="600" text-anchor="middle" fill="#334155">FF FF FD 00</text>
+<text x="236.7" y="325.6" font-size="14" font-weight="600" text-anchor="middle" fill="#0B5F59">ID</text>
+<text x="284.3" y="325.6" font-size="14" font-weight="600" text-anchor="middle" fill="#0B5F59">Length</text>
+<text x="347.9" y="325.6" font-size="14" font-weight="600" text-anchor="middle" fill="#0B5F59">0x55</text>
+<text x="411.4" y="325.6" font-size="14" font-weight="600" text-anchor="middle" fill="#8A3C0B">ERR</text>
+<text x="490.8" y="325.6" font-size="14" font-weight="600" text-anchor="middle" fill="#0B5F59">Param 1…N</text>
+<text x="570.2" y="325.6" font-size="14" font-weight="600" text-anchor="middle" fill="#0B5F59">CRC</text>
+<text x="32" y="369" font-size="17" font-weight="700" fill="#0E1726">Values</text>
+<text x="32" y="405.4" font-size="15" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">ID</text>
+<text x="608" y="405.4" font-size="15" font-weight="700" text-anchor="end" fill="#0E1726">min 0 · max 252</text>
+<text x="32" y="425.7" font-size="15" fill="#2B3442">Packet ID range, protocol 2.0</text>
+<text x="32" y="445.8" font-size="14" fill="#566070">Datasheet 2.3 Packet ID, p. 1</text>
+<text x="32" y="478.3" font-size="15" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">ID</text>
+<text x="608" y="478.3" font-size="15" font-weight="700" text-anchor="end" fill="#0E1726">typ 254</text>
+<text x="32" y="498.6" font-size="15" fill="#2B3442">Broadcast ID: every device executes the packet</text>
+<text x="32" y="518.7" font-size="14" fill="#566070">Datasheet 2.3 Packet ID, p. 1</text>
+<text x="32" y="551.2" font-size="15" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">ID</text>
+<text x="608" y="551.2" font-size="15" font-weight="700" text-anchor="end" fill="#0E1726">min 0 · max 253</text>
+<text x="32" y="571.4" font-size="15" fill="#2B3442">Packet ID range, protocol 1.0</text>
+<text x="32" y="591.5" font-size="14" fill="#566070">Datasheet 2.2 Packet ID, p. 1</text>
+<text x="32" y="624" font-size="15" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">CRC</text>
+<text x="608" y="624" font-size="15" font-weight="700" text-anchor="end" fill="#0E1726">typ 16 bit</text>
+<text x="32" y="644.2" font-size="15" fill="#2B3442">Checksum over the header to the last parameter, low byte first</text>
+<text x="32" y="664.4" font-size="14" fill="#566070">Datasheet 2.7 CRC, p. 1</text>
+<text x="46" y="718.6" font-size="17" font-weight="700" fill="#334155">Notes</text>
+<text x="46" y="739" font-size="15" fill="#334155">Length counts the instruction, the parameters and the CRC: parameters</text>
+<text x="46" y="760.7" font-size="15" fill="#334155">+ 3. The status packet adds the error byte after the instruction 0x55.</text>
+<text x="46" y="782.5" font-size="15" fill="#334155">Protocol 1.0: header FF FF, no reserved byte, one length byte and a</text>
+<text x="46" y="804.2" font-size="15" fill="#334155">one-byte checksum.</text>
+</svg>

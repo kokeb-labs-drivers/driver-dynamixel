@@ -16,7 +16,7 @@
         <link rel="prev" href="../platforms/">
       
       
-        <link rel="next" href="../protocol/">
+        <link rel="next" href="../bus/">
       
       
         
@@ -102,72 +102,6 @@
   <meta property="og:description" content="C++20 driver for the ROBOTIS DYNAMIXEL servo protocols 1.0 and 2.0 over a half-duplex UART.">
   <meta property="og:url" content="https://kokeb-labs-drivers.github.io/driver-dynamixel/latest/hardware/">
   <meta name="twitter:card" content="summary">
-  <script>
-(function () {
-  if (typeof mermaid != "undefined" && !(mermaid instanceof Element)) return;
-  var SRC = "https://unpkg.com/mermaid@11.17.2/dist/mermaid.min.js",
-      SRI = "sha384-EOXBFmc3gx5mb+vn0vPvvGqACToJD24hhacX5Yx+8NUUQrHIle/Qi5Bg9o3zKwW2", config = {}, real, loading;
-  var waiting = [], io = null, ahead = false, ENGAGE = ["scroll", "keydown", "pointerdown", "touchstart"];
-  var stub = {
-    initialize: function (c) { config = c || {}; if (real) real.initialize(config); },
-    render: function (id, text) {
-      var el = null, pres = document.querySelectorAll("pre.mermaid:not([data-kb-mermaid])");
-      for (var i = 0; i < pres.length && !el; i++) if (pres[i].textContent === text) el = pres[i];
-      if (el) el.setAttribute("data-kb-mermaid", "");
-      return near(el).then(load).then(function (m) { return m.render(id, text); });
-    }
-  };
-  function load() {
-    return loading || (loading = new Promise(function (resolve, reject) {
-      var s = document.createElement("script");
-      s.src = SRC;
-      s.integrity = SRI;
-      s.crossOrigin = "anonymous";
-      s.onload = function () {
-        real = window.mermaid;
-        window.mermaid = stub;
-        real.initialize(config);
-        resolve(real);
-      };
-      s.onerror = function () { loading = null; reject(new Error("Mermaid did not load")); };
-      document.head.appendChild(s);
-    }));
-  }
-  // One observer for the diagrams still waiting: on the screen only until the reader engages, then a screen ahead.
-  function watch() {
-    if (io) io.disconnect();
-    io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) release(function (w) { return w.el === e.target; });
-      });
-    }, { rootMargin: ahead ? "100% 0px" : "0px" });
-    waiting.forEach(function (w) { io.observe(w.el); });
-  }
-  function release(which) {
-    waiting = waiting.filter(function (w) {
-      if (!which(w)) return true;
-      io.unobserve(w.el);
-      w.go();
-      return false;
-    });
-  }
-  function near(el) {
-    if (real || !el || !("IntersectionObserver" in window)) return Promise.resolve();
-    return new Promise(function (resolve) {
-      waiting.push({ el: el, go: resolve });
-      if (io) io.observe(el); else watch();
-    });
-  }
-  function engaged() {
-    ENGAGE.forEach(function (t) { window.removeEventListener(t, engaged, true); });
-    ahead = true;
-    if (io) watch();
-  }
-  ENGAGE.forEach(function (t) { window.addEventListener(t, engaged, { capture: true, passive: true }); });
-  window.addEventListener("beforeprint", function () { if (io) release(function () { return true; }); });
-  window.mermaid = stub;
-})();
-</script>
 
   </head>
   
@@ -516,6 +450,8 @@
       
         
       
+        
+      
     
     
     
@@ -819,6 +755,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    On the bus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1216,7 +1180,7 @@ RS-485 variant has the same first two pins and splits the data into DATA+ and DA
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>The DYNAMIXEL seen from the top, in its TTL servo package. Pin 1 is marked by the dot; the numbers run counter-clockwise from it. Each pad is coloured by the pin's electrical type (legend below). Next to it is the pin's name and, in mono, the hook of the driver's port that drives or reads it; a pin without a hook is not used by the driver.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
 </details>
 <!-- generated: chip-pins -->
 <p>TTL servo, 3 pins (4.5 Connector Information, p. 1).</p>
@@ -1344,14 +1308,14 @@ another talker on the line, or a short, shows as <code>Error::EchoMismatch</code
 and 1 000 000 bit/s. <code>Config::baud</code> must match; a wrong rate looks like silence (<code>Error::Timeout</code>) or noise.</p>
 <h2 id="circuits">Circuits<a class="headerlink" href="#circuits" title="Permanent link">&para;</a></h2>
 <figure class="kb-figure">
-<img src="../diagrams/chip-circuit-typical.svg#only-light" alt="Schematic of the DYNAMIXEL servo bus on an mcu&#x27;s uart through a half-duplex stage: the chip with U2 MCU, U3 Half-duplex stage, C1 capacitor 100 µF; the MCU wires carry the port hooks Write()." width="1000" height="653" loading="lazy"><img src="../diagrams/chip-circuit-typical.dark.svg#only-dark" alt="Schematic of the DYNAMIXEL servo bus on an mcu&#x27;s uart through a half-duplex stage: the chip with U2 MCU, U3 Half-duplex stage, C1 capacitor 100 µF; the MCU wires carry the port hooks Write()." width="1000" height="653" loading="lazy">
+<img src="../diagrams/chip-circuit-typical.svg#only-light" alt="Schematic of the DYNAMIXEL servo bus on an mcu&#x27;s uart through a half-duplex stage: the chip with U2 MCU (5 V), U3 74LVC2G241 buffers, R1 resistor 10 kΩ, R2 resistor 10 kΩ, R3 resistor 10 kΩ, C1 capacitor 100 µF; the MCU wires carry the port hooks Write()." width="1072" height="898" loading="lazy"><img src="../diagrams/chip-circuit-typical.dark.svg#only-dark" alt="Schematic of the DYNAMIXEL servo bus on an mcu&#x27;s uart through a half-duplex stage: the chip with U2 MCU (5 V), U3 74LVC2G241 buffers, R1 resistor 10 kΩ, R2 resistor 10 kΩ, R3 resistor 10 kΩ, C1 capacitor 100 µF; the MCU wires carry the port hooks Write()." width="1072" height="898" loading="lazy">
 <figcaption>DYNAMIXEL: servo bus on an MCU's UART through a half-duplex stage</figcaption>
 </figure>
 
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>A schematic. The MCU is on the left, each of its pins level with the chip pin it connects to; above each wire is the hook of the driver's port that drives or reads it. Supply pins point up to their supply and decoupling, ground pins down. Pins on the right carry the loads and the pins tied to a supply or ground; a cross marks a pin left open. A dot is a junction; wires that cross without a dot are not connected.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
 </details>
 <p>The e-Manual's recommended TTL circuit is a pair of tri-state buffers (a 74LVC2G241 in the figure), one for each
 direction. One direction signal (<code>TX_Enable</code>) drives both enables: low enables the receive buffer (servo DATA to the
@@ -1362,10 +1326,10 @@ kilohm pull-<strong>down</strong> to ground on <code>TX_Enable</code>, so that t
 copy the enable resistor as a pull-up: a pull-up on the direction pin would enable the transmit buffer and drive DATA
 high at idle, against the servos' own answers. <strong>A 3.3 V MCU therefore needs a level shifter</strong>; the e-Manual shows no
 3.3 V circuit. What is read from the figure (the part name, the 5 V supply, the pull-ups and the pull-down) is
-unverified against a second source. The stage drawn here is a block, not a part; any circuit that gives
-the same behaviour (an RS-485 transceiver with the right level, or a UART's own half-duplex mode) works the same way
-for the driver. Add a bulk capacitor on the servo supply; the 100 microfarad of the drawing is an example, not a
-datasheet value.</p>
+unverified against a second source. The drawing shows the buffer pair as a part, with the 74LVC2G241's pin names;
+any circuit that gives the same behaviour (an RS-485 transceiver with the right level, or a UART's own half-duplex
+mode) works the same way for the driver. Add a bulk capacitor on the servo supply; the 100 microfarad of the drawing
+is an example, not a datasheet value.</p>
 <h2 id="inside-the-servo">Inside the servo<a class="headerlink" href="#inside-the-servo" title="Permanent link">&para;</a></h2>
 <figure class="kb-figure">
 <img src="../diagrams/chip-blocks.svg#only-light" alt="Block diagram of the DYNAMIXEL: its function blocks, how they connect and which package pins reach each block." width="1200" height="547" loading="lazy"><img src="../diagrams/chip-blocks.dark.svg#only-dark" alt="Block diagram of the DYNAMIXEL: its function blocks, how they connect and which package pins reach each block." width="1200" height="547" loading="lazy">
@@ -1375,7 +1339,7 @@ datasheet value.</p>
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>The DYNAMIXEL's function blocks inside its outline. Arrows between blocks carry signals or data in the direction they point (both ways where they have two heads). The package pins stand on the left and right edges with their numbers, each wired to the block it reaches.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
 </details>
 <p>The e-Manual has no block diagram; this one is drawn from its specification table, and the blocks are marked as
 unverified in <a href="../hardware.yml"><code>hardware.yml</code></a>.</p>
@@ -1388,7 +1352,7 @@ unverified in <a href="../hardware.yml"><code>hardware.yml</code></a>.</p>
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>The DYNAMIXEL package seen from the top and, when the height is known, from the side, drawn to scale: 28.5 x 46.5 x 34.0 mm. The arrows carry the datasheet's dimensions, the dot marks pin 1 and the pads are numbered counter-clockwise from it, coloured by the pin's electrical type (legend below). Pads sit centred on each side at the stated pitch; the datasheet's land pattern is the reference for a board.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
 </details>
 <h2 id="timing">Timing<a class="headerlink" href="#timing" title="Permanent link">&para;</a></h2>
 <table>
@@ -1519,11 +1483,11 @@ of the driver is in the datasheet: <a href="../datasheet/">Datasheet map</a>.</p
 </thead>
 <tbody>
 <tr>
-<td><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_tables.hpp"><code>inc/dynamixel_tables.hpp</code></a></td>
+<td><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_tables.hpp"><code>inc/dynamixel_tables.hpp</code></a></td>
 <td>The control table of every family, with the e-Manual page of each</td>
 </tr>
 <tr>
-<td><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_protocol.hpp"><code>inc/dynamixel_protocol.hpp</code></a></td>
+<td><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_protocol.hpp"><code>inc/dynamixel_protocol.hpp</code></a></td>
 <td>The packet layout, stuffing, CRC and the reply search</td>
 </tr>
 </tbody>
@@ -1582,13 +1546,13 @@ of the driver is in the datasheet: <a href="../datasheet/">Datasheet map</a>.</p
         
         
           
-          <a href="../protocol/" class="md-footer__link md-footer__link--next" aria-label="Next: Protocol">
+          <a href="../bus/" class="md-footer__link md-footer__link--next" aria-label="Next: On the bus">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Protocol
+                On the bus
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -100,72 +100,6 @@
   <meta property="og:description" content="C++20 driver for the ROBOTIS DYNAMIXEL servo protocols 1.0 and 2.0 over a half-duplex UART.">
   <meta property="og:url" content="https://kokeb-labs-drivers.github.io/driver-dynamixel/latest/">
   <meta name="twitter:card" content="summary">
-  <script>
-(function () {
-  if (typeof mermaid != "undefined" && !(mermaid instanceof Element)) return;
-  var SRC = "https://unpkg.com/mermaid@11.17.2/dist/mermaid.min.js",
-      SRI = "sha384-EOXBFmc3gx5mb+vn0vPvvGqACToJD24hhacX5Yx+8NUUQrHIle/Qi5Bg9o3zKwW2", config = {}, real, loading;
-  var waiting = [], io = null, ahead = false, ENGAGE = ["scroll", "keydown", "pointerdown", "touchstart"];
-  var stub = {
-    initialize: function (c) { config = c || {}; if (real) real.initialize(config); },
-    render: function (id, text) {
-      var el = null, pres = document.querySelectorAll("pre.mermaid:not([data-kb-mermaid])");
-      for (var i = 0; i < pres.length && !el; i++) if (pres[i].textContent === text) el = pres[i];
-      if (el) el.setAttribute("data-kb-mermaid", "");
-      return near(el).then(load).then(function (m) { return m.render(id, text); });
-    }
-  };
-  function load() {
-    return loading || (loading = new Promise(function (resolve, reject) {
-      var s = document.createElement("script");
-      s.src = SRC;
-      s.integrity = SRI;
-      s.crossOrigin = "anonymous";
-      s.onload = function () {
-        real = window.mermaid;
-        window.mermaid = stub;
-        real.initialize(config);
-        resolve(real);
-      };
-      s.onerror = function () { loading = null; reject(new Error("Mermaid did not load")); };
-      document.head.appendChild(s);
-    }));
-  }
-  // One observer for the diagrams still waiting: on the screen only until the reader engages, then a screen ahead.
-  function watch() {
-    if (io) io.disconnect();
-    io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) release(function (w) { return w.el === e.target; });
-      });
-    }, { rootMargin: ahead ? "100% 0px" : "0px" });
-    waiting.forEach(function (w) { io.observe(w.el); });
-  }
-  function release(which) {
-    waiting = waiting.filter(function (w) {
-      if (!which(w)) return true;
-      io.unobserve(w.el);
-      w.go();
-      return false;
-    });
-  }
-  function near(el) {
-    if (real || !el || !("IntersectionObserver" in window)) return Promise.resolve();
-    return new Promise(function (resolve) {
-      waiting.push({ el: el, go: resolve });
-      if (io) io.observe(el); else watch();
-    });
-  }
-  function engaged() {
-    ENGAGE.forEach(function (t) { window.removeEventListener(t, engaged, true); });
-    ahead = true;
-    if (io) watch();
-  }
-  ENGAGE.forEach(function (t) { window.addEventListener(t, engaged, { capture: true, passive: true }); });
-  window.addEventListener("beforeprint", function () { if (io) release(function () { return true; }); });
-  window.mermaid = stub;
-})();
-</script>
 
   </head>
   
@@ -537,10 +471,65 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-you-get" class="md-nav__link">
+  <a href="#what-it-does" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What you get
+        What it does
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-it-is-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where it is used
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inside-the-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inside the device
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pins-and-wiring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pins and wiring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#driver-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Driver coverage
       
     </span>
   </a>
@@ -569,6 +558,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#datasheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datasheet
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -585,6 +585,8 @@
   
     
     
+      
+        
       
         
       
@@ -866,10 +868,65 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-you-get" class="md-nav__link">
+  <a href="#what-it-does" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What you get
+        What it does
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-it-is-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where it is used
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inside-the-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inside the device
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pins-and-wiring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pins and wiring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#driver-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Driver coverage
       
     </span>
   </a>
@@ -892,6 +949,17 @@
     <span class="md-ellipsis">
       
         Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#datasheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datasheet
       
     </span>
   </a>
@@ -926,7 +994,7 @@
 
 
 <div class="kb-hero">
-<p><span class="kb-kicker">Driver</span></p>
+<p><span class="kb-kicker">Smart servo actuator</span></p>
 <h1 id="dynamixel-driver">DYNAMIXEL Driver<a class="headerlink" href="#dynamixel-driver" title="Permanent link">&para;</a></h1>
 <p>A C++20 bus-master driver for ROBOTIS DYNAMIXEL servos. It speaks protocol 1.0 and 2.0 over a half-duplex UART,
 finds the servos, reads and writes their control tables by name, and runs Sync, Bulk and Fast reads, on any MCU.</p>
@@ -934,29 +1002,196 @@ finds the servos, reads and writes their control tables by name, and runs Sync, 
 <a class="md-button" href="api-guide/">API guide</a>
 <a class="md-button" href="https://github.com/kokeb-labs-drivers/driver-dynamixel">Source on GitHub</a></p>
 </div>
+<!-- generated: chip-summary -->
+<p>The <strong>DYNAMIXEL</strong> is a family of smart servo actuators: each one has a motor, a gearbox, an absolute position sensor and
+a controller that runs its position, velocity or current loop, and all of them share one half-duplex data line, each
+with its own ID (1 Specifications, p. 1).</p>
+<!-- /generated -->
+
+<figure class="kb-figure">
+<img src="diagrams/chip-hero.svg#only-light" alt="Overview of the DYNAMIXEL, a family of smart servo actuators: each one has a motor, a gearbox, an absolute position sensor and a controller that runs its position, velocity or current loop, and all of them share one half-duplex data line, each with its own ID. A MCU talks to it over TTL or RS-485; it drives Motor and gear; it reads back Absolute encoder, Temperature, voltage, current. Headline figures: 10 to 14.8 V XM430-W350 supply, 12 V recommended; 4096 / rev position resolution, 12 bit; 4.5 Mbit/s fastest baud rate, from 9600; 253 IDs on one bus, 0 to 252; 4.1 N.m stall torque at 12 V." width="1200" height="842"><img src="diagrams/chip-hero.dark.svg#only-dark" alt="Overview of the DYNAMIXEL, a family of smart servo actuators: each one has a motor, a gearbox, an absolute position sensor and a controller that runs its position, velocity or current loop, and all of them share one half-duplex data line, each with its own ID. A MCU talks to it over TTL or RS-485; it drives Motor and gear; it reads back Absolute encoder, Temperature, voltage, current. Headline figures: 10 to 14.8 V XM430-W350 supply, 12 V recommended; 4096 / rev position resolution, 12 bit; 4.5 Mbit/s fastest baud rate, from 9600; 253 IDs on one bus, 0 to 252; 4.1 N.m stall torque at 12 V." width="1200" height="842">
+<figcaption>DYNAMIXEL</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>The DYNAMIXEL in the middle, drawn as its TTL servo package. On the left the MCU that runs the driver, joined to it by TTL or RS-485. To the right, what the chip drives, in the order the power flows. Below it, what the chip reads back. The tiles at the bottom are the headline numbers, each with the datasheet section and page it comes from.</p>
+<p>Drawn from: <a href="hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+</details>
+<h2 id="what-it-does">What it does<a class="headerlink" href="#what-it-does" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="diagrams/chip-capabilities.svg#only-light" alt="Capability map of the DYNAMIXEL: Position control (supported): Moves to a goal position in counts, within the position limits and the profile velocity and acceleration; Velocity, current and PWM modes (supported): Selects the operating mode and sets a velocity, current or PWM goal, by register name with units; Feedback (supported): Reads position, velocity, load or current, voltage and temperature in one call; Torque enable (supported): Switches the motor on or off; the torque-off stop is always available, even with guards on; Find servos (supported): Pings one ID or the whole bus, and reads each servo&#x27;s model number and firmware; Many servos at once (supported): Reads or writes the same registers of many servos in one transaction, with an outcome for each servo; ID, baud rate and status level (supported): Gives a servo its ID and baud rate, moves the bus to match, and sets which replies a servo returns; Reboot, reset and backup (guarded): Reboots a servo, resets its control table, clears the multi-turn count and stores or restores a backup; Hardware errors (supported): Decodes the error byte and the hardware error status, and latches an alert until it is cleared." width="1200" height="1068" loading="lazy"><img src="diagrams/chip-capabilities.dark.svg#only-dark" alt="Capability map of the DYNAMIXEL: Position control (supported): Moves to a goal position in counts, within the position limits and the profile velocity and acceleration; Velocity, current and PWM modes (supported): Selects the operating mode and sets a velocity, current or PWM goal, by register name with units; Feedback (supported): Reads position, velocity, load or current, voltage and temperature in one call; Torque enable (supported): Switches the motor on or off; the torque-off stop is always available, even with guards on; Find servos (supported): Pings one ID or the whole bus, and reads each servo&#x27;s model number and firmware; Many servos at once (supported): Reads or writes the same registers of many servos in one transaction, with an outcome for each servo; ID, baud rate and status level (supported): Gives a servo its ID and baud rate, moves the bus to match, and sets which replies a servo returns; Reboot, reset and backup (guarded): Reboots a servo, resets its control table, clears the multi-turn count and stores or restores a backup; Hardware errors (supported): Decodes the error byte and the hardware error status, and latches an alert until it is cleared." width="1200" height="1068" loading="lazy">
+<figcaption>What the DYNAMIXEL does</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>Each card is one function of the DYNAMIXEL: an icon, its name and what it does for the application. The filled pill says how this driver covers it (legend below); the outlined pills are the chip registers behind it. The coverage table in the README gives the driver calls and the datasheet section of each card.</p>
+<p>Drawn from: <a href="hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+</details>
+<h2 id="where-it-is-used">Where it is used<a class="headerlink" href="#where-it-is-used" title="Permanent link">&para;</a></h2>
+<!-- generated: chip-uses -->
+<ul>
+<li>Articulated robot joints</li>
+<li>Wheel-type robots</li>
+<li>Grippers</li>
+<li>Multi-turn wrists and conveyor systems</li>
+</ul>
+<p>Uses named by the datasheet (2.4 Control Table Description, Operating Mode(11), p. 1).</p>
+<!-- /generated -->
+
+<h2 id="inside-the-device">Inside the device<a class="headerlink" href="#inside-the-device" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="diagrams/chip-blocks.svg#only-light" alt="Block diagram of the DYNAMIXEL: its function blocks, how they connect and which package pins reach each block." width="1200" height="547" loading="lazy"><img src="diagrams/chip-blocks.dark.svg#only-dark" alt="Block diagram of the DYNAMIXEL: its function blocks, how they connect and which package pins reach each block." width="1200" height="547" loading="lazy">
+<figcaption>Inside the DYNAMIXEL</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>The DYNAMIXEL's function blocks inside its outline. Arrows between blocks carry signals or data in the direction they point (both ways where they have two heads). The package pins stand on the left and right edges with their numbers, each wired to the block it reaches.</p>
+<p>Drawn from: <a href="hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+</details>
+<h2 id="pins-and-wiring">Pins and wiring<a class="headerlink" href="#pins-and-wiring" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="diagrams/chip-pinout.svg#only-light" alt="Pinout of the DYNAMIXEL in TTL servo, top view: 3 pins, each with its name, its electrical type as a colour and the driver hook that uses it." width="760" height="441" loading="lazy"><img src="diagrams/chip-pinout.dark.svg#only-dark" alt="Pinout of the DYNAMIXEL in TTL servo, top view: 3 pins, each with its name, its electrical type as a colour and the driver hook that uses it." width="760" height="441" loading="lazy">
+<figcaption>DYNAMIXEL pinout, TTL servo</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>The DYNAMIXEL seen from the top, in its TTL servo package. Pin 1 is marked by the dot; the numbers run counter-clockwise from it. Each pad is coloured by the pin's electrical type (legend below). Next to it is the pin's name and, in mono, the hook of the driver's port that drives or reads it; a pin without a hook is not used by the driver.</p>
+<p>Drawn from: <a href="hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+</details>
+<figure class="kb-figure">
+<img src="diagrams/chip-wiring-typical.svg#only-light" alt="Wiring of the DYNAMIXEL for the servo bus on an MCU&#x27;s UART through a half-duplex stage: MCU (5 V) UART TX to 74LVC2G241 buffers 2A (Write()); MCU (5 V) UART RX to 74LVC2G241 buffers 1Y (Read()); MCU (5 V) GPIO (direction) to 74LVC2G241 buffers 1OE, 2OE (Write()); 74LVC2G241 buffers 2Y, 1A to DATA (Write() and Read()). Supplies, grounds and the support parts are listed under the drawing." width="1200" height="955" loading="lazy"><img src="diagrams/chip-wiring-typical.dark.svg#only-dark" alt="Wiring of the DYNAMIXEL for the servo bus on an MCU&#x27;s UART through a half-duplex stage: MCU (5 V) UART TX to 74LVC2G241 buffers 2A (Write()); MCU (5 V) UART RX to 74LVC2G241 buffers 1Y (Read()); MCU (5 V) GPIO (direction) to 74LVC2G241 buffers 1OE, 2OE (Write()); 74LVC2G241 buffers 2Y, 1A to DATA (Write() and Read()). Supplies, grounds and the support parts are listed under the drawing." width="1200" height="955" loading="lazy">
+<figcaption>Wiring: servo bus on an MCU's UART through a half-duplex stage</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>The MCU (5 V) on the left, the DYNAMIXEL on the right of the parts between them (74LVC2G241 buffers). Each wire to the chip is coloured by the chip pin's electrical type and carries the net name and the chip pin number above it and, under it, the driver hooks that use it (and any part on the net). The boxes underneath list the supplies, the support parts and the pins this circuit leaves unconnected.</p>
+<p>Drawn from: <a href="hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+</details>
+<p>The wiring, the half-duplex stage and the circuit in full: <a href="hardware/">Hardware</a>.</p>
+<h2 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<p>Wire the bus as above, write the port (<a href="porting/">Porting</a>), then find a servo and move it:</p>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"dynamixel.hpp"</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">move_first_servo</span><span class="p">(</span><span class="n">MyPort</span><span class="o">&amp;</span><span class="w"> </span><span class="n">port</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="n">dynamixel</span><span class="o">::</span><span class="n">DYNAMIXEL</span><span class="o">&lt;</span><span class="n">MyPort</span><span class="o">&gt;</span><span class="w"> </span><span class="n">servos</span><span class="p">(</span><span class="n">port</span><span class="p">);</span><span class="w"> </span><span class="c1">// protocol 2.0, 57 600 bit/s; no I/O yet</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">servos</span><span class="p">.</span><span class="n">EnsureInitialized</span><span class="p">();</span><span class="w"> </span><span class="o">!</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// 1. UART up</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">error</span><span class="p">);</span><span class="w">            </span><span class="c1">//    Bus: check the UART and the wiring</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">found</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">servos</span><span class="p">.</span><span class="n">Ping</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// 2. who is there? model, firmware, family</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">found</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">found</span><span class="p">.</span><span class="n">error</span><span class="p">);</span><span class="w"> </span><span class="c1">//    Timeout: wrong ID, baud rate or protocol</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">dynamixel</span><span class="o">::</span><span class="n">ServoRef</span><span class="w"> </span><span class="n">servo</span><span class="p">{</span><span class="n">found</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">found</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">family</span><span class="p">};</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">servos</span><span class="p">.</span><span class="n">SetTorque</span><span class="p">(</span><span class="n">servo</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span><span class="w"> </span><span class="o">!</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// 3. torque on</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">error</span><span class="p">);</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">servos</span><span class="p">.</span><span class="n">SetGoalPosition</span><span class="p">(</span><span class="n">servo</span><span class="p">,</span><span class="w"> </span><span class="mi">2048</span><span class="p">).</span><span class="n">error</span><span class="p">);</span><span class="w"> </span><span class="c1">// 4. half a turn</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>The steps explained: <a href="quickstart/">Quickstart</a>.</p>
+<h2 id="driver-coverage">Driver coverage<a class="headerlink" href="#driver-coverage" title="Permanent link">&para;</a></h2>
+<!-- generated: chip-coverage -->
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>What the chip does</th>
+<th>Driver API</th>
+<th>Registers</th>
+<th>Status</th>
+<th>Datasheet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="control-tables/">Position control</a></td>
+<td>Moves to a goal position in counts, within the position limits and the profile velocity and acceleration</td>
+<td><code>SetGoalPosition</code>, <code>WriteRegister</code></td>
+<td><code>GoalPosition</code>, <code>MinPositionLimit</code>, <code>MaxPositionLimit</code>, <code>ProfileVelocity</code>, <code>ProfileAcceleration</code></td>
+<td>Supported</td>
+<td>2.4, p. 1</td>
+</tr>
+<tr>
+<td><a href="control-tables/">Velocity, current and PWM modes</a></td>
+<td>Selects the operating mode and sets a velocity, current or PWM goal, by register name with units (no motion helper: written through the register calls)</td>
+<td><code>WriteRegister</code>, <code>ReadRegister</code></td>
+<td><code>OperatingMode</code>, <code>GoalVelocity</code>, <code>GoalCurrent</code>, <code>GoalPwm</code></td>
+<td>Supported</td>
+<td>2.4, p. 1</td>
+</tr>
+<tr>
+<td><a href="control-tables/">Feedback</a></td>
+<td>Reads position, velocity, load or current, voltage and temperature in one call</td>
+<td><code>ReadFeedback</code>, <code>ReadRegister</code></td>
+<td><code>PresentPosition</code>, <code>PresentVelocity</code>, <code>PresentCurrent</code>, <code>PresentVoltage</code>, <code>PresentTemperature</code></td>
+<td>Supported</td>
+<td>2.4, p. 1</td>
+</tr>
+<tr>
+<td><a href="api-guide/">Torque enable</a></td>
+<td>Switches the motor on or off; the torque-off stop is always available, even with guards on</td>
+<td><code>SetTorque</code>, <code>DisableTorque</code>, <code>DisableTorqueAll</code>, <code>DisableTorqueEach</code></td>
+<td><code>TorqueEnable</code></td>
+<td>Supported</td>
+<td>2.4, p. 1</td>
+</tr>
+<tr>
+<td><a href="protocol/">Find servos</a></td>
+<td>Pings one ID or the whole bus, and reads each servo's model number and firmware</td>
+<td><code>Ping</code>, <code>BroadcastPing</code>, <code>ScanIds</code>, <code>Identify</code></td>
+<td><code>ModelNumber</code>, <code>FirmwareVersion</code></td>
+<td>Supported</td>
+<td>5.1, p. 1</td>
+</tr>
+<tr>
+<td><a href="protocol/">Many servos at once</a></td>
+<td>Reads or writes the same registers of many servos in one transaction, with an outcome for each servo</td>
+<td><code>SyncRead</code>, <code>SyncWrite</code>, <code>BulkRead</code>, <code>BulkWrite</code>, <code>FastSyncRead</code>, <code>FastBulkRead</code></td>
+<td>-</td>
+<td>Supported</td>
+<td>5.10, p. 1</td>
+</tr>
+<tr>
+<td><a href="api-guide/">ID, baud rate and status level</a></td>
+<td>Gives a servo its ID and baud rate, moves the bus to match, and sets which replies a servo returns</td>
+<td><code>SetId</code>, <code>SetServoBaudRate</code>, <code>ChangeBusBaud</code>, <code>SetStatusReturnLevel</code></td>
+<td><code>Id</code>, <code>BaudRate</code>, <code>StatusReturnLevel</code></td>
+<td>Supported</td>
+<td>2.4, p. 1</td>
+</tr>
+<tr>
+<td><a href="protocol/">Reboot, reset and backup</a></td>
+<td>Reboots a servo, resets its control table, clears the multi-turn count and stores or restores a backup (destructive instructions need one configuration flag)</td>
+<td><code>Reboot</code>, <code>FactoryReset</code>, <code>Clear</code>, <code>Backup</code></td>
+<td>-</td>
+<td>Guarded</td>
+<td>5.6, p. 1</td>
+</tr>
+<tr>
+<td><a href="protocol/">Hardware errors</a></td>
+<td>Decodes the error byte and the hardware error status, and latches an alert until it is cleared</td>
+<td><code>GetLatchedAlert</code>, <code>ClearLatchedAlert</code>, <code>Resync</code></td>
+<td><code>HardwareErrorStatus</code>, <code>Shutdown</code></td>
+<td>Supported</td>
+<td>2.4, p. 1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Supported</strong>: the driver covers it and a host test checks it; <strong>Guarded</strong>: covered, behind an explicit acknowledgement
+because a wrong value can do harm.</p>
+<p>From <a href="hardware.yml"><code>docs/hardware.yml</code></a>; <code>kokeb-docs hardware --check</code> confirms that every API name is in
+<code>inc/dynamixel.hpp</code>, <code>inc/dynamixel_types.hpp</code> and every register in <code>inc/dynamixel_tables.hpp</code>.</p>
+<!-- /generated -->
+
 <p>The driver has no platform code. You give it a small class that moves bytes on your UART; it does the rest:
 packet framing and byte stuffing, CRC-16 and checksums, finding the reply in the received bytes, retries, the
 per-register decoding of 9 families of servos and the per-servo outcome of a Sync or Fast read.</p>
-<div class="kb-chip">
-<div class="kb-chip__head">
-<span class="kb-chip__kicker">Smart servo</span>
-<span class="kb-chip__name">DYNAMIXEL</span>
-<span class="kb-chip__vendor">ROBOTIS</span>
-</div>
-<dl>
-<dt>Function</dt>
-<dd>Servo with a control table of registers; position, velocity, current and PWM control</dd>
-<dt>Interface</dt>
-<dd>Half-duplex TTL or RS-485 UART, 8N1, 9 600 to 4.5 Mbit/s; one line shared by every servo</dd>
-<dt>Protocols</dt>
-<dd>2.0 (CRC-16, byte stuffing) and 1.0 (checksum); one per bus</dd>
-<dt>Instructions</dt>
-<dd>Ping, Read, Write, Reg Write, Action, Reboot, Factory Reset, Clear, Backup, Sync, Bulk and the Fast reads</dd>
-<dt>Catalogue</dt>
-<dd>47 model numbers in 9 control-table families: AX, RX, DX, MX (1.0 and 2.0), XL-320, XL330, XL430, XM, XH, XD, XW</dd>
-</dl>
-</div>
-<h2 id="what-you-get">What you get<a class="headerlink" href="#what-you-get" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>One object per bus.</strong> <code>DYNAMIXEL&lt;YourPort&gt;</code> takes a reference to your port and does no I/O until
   <code>EnsureInitialized()</code>. See <a href="api-guide/">API guide</a>.</li>
@@ -1019,6 +1254,7 @@ per-register decoding of 9 families of servos and the per-servo outcome of a Syn
 <p>Version 0.1.0. The behaviour is checked against a model of the bus that is written separately from the driver, by
 unit tests, fuzzing and mutation testing (<a href="testing/">Testing and CI</a>). It has not been run against a servo yet.
 Four points the e-Manual does not specify are listed in the <a href="contract/#open-points">Contract</a>.</p>
+<h2 id="datasheet">Datasheet<a class="headerlink" href="#datasheet" title="Permanent link">&para;</a></h2>
 <!-- generated: datasheet-card -->
 <table>
 <thead>

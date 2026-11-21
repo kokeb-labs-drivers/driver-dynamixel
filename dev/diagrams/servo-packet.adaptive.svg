@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="851" viewBox="0 0 640 851" role="img" aria-labelledby="servo-packet-title servo-packet-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" class="fk">
+<title id="servo-packet-title">Instruction and status packets</title>
+<desc id="servo-packet-desc">Field layout of a DYNAMIXEL protocol 2.0 instruction packet and the status packet that answers it: header and reserved byte, packet ID, length, instruction, the status packet's error byte, parameters and CRC.</desc>
+<style>
+.fk{--fk-amber-strong:#C26A05;--fk-amber-text:#8A3C0B;--fk-amber-tint:#FFF5E3;--fk-blue-strong:#2563EB;--fk-blue-text:#1E429F;--fk-blue-tint:#EAF2FF;--fk-brand-text:#7A360E;--fk-canvas:#FFFFFF;--fk-frame:#E2E7EE;--fk-hair:#E2E7EE;--fk-ink:#0E1726;--fk-ink2:#2B3442;--fk-muted:#566070;--fk-rail:#7C8798;--fk-slate-soft:#CBD5E1;--fk-slate-strong:#64748B;--fk-slate-text:#334155;--fk-slate-tint:#F1F4F8;--fk-teal-strong:#0B7A72;--fk-teal-text:#0B5F59;--fk-teal-tint:#E6F6F4;}
+@media (prefers-color-scheme:dark){.fk{--fk-amber-strong:#FBBF24;--fk-amber-text:#FDE68A;--fk-amber-tint:#2C2310;--fk-blue-strong:#60A5FA;--fk-blue-text:#BFDBFE;--fk-blue-tint:#13233A;--fk-brand-text:#F8D27A;--fk-canvas:#0E131A;--fk-frame:#283241;--fk-hair:#252F3C;--fk-ink:#E8EDF3;--fk-ink2:#D2DAE4;--fk-muted:#9AA6B5;--fk-rail:#6C7889;--fk-slate-soft:#3A4656;--fk-slate-strong:#94A3B8;--fk-slate-text:#E2E8F0;--fk-slate-tint:#1B232E;--fk-teal-strong:#2BB3A3;--fk-teal-text:#A7F3E6;--fk-teal-tint:#0F2A28;}}
+:root[data-theme="dark"] .fk,[data-md-color-scheme="slate"] .fk{--fk-amber-strong:#FBBF24;--fk-amber-text:#FDE68A;--fk-amber-tint:#2C2310;--fk-blue-strong:#60A5FA;--fk-blue-text:#BFDBFE;--fk-blue-tint:#13233A;--fk-brand-text:#F8D27A;--fk-canvas:#0E131A;--fk-frame:#283241;--fk-hair:#252F3C;--fk-ink:#E8EDF3;--fk-ink2:#D2DAE4;--fk-muted:#9AA6B5;--fk-rail:#6C7889;--fk-slate-soft:#3A4656;--fk-slate-strong:#94A3B8;--fk-slate-text:#E2E8F0;--fk-slate-tint:#1B232E;--fk-teal-strong:#2BB3A3;--fk-teal-text:#A7F3E6;--fk-teal-tint:#0F2A28;}
+:root[data-theme="light"] .fk,[data-md-color-scheme="default"] .fk{--fk-amber-strong:#C26A05;--fk-amber-text:#8A3C0B;--fk-amber-tint:#FFF5E3;--fk-blue-strong:#2563EB;--fk-blue-text:#1E429F;--fk-blue-tint:#EAF2FF;--fk-brand-text:#7A360E;--fk-canvas:#FFFFFF;--fk-frame:#E2E7EE;--fk-hair:#E2E7EE;--fk-ink:#0E1726;--fk-ink2:#2B3442;--fk-muted:#566070;--fk-rail:#7C8798;--fk-slate-soft:#CBD5E1;--fk-slate-strong:#64748B;--fk-slate-text:#334155;--fk-slate-tint:#F1F4F8;--fk-teal-strong:#0B7A72;--fk-teal-text:#0B5F59;--fk-teal-tint:#E6F6F4;}
+.fk-f-amber-strong{fill:var(--fk-amber-strong)}.fk-s-amber-strong{stroke:var(--fk-amber-strong)}
+.fk-f-amber-text{fill:var(--fk-amber-text)}.fk-s-amber-text{stroke:var(--fk-amber-text)}
+.fk-f-amber-tint{fill:var(--fk-amber-tint)}.fk-s-amber-tint{stroke:var(--fk-amber-tint)}
+.fk-f-blue-strong{fill:var(--fk-blue-strong)}.fk-s-blue-strong{stroke:var(--fk-blue-strong)}
+.fk-f-blue-text{fill:var(--fk-blue-text)}.fk-s-blue-text{stroke:var(--fk-blue-text)}
+.fk-f-blue-tint{fill:var(--fk-blue-tint)}.fk-s-blue-tint{stroke:var(--fk-blue-tint)}
+.fk-f-brand-text{fill:var(--fk-brand-text)}.fk-s-brand-text{stroke:var(--fk-brand-text)}
+.fk-f-canvas{fill:var(--fk-canvas)}.fk-s-canvas{stroke:var(--fk-canvas)}
+.fk-f-frame{fill:var(--fk-frame)}.fk-s-frame{stroke:var(--fk-frame)}
+.fk-f-hair{fill:var(--fk-hair)}.fk-s-hair{stroke:var(--fk-hair)}
+.fk-f-ink{fill:var(--fk-ink)}.fk-s-ink{stroke:var(--fk-ink)}
+.fk-f-ink2{fill:var(--fk-ink2)}.fk-s-ink2{stroke:var(--fk-ink2)}
+.fk-f-muted{fill:var(--fk-muted)}.fk-s-muted{stroke:var(--fk-muted)}
+.fk-f-rail{fill:var(--fk-rail)}.fk-s-rail{stroke:var(--fk-rail)}
+.fk-f-slate-soft{fill:var(--fk-slate-soft)}.fk-s-slate-soft{stroke:var(--fk-slate-soft)}
+.fk-f-slate-strong{fill:var(--fk-slate-strong)}.fk-s-slate-strong{stroke:var(--fk-slate-strong)}
+.fk-f-slate-text{fill:var(--fk-slate-text)}.fk-s-slate-text{stroke:var(--fk-slate-text)}
+.fk-f-slate-tint{fill:var(--fk-slate-tint)}.fk-s-slate-tint{stroke:var(--fk-slate-tint)}
+.fk-f-teal-strong{fill:var(--fk-teal-strong)}.fk-s-teal-strong{stroke:var(--fk-teal-strong)}
+.fk-f-teal-text{fill:var(--fk-teal-text)}.fk-s-teal-text{stroke:var(--fk-teal-text)}
+.fk-f-teal-tint{fill:var(--fk-teal-tint)}.fk-s-teal-tint{stroke:var(--fk-teal-tint)}
+@media (forced-colors:active){.fk text{fill:CanvasText}.fk rect,.fk circle{fill:Canvas;stroke:CanvasText}.fk path{stroke:CanvasText}.fk marker path{fill:CanvasText;stroke:none}}
+</style>
+<rect x="0.5" y="0.5" width="639" height="850" rx="16" class="fk-f-canvas fk-s-frame"/>
+<text x="32" y="44.4" font-size="13" font-weight="700" letter-spacing="1.2" class="fk-f-brand-text">PROTOCOL 2.0</text>
+<text x="32" y="76.2" font-size="24" font-weight="700" class="fk-f-ink">Instruction and status packets</text>
+<text x="32" y="102.7" font-size="15" class="fk-f-muted">Sources: p2 2.3 Packet ID, p. 1; p1 2.2 Packet ID, p. 1; p2 2.7 CRC, p. 1; p2 2</text>
+<text x="32" y="124.5" font-size="15" class="fk-f-muted">Instruction Packet, p. 1; p2 2.4 Length, p. 1; p2 3 Status Packet, p. 1; p1 2</text>
+<text x="32" y="146.2" font-size="15" class="fk-f-muted">Instruction Packet, p. 1.</text>
+<rect x="32" y="162.2" width="576" height="1" class="fk-f-hair"/>
+<path d="M93.7 254.6 L93.7 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M125.5 254.6 L125.5 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M157.2 254.6 L157.2 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M189 254.6 L189 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M220.8 254.6 L220.8 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M252.5 254.6 L252.5 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M284.3 254.6 L284.3 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M316.1 254.6 L316.1 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M347.9 254.6 L347.9 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M379.6 254.6 L379.6 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M411.4 254.6 L411.4 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M443.2 254.6 L443.2 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M474.9 254.6 L474.9 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M506.7 254.6 L506.7 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M538.5 254.6 L538.5 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M570.2 254.6 L570.2 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M602 254.6 L602 338.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M32 384.7 L608 384.7" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M32 457.6 L608 457.6" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M32 530.4 L608 530.4" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M32 603.2 L608 603.2" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M32 676.1 L608 676.1" fill="none" stroke-width="1" class="fk-s-hair"/>
+<path d="M94.7 245.6 L94.7 240.6 L219.8 240.6 L219.8 245.6" fill="none" stroke-width="1.4" class="fk-s-slate-strong"/>
+<path d="M221.8 213.4 L221.8 208.4 L251.5 208.4 L251.5 213.4" fill="none" stroke-width="1.4" class="fk-s-slate-strong"/>
+<path d="M253.5 245.6 L253.5 240.6 L315.1 240.6 L315.1 245.6" fill="none" stroke-width="1.4" class="fk-s-slate-strong"/>
+<path d="M317.1 213.4 L317.1 208.4 L378.6 208.4 L378.6 213.4" fill="none" stroke-width="1.4" class="fk-s-slate-strong"/>
+<path d="M538.5 272.6 L570.2 272.6" fill="none" stroke-width="2" class="fk-s-rail"/>
+<path d="M570.2 272.6 L602 272.6" fill="none" stroke-width="2" class="fk-s-rail"/>
+<path d="M93.7 272.6 L98.7 259.6 L215.8 259.6 L220.8 272.6 L215.8 285.6 L98.7 285.6 Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="fk-f-slate-tint fk-s-slate-strong"/>
+<path d="M220.8 272.6 L225.8 259.6 L247.5 259.6 L252.5 272.6 L247.5 285.6 L225.8 285.6 Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="fk-f-blue-tint fk-s-blue-strong"/>
+<path d="M252.5 272.6 L257.5 259.6 L311.1 259.6 L316.1 272.6 L311.1 285.6 L257.5 285.6 Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="fk-f-blue-tint fk-s-blue-strong"/>
+<path d="M316.1 272.6 L321.1 259.6 L374.6 259.6 L379.6 272.6 L374.6 285.6 L321.1 285.6 Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="fk-f-blue-tint fk-s-blue-strong"/>
+<path d="M379.6 272.6 L384.6 259.6 L469.9 259.6 L474.9 272.6 L469.9 285.6 L384.6 285.6 Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="fk-f-blue-tint fk-s-blue-strong"/>
+<path d="M474.9 272.6 L479.9 259.6 L533.5 259.6 L538.5 272.6 L533.5 285.6 L479.9 285.6 Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="fk-f-teal-tint fk-s-teal-strong"/>
+<path d="M93.7 320.6 L98.7 307.6 L215.8 307.6 L220.8 320.6 L215.8 333.6 L98.7 333.6 Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="fk-f-slate-tint fk-s-slate-strong"/>
+<path d="M220.8 320.6 L225.8 307.6 L247.5 307.6 L252.5 320.6 L247.5 333.6 L225.8 333.6 Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="fk-f-teal-tint fk-s-teal-strong"/>
+<path d="M252.5 320.6 L257.5 307.6 L311.1 307.6 L316.1 320.6 L311.1 333.6 L257.5 333.6 Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="fk-f-teal-tint fk-s-teal-strong"/>
+<path d="M316.1 320.6 L321.1 307.6 L374.6 307.6 L379.6 320.6 L374.6 333.6 L321.1 333.6 Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="fk-f-teal-tint fk-s-teal-strong"/>
+<path d="M379.6 320.6 L384.6 307.6 L438.2 307.6 L443.2 320.6 L438.2 333.6 L384.6 333.6 Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="fk-f-amber-tint fk-s-amber-strong"/>
+<path d="M443.2 320.6 L448.2 307.6 L533.5 307.6 L538.5 320.6 L533.5 333.6 L448.2 333.6 Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="fk-f-teal-tint fk-s-teal-strong"/>
+<path d="M538.5 320.6 L543.5 307.6 L597 307.6 L602 320.6 L597 333.6 L543.5 333.6 Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="fk-f-teal-tint fk-s-teal-strong"/>
+<rect x="32" y="690.1" width="576" height="130.3" rx="10" stroke-width="1" class="fk-f-slate-tint fk-s-slate-soft"/>
+<text x="157.2" y="229.7" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-slate-text">header and reserved</text>
+<text x="236.7" y="197.5" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-slate-text">packet ID</text>
+<text x="284.3" y="229.7" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-slate-text">length</text>
+<text x="347.9" y="197.5" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-slate-text">instruction</text>
+<text x="32" y="278" font-size="15" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" class="fk-f-ink">Host</text>
+<text x="157.2" y="277.6" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-slate-text">FF FF FD 00</text>
+<text x="236.7" y="277.6" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-blue-text">ID</text>
+<text x="284.3" y="277.6" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-blue-text">Length</text>
+<text x="347.9" y="277.6" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-blue-text">INST</text>
+<text x="427.3" y="277.6" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-blue-text">Param 1…N</text>
+<text x="506.7" y="277.6" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-teal-text">CRC</text>
+<text x="32" y="326" font-size="15" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" class="fk-f-ink">Servo</text>
+<text x="157.2" y="325.6" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-slate-text">FF FF FD 00</text>
+<text x="236.7" y="325.6" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-teal-text">ID</text>
+<text x="284.3" y="325.6" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-teal-text">Length</text>
+<text x="347.9" y="325.6" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-teal-text">0x55</text>
+<text x="411.4" y="325.6" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-amber-text">ERR</text>
+<text x="490.8" y="325.6" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-teal-text">Param 1…N</text>
+<text x="570.2" y="325.6" font-size="14" font-weight="600" text-anchor="middle" class="fk-f-teal-text">CRC</text>
+<text x="32" y="369" font-size="17" font-weight="700" class="fk-f-ink">Values</text>
+<text x="32" y="405.4" font-size="15" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" class="fk-f-ink">ID</text>
+<text x="608" y="405.4" font-size="15" font-weight="700" text-anchor="end" class="fk-f-ink">min 0 · max 252</text>
+<text x="32" y="425.7" font-size="15" class="fk-f-ink2">Packet ID range, protocol 2.0</text>
+<text x="32" y="445.8" font-size="14" class="fk-f-muted">Datasheet 2.3 Packet ID, p. 1</text>
+<text x="32" y="478.3" font-size="15" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" class="fk-f-ink">ID</text>
+<text x="608" y="478.3" font-size="15" font-weight="700" text-anchor="end" class="fk-f-ink">typ 254</text>
+<text x="32" y="498.6" font-size="15" class="fk-f-ink2">Broadcast ID: every device executes the packet</text>
+<text x="32" y="518.7" font-size="14" class="fk-f-muted">Datasheet 2.3 Packet ID, p. 1</text>
+<text x="32" y="551.2" font-size="15" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" class="fk-f-ink">ID</text>
+<text x="608" y="551.2" font-size="15" font-weight="700" text-anchor="end" class="fk-f-ink">min 0 · max 253</text>
+<text x="32" y="571.4" font-size="15" class="fk-f-ink2">Packet ID range, protocol 1.0</text>
+<text x="32" y="591.5" font-size="14" class="fk-f-muted">Datasheet 2.2 Packet ID, p. 1</text>
+<text x="32" y="624" font-size="15" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" class="fk-f-ink">CRC</text>
+<text x="608" y="624" font-size="15" font-weight="700" text-anchor="end" class="fk-f-ink">typ 16 bit</text>
+<text x="32" y="644.2" font-size="15" class="fk-f-ink2">Checksum over the header to the last parameter, low byte first</text>
+<text x="32" y="664.4" font-size="14" class="fk-f-muted">Datasheet 2.7 CRC, p. 1</text>
+<text x="46" y="718.6" font-size="17" font-weight="700" class="fk-f-slate-text">Notes</text>
+<text x="46" y="739" font-size="15" class="fk-f-slate-text">Length counts the instruction, the parameters and the CRC: parameters</text>
+<text x="46" y="760.7" font-size="15" class="fk-f-slate-text">+ 3. The status packet adds the error byte after the instruction 0x55.</text>
+<text x="46" y="782.5" font-size="15" class="fk-f-slate-text">Protocol 1.0: header FF FF, no reserved byte, one length byte and a</text>
+<text x="46" y="804.2" font-size="15" class="fk-f-slate-text">one-byte checksum.</text>
+</svg>

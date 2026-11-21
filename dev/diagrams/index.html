@@ -102,72 +102,6 @@
   <meta property="og:description" content="C++20 driver for the ROBOTIS DYNAMIXEL servo protocols 1.0 and 2.0 over a half-duplex UART.">
   <meta property="og:url" content="https://kokeb-labs-drivers.github.io/driver-dynamixel/latest/diagrams/">
   <meta name="twitter:card" content="summary">
-  <script>
-(function () {
-  if (typeof mermaid != "undefined" && !(mermaid instanceof Element)) return;
-  var SRC = "https://unpkg.com/mermaid@11.17.2/dist/mermaid.min.js",
-      SRI = "sha384-EOXBFmc3gx5mb+vn0vPvvGqACToJD24hhacX5Yx+8NUUQrHIle/Qi5Bg9o3zKwW2", config = {}, real, loading;
-  var waiting = [], io = null, ahead = false, ENGAGE = ["scroll", "keydown", "pointerdown", "touchstart"];
-  var stub = {
-    initialize: function (c) { config = c || {}; if (real) real.initialize(config); },
-    render: function (id, text) {
-      var el = null, pres = document.querySelectorAll("pre.mermaid:not([data-kb-mermaid])");
-      for (var i = 0; i < pres.length && !el; i++) if (pres[i].textContent === text) el = pres[i];
-      if (el) el.setAttribute("data-kb-mermaid", "");
-      return near(el).then(load).then(function (m) { return m.render(id, text); });
-    }
-  };
-  function load() {
-    return loading || (loading = new Promise(function (resolve, reject) {
-      var s = document.createElement("script");
-      s.src = SRC;
-      s.integrity = SRI;
-      s.crossOrigin = "anonymous";
-      s.onload = function () {
-        real = window.mermaid;
-        window.mermaid = stub;
-        real.initialize(config);
-        resolve(real);
-      };
-      s.onerror = function () { loading = null; reject(new Error("Mermaid did not load")); };
-      document.head.appendChild(s);
-    }));
-  }
-  // One observer for the diagrams still waiting: on the screen only until the reader engages, then a screen ahead.
-  function watch() {
-    if (io) io.disconnect();
-    io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) release(function (w) { return w.el === e.target; });
-      });
-    }, { rootMargin: ahead ? "100% 0px" : "0px" });
-    waiting.forEach(function (w) { io.observe(w.el); });
-  }
-  function release(which) {
-    waiting = waiting.filter(function (w) {
-      if (!which(w)) return true;
-      io.unobserve(w.el);
-      w.go();
-      return false;
-    });
-  }
-  function near(el) {
-    if (real || !el || !("IntersectionObserver" in window)) return Promise.resolve();
-    return new Promise(function (resolve) {
-      waiting.push({ el: el, go: resolve });
-      if (io) io.observe(el); else watch();
-    });
-  }
-  function engaged() {
-    ENGAGE.forEach(function (t) { window.removeEventListener(t, engaged, true); });
-    ahead = true;
-    if (io) watch();
-  }
-  ENGAGE.forEach(function (t) { window.addEventListener(t, engaged, { capture: true, passive: true }); });
-  window.addEventListener("beforeprint", function () { if (io) release(function () { return true; }); });
-  window.mermaid = stub;
-})();
-</script>
 
   </head>
   
@@ -505,6 +439,8 @@
   
     
     
+      
+        
       
         
       
@@ -957,10 +893,32 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-the-dynamixel-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the DYNAMIXEL does
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#dynamixel-servo-bus-on-an-mcus-uart-through-a-half-duplex-stage" class="md-nav__link">
     <span class="md-ellipsis">
       
         DYNAMIXEL: servo bus on an MCU's UART through a half-duplex stage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamixel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DYNAMIXEL
       
     </span>
   </a>
@@ -983,6 +941,17 @@
     <span class="md-ellipsis">
       
         DYNAMIXEL pinout, TTL servo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wiring-servo-bus-on-an-mcus-uart-through-a-half-duplex-stage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wiring: servo bus on an MCU's UART through a half-duplex stage
       
     </span>
   </a>
@@ -1016,6 +985,39 @@
     <span class="md-ellipsis">
       
         One call through the layers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instruction-and-status-packets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instruction and status packets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bytes-on-the-data-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bytes on the DATA line
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#servos-on-one-data-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Servos on one DATA line
       
     </span>
   </a>
@@ -1062,30 +1064,64 @@ committed figure no longer matches the code. Each figure below lists the files i
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>The DYNAMIXEL's function blocks inside its outline. Arrows between blocks carry signals or data in the direction they point (both ways where they have two heads). The package pins stand on the left and right edges with their numbers, each wired to the block it reaches.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
 </details>
 <p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
 <p>Drawn from:</p>
 <ul>
 <li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
-<li><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a></li>
+</ul>
+<h2 id="what-the-dynamixel-does">What the DYNAMIXEL does<a class="headerlink" href="#what-the-dynamixel-does" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="chip-capabilities.svg#only-light" alt="Capability map of the DYNAMIXEL: Position control (supported): Moves to a goal position in counts, within the position limits and the profile velocity and acceleration; Velocity, current and PWM modes (supported): Selects the operating mode and sets a velocity, current or PWM goal, by register name with units; Feedback (supported): Reads position, velocity, load or current, voltage and temperature in one call; Torque enable (supported): Switches the motor on or off; the torque-off stop is always available, even with guards on; Find servos (supported): Pings one ID or the whole bus, and reads each servo&#x27;s model number and firmware; Many servos at once (supported): Reads or writes the same registers of many servos in one transaction, with an outcome for each servo; ID, baud rate and status level (supported): Gives a servo its ID and baud rate, moves the bus to match, and sets which replies a servo returns; Reboot, reset and backup (guarded): Reboots a servo, resets its control table, clears the multi-turn count and stores or restores a backup; Hardware errors (supported): Decodes the error byte and the hardware error status, and latches an alert until it is cleared." width="1200" height="1068" loading="lazy"><img src="chip-capabilities.dark.svg#only-dark" alt="Capability map of the DYNAMIXEL: Position control (supported): Moves to a goal position in counts, within the position limits and the profile velocity and acceleration; Velocity, current and PWM modes (supported): Selects the operating mode and sets a velocity, current or PWM goal, by register name with units; Feedback (supported): Reads position, velocity, load or current, voltage and temperature in one call; Torque enable (supported): Switches the motor on or off; the torque-off stop is always available, even with guards on; Find servos (supported): Pings one ID or the whole bus, and reads each servo&#x27;s model number and firmware; Many servos at once (supported): Reads or writes the same registers of many servos in one transaction, with an outcome for each servo; ID, baud rate and status level (supported): Gives a servo its ID and baud rate, moves the bus to match, and sets which replies a servo returns; Reboot, reset and backup (guarded): Reboots a servo, resets its control table, clears the multi-turn count and stores or restores a backup; Hardware errors (supported): Decodes the error byte and the hardware error status, and latches an alert until it is cleared." width="1200" height="1068" loading="lazy">
+<figcaption>What the DYNAMIXEL does</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>Each card is one function of the DYNAMIXEL: an icon, its name and what it does for the application. The filled pill says how this driver covers it (legend below); the outlined pills are the chip registers behind it. The coverage table in the README gives the driver calls and the datasheet section of each card.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+</details>
+<p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
+<p>Drawn from:</p>
+<ul>
+<li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a></li>
 </ul>
 <h2 id="dynamixel-servo-bus-on-an-mcus-uart-through-a-half-duplex-stage">DYNAMIXEL: servo bus on an MCU's UART through a half-duplex stage<a class="headerlink" href="#dynamixel-servo-bus-on-an-mcus-uart-through-a-half-duplex-stage" title="Permanent link">&para;</a></h2>
 <figure class="kb-figure">
-<img src="chip-circuit-typical.svg#only-light" alt="Schematic of the DYNAMIXEL servo bus on an mcu&#x27;s uart through a half-duplex stage: the chip with U2 MCU, U3 Half-duplex stage, C1 capacitor 100 µF; the MCU wires carry the port hooks Write()." width="1000" height="653" loading="lazy"><img src="chip-circuit-typical.dark.svg#only-dark" alt="Schematic of the DYNAMIXEL servo bus on an mcu&#x27;s uart through a half-duplex stage: the chip with U2 MCU, U3 Half-duplex stage, C1 capacitor 100 µF; the MCU wires carry the port hooks Write()." width="1000" height="653" loading="lazy">
+<img src="chip-circuit-typical.svg#only-light" alt="Schematic of the DYNAMIXEL servo bus on an mcu&#x27;s uart through a half-duplex stage: the chip with U2 MCU (5 V), U3 74LVC2G241 buffers, R1 resistor 10 kΩ, R2 resistor 10 kΩ, R3 resistor 10 kΩ, C1 capacitor 100 µF; the MCU wires carry the port hooks Write()." width="1072" height="898" loading="lazy"><img src="chip-circuit-typical.dark.svg#only-dark" alt="Schematic of the DYNAMIXEL servo bus on an mcu&#x27;s uart through a half-duplex stage: the chip with U2 MCU (5 V), U3 74LVC2G241 buffers, R1 resistor 10 kΩ, R2 resistor 10 kΩ, R3 resistor 10 kΩ, C1 capacitor 100 µF; the MCU wires carry the port hooks Write()." width="1072" height="898" loading="lazy">
 <figcaption>DYNAMIXEL: servo bus on an MCU's UART through a half-duplex stage</figcaption>
 </figure>
 
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>A schematic. The MCU is on the left, each of its pins level with the chip pin it connects to; above each wire is the hook of the driver's port that drives or reads it. Supply pins point up to their supply and decoupling, ground pins down. Pins on the right carry the loads and the pins tied to a supply or ground; a cross marks a pin left open. A dot is a junction; wires that cross without a dot are not connected.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
 </details>
 <p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
 <p>Drawn from:</p>
 <ul>
 <li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
-<li><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a></li>
+</ul>
+<h2 id="dynamixel">DYNAMIXEL<a class="headerlink" href="#dynamixel" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="chip-hero.svg#only-light" alt="Overview of the DYNAMIXEL, a family of smart servo actuators: each one has a motor, a gearbox, an absolute position sensor and a controller that runs its position, velocity or current loop, and all of them share one half-duplex data line, each with its own ID. A MCU talks to it over TTL or RS-485; it drives Motor and gear; it reads back Absolute encoder, Temperature, voltage, current. Headline figures: 10 to 14.8 V XM430-W350 supply, 12 V recommended; 4096 / rev position resolution, 12 bit; 4.5 Mbit/s fastest baud rate, from 9600; 253 IDs on one bus, 0 to 252; 4.1 N.m stall torque at 12 V." width="1200" height="842" loading="lazy"><img src="chip-hero.dark.svg#only-dark" alt="Overview of the DYNAMIXEL, a family of smart servo actuators: each one has a motor, a gearbox, an absolute position sensor and a controller that runs its position, velocity or current loop, and all of them share one half-duplex data line, each with its own ID. A MCU talks to it over TTL or RS-485; it drives Motor and gear; it reads back Absolute encoder, Temperature, voltage, current. Headline figures: 10 to 14.8 V XM430-W350 supply, 12 V recommended; 4096 / rev position resolution, 12 bit; 4.5 Mbit/s fastest baud rate, from 9600; 253 IDs on one bus, 0 to 252; 4.1 N.m stall torque at 12 V." width="1200" height="842" loading="lazy">
+<figcaption>DYNAMIXEL</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>The DYNAMIXEL in the middle, drawn as its TTL servo package. On the left the MCU that runs the driver, joined to it by TTL or RS-485. To the right, what the chip drives, in the order the power flows. Below it, what the chip reads back. The tiles at the bottom are the headline numbers, each with the datasheet section and page it comes from.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+</details>
+<p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
+<p>Drawn from:</p>
+<ul>
+<li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a></li>
 </ul>
 <h2 id="dynamixel-package-ttl-servo">DYNAMIXEL package, TTL servo<a class="headerlink" href="#dynamixel-package-ttl-servo" title="Permanent link">&para;</a></h2>
 <figure class="kb-figure">
@@ -1096,13 +1132,13 @@ committed figure no longer matches the code. Each figure below lists the files i
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>The DYNAMIXEL package seen from the top and, when the height is known, from the side, drawn to scale: 28.5 x 46.5 x 34.0 mm. The arrows carry the datasheet's dimensions, the dot marks pin 1 and the pads are numbered counter-clockwise from it, coloured by the pin's electrical type (legend below). Pads sit centred on each side at the stated pitch; the datasheet's land pattern is the reference for a board.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
 </details>
 <p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
 <p>Drawn from:</p>
 <ul>
 <li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
-<li><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a></li>
 </ul>
 <h2 id="dynamixel-pinout-ttl-servo">DYNAMIXEL pinout, TTL servo<a class="headerlink" href="#dynamixel-pinout-ttl-servo" title="Permanent link">&para;</a></h2>
 <figure class="kb-figure">
@@ -1113,13 +1149,30 @@ committed figure no longer matches the code. Each figure below lists the files i
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>The DYNAMIXEL seen from the top, in its TTL servo package. Pin 1 is marked by the dot; the numbers run counter-clockwise from it. Each pad is coloured by the pin's electrical type (legend below). Next to it is the pin's name and, in mono, the hook of the driver's port that drives or reads it; a pin without a hook is not used by the driver.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
 </details>
 <p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
 <p>Drawn from:</p>
 <ul>
 <li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
-<li><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a></li>
+</ul>
+<h2 id="wiring-servo-bus-on-an-mcus-uart-through-a-half-duplex-stage">Wiring: servo bus on an MCU's UART through a half-duplex stage<a class="headerlink" href="#wiring-servo-bus-on-an-mcus-uart-through-a-half-duplex-stage" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="chip-wiring-typical.svg#only-light" alt="Wiring of the DYNAMIXEL for the servo bus on an MCU&#x27;s UART through a half-duplex stage: MCU (5 V) UART TX to 74LVC2G241 buffers 2A (Write()); MCU (5 V) UART RX to 74LVC2G241 buffers 1Y (Read()); MCU (5 V) GPIO (direction) to 74LVC2G241 buffers 1OE, 2OE (Write()); 74LVC2G241 buffers 2Y, 1A to DATA (Write() and Read()). Supplies, grounds and the support parts are listed under the drawing." width="1200" height="955" loading="lazy"><img src="chip-wiring-typical.dark.svg#only-dark" alt="Wiring of the DYNAMIXEL for the servo bus on an MCU&#x27;s UART through a half-duplex stage: MCU (5 V) UART TX to 74LVC2G241 buffers 2A (Write()); MCU (5 V) UART RX to 74LVC2G241 buffers 1Y (Read()); MCU (5 V) GPIO (direction) to 74LVC2G241 buffers 1OE, 2OE (Write()); 74LVC2G241 buffers 2Y, 1A to DATA (Write() and Read()). Supplies, grounds and the support parts are listed under the drawing." width="1200" height="955" loading="lazy">
+<figcaption>Wiring: servo bus on an MCU's UART through a half-duplex stage</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>The MCU (5 V) on the left, the DYNAMIXEL on the right of the parts between them (74LVC2G241 buffers). Each wire to the chip is coloured by the chip pin's electrical type and carries the net name and the chip pin number above it and, under it, the driver hooks that use it (and any part on the net). The boxes underneath list the supplies, the support parts and the pins this circuit leaves unconnected.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a>.</p>
+</details>
+<p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
+<p>Drawn from:</p>
+<ul>
+<li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a></li>
 </ul>
 <h2 id="one-read-on-the-half-duplex-data-line">One read on the half-duplex data line<a class="headerlink" href="#one-read-on-the-half-duplex-data-line" title="Permanent link">&para;</a></h2>
 <figure class="kb-figure">
@@ -1146,13 +1199,13 @@ committed figure no longer matches the code. Each figure below lists the files i
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>Top to bottom, each arrow is a call. Your application calls one object, whose public calls are listed from the umbrella header in inc/. The core turns each call into register reads and writes and hands them to the port contract (the CRTP base in inc/*_interface.hpp), which forwards them, at compile time, to the hooks of the port class you write; your port moves the bytes on the bus. The notes on the right say which layers stay the same on every MCU and which one you write. A library without a port contract has only the first two layers.</p>
-<p>Drawn from: <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel.hpp"><code>inc/dynamixel.hpp</code></a> <code>public calls</code>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a> <code>UartInterface</code>; figure module <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/docs/diagrams/figures/driver-layers.py"><code>docs/diagrams/figures/driver-layers.py</code></a>.</p>
+<p>Drawn from: <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel.hpp"><code>inc/dynamixel.hpp</code></a> <code>public calls</code>; <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a> <code>UartInterface</code>; figure module <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/docs/diagrams/figures/driver-layers.py"><code>docs/diagrams/figures/driver-layers.py</code></a>.</p>
 </details>
-<p>Figure module: <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/docs/diagrams/figures/driver-layers.py"><code>docs/diagrams/figures/driver-layers.py</code></a></p>
+<p>Figure module: <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/docs/diagrams/figures/driver-layers.py"><code>docs/diagrams/figures/driver-layers.py</code></a></p>
 <p>Drawn from:</p>
 <ul>
-<li><code>public calls</code> in <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel.hpp"><code>inc/dynamixel.hpp</code></a></li>
-<li><code>UartInterface</code> in <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/ae6872ce9760c8a2adf695c24c24eee2d96794b3/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a></li>
+<li><code>public calls</code> in <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel.hpp"><code>inc/dynamixel.hpp</code></a></li>
+<li><code>UartInterface</code> in <a href="https://github.com/kokeb-labs-drivers/driver-dynamixel/blob/52896f897f28c9b4d553680c19e412d4eba70fbe/inc/dynamixel_uart_interface.hpp"><code>inc/dynamixel_uart_interface.hpp</code></a></li>
 </ul>
 <h2 id="one-call-through-the-layers">One call through the layers<a class="headerlink" href="#one-call-through-the-layers" title="Permanent link">&para;</a></h2>
 <figure class="kb-figure">
@@ -1169,6 +1222,54 @@ committed figure no longer matches the code. Each figure below lists the files i
 <p>Drawn from:</p>
 <ul>
 <li><a href="../model/one-call-through-the-layers.seq.yml"><code>docs/model/one-call-through-the-layers.seq.yml</code></a></li>
+</ul>
+<h2 id="instruction-and-status-packets">Instruction and status packets<a class="headerlink" href="#instruction-and-status-packets" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="servo-packet.svg#only-light" alt="Field layout of a DYNAMIXEL protocol 2.0 instruction packet and the status packet that answers it: header and reserved byte, packet ID, length, instruction, the status packet&#x27;s error byte, parameters and CRC." width="640" height="851" loading="lazy"><img src="servo-packet.dark.svg#only-dark" alt="Field layout of a DYNAMIXEL protocol 2.0 instruction packet and the status packet that answers it: header and reserved byte, packet ID, length, instruction, the status packet&#x27;s error byte, parameters and CRC." width="640" height="851" loading="lazy">
+<figcaption>Instruction and status packets</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>The two lanes are the instruction packet the Host sends and the status packet the Servo returns, each drawn from its first byte. Both start with FF FF FD and the reserved 00, then the packet ID, the two length bytes and the instruction, which is 0x55 in a status packet; the status packet adds the error byte, and both end with the parameters and the two CRC bytes.</p>
+<p>Drawn from: <a href="../model/servo-packet.timing.yml"><code>docs/model/servo-packet.timing.yml</code></a>.</p>
+</details>
+<p>Hardware description: <a href="../model/servo-packet.timing.yml"><code>docs/model/servo-packet.timing.yml</code></a></p>
+<p>Drawn from:</p>
+<ul>
+<li><a href="../model/servo-packet.timing.yml"><code>docs/model/servo-packet.timing.yml</code></a></li>
+</ul>
+<h2 id="bytes-on-the-data-line">Bytes on the DATA line<a class="headerlink" href="#bytes-on-the-data-line" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="uart-timing.svg#only-light" alt="Two bytes on the half-duplex DATA line of a DYNAMIXEL bus: a start bit, eight data bits and one stop bit with no parity, and the longest gap allowed between the bytes of one instruction packet." width="640" height="721" loading="lazy"><img src="uart-timing.dark.svg#only-dark" alt="Two bytes on the half-duplex DATA line of a DYNAMIXEL bus: a start bit, eight data bits and one stop bit with no parity, and the longest gap allowed between the bytes of one instruction packet." width="640" height="721" loading="lazy">
+<figcaption>Bytes on the DATA line</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>The lane is DATA, left to right in time. The line idles high, the start bit pulls it low, the data bits D0 to D7 follow and the stop bit returns it high; after a gap the next byte of the packet starts. The table gives the bit rates of the reference servo and the longest gap between bytes before the servo drops the packet.</p>
+<p>Drawn from: <a href="../model/uart-timing.timing.yml"><code>docs/model/uart-timing.timing.yml</code></a>.</p>
+</details>
+<p>Hardware description: <a href="../model/uart-timing.timing.yml"><code>docs/model/uart-timing.timing.yml</code></a></p>
+<p>Drawn from:</p>
+<ul>
+<li><a href="../model/uart-timing.timing.yml"><code>docs/model/uart-timing.timing.yml</code></a></li>
+</ul>
+<h2 id="servos-on-one-data-line">Servos on one DATA line<a class="headerlink" href="#servos-on-one-data-line" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="uart-topology.svg#only-light" alt="A DYNAMIXEL multidrop bus on which the MCU and several servos share one half-duplex DATA line and ground, each servo answering to its own ID, and the broadcast ID reaching all of them." width="640" height="714" loading="lazy"><img src="uart-topology.dark.svg#only-dark" alt="A DYNAMIXEL multidrop bus on which the MCU and several servos share one half-duplex DATA line and ground, each servo answering to its own ID, and the broadcast ID reaching all of them." width="640" height="714" loading="lazy">
+<figcaption>Servos on one DATA line</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>The MCU on top and the servos under it connect to the rails DATA and GND on the right; the dashed card stands for the servos in between. Each servo has a unique ID, and a packet sent to the broadcast ID is executed by every servo.</p>
+<p>Drawn from: <a href="../model/uart-topology.topology.yml"><code>docs/model/uart-topology.topology.yml</code></a>.</p>
+</details>
+<p>Hardware description: <a href="../model/uart-topology.topology.yml"><code>docs/model/uart-topology.topology.yml</code></a></p>
+<p>Drawn from:</p>
+<ul>
+<li><a href="../model/uart-topology.topology.yml"><code>docs/model/uart-topology.topology.yml</code></a></li>
 </ul>
 
 

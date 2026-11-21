@@ -1,0 +1,41 @@
+---
+# Model of the figure 'servo-packet'. Edit this file; `kokeb-docs figures` draws it. Never edit the SVGs.
+# Every field and number is from the DYNAMIXEL Protocol 2.0 e-Manual page (refs in docs/hardware.yml); `page: 1`
+# stands for the web page. The two lanes are the two packet layouts, each from its first byte, not one time line.
+kind: timing
+id: servo-packet
+title: Instruction and status packets
+kicker: Protocol 2.0
+alt: >-
+  Field layout of a DYNAMIXEL protocol 2.0 instruction packet and the status packet that answers it: header and
+  reserved byte, packet ID, length, instruction, the status packet's error byte, parameters and CRC.
+reads: >-
+  The two lanes are the instruction packet the Host sends and the status packet the Servo returns, each drawn from
+  its first byte. Both start with FF FF FD and the reserved 00, then the packet ID, the two length bytes and the
+  instruction, which is 0x55 in a status packet; the status packet adds the error byte, and both end with the
+  parameters and the two CRC bytes.
+print: landscape
+sources:
+  - docs/model/servo-packet.timing.yml
+bus: transaction
+signals:
+  - {id: inst, label: Host, wave: "=...==.=.=..=.zz",
+     data: [{text: FF FF FD 00, tone: slate}, ID, Length, INST, Param 1…N, {text: CRC, tone: teal}]}
+  - {id: stat, label: Servo, wave: "=...==.=.=.=..=.", tone: teal,
+     data: [{text: FF FF FD 00, tone: slate}, ID, Length, "0x55", {text: ERR, tone: amber}, Param 1…N,
+            {text: CRC, tone: teal}]}
+groups:
+  - {from: 0, to: 4, label: header and reserved, ref: p2pkt}
+  - {from: 4, to: 5, label: packet ID, ref: p2id}
+  - {from: 5, to: 7, label: length, ref: p2len}
+  - {from: 7, to: 9, label: instruction, ref: p2pkt}
+params:
+  - {id: id2, symbol: ID, label: "Packet ID range, protocol 2.0", min: 0, max: 252, unit: "", ref: p2id}
+  - {id: bid, symbol: ID, label: "Broadcast ID: every device executes the packet", typ: 254, unit: "", ref: p2id}
+  - {id: id1, symbol: ID, label: "Packet ID range, protocol 1.0", min: 0, max: 253, unit: "", ref: p1id}
+  - {id: crc, symbol: CRC, label: "Checksum over the header to the last parameter, low byte first", typ: 16, unit: bit,
+     ref: p2crc}
+notes:
+  - {text: "Length counts the instruction, the parameters and the CRC: parameters + 3.", ref: p2len}
+  - {text: "The status packet adds the error byte after the instruction 0x55.", ref: p2status}
+  - {text: "Protocol 1.0: header FF FF, no reserved byte, one length byte and a one-byte checksum.", ref: p1pkt}
