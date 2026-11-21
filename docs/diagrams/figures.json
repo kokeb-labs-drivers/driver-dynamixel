@@ -11,12 +11,36 @@
       "inc/dynamixel_uart_interface.hpp"
     ]
   },
+  "chip-capabilities": {
+    "title": "What the DYNAMIXEL does",
+    "alt": "Capability map of the DYNAMIXEL: Position control (supported): Moves to a goal position in counts, within the position limits and the profile velocity and acceleration; Velocity, current and PWM modes (supported): Selects the operating mode and sets a velocity, current or PWM goal, by register name with units; Feedback (supported): Reads position, velocity, load or current, voltage and temperature in one call; Torque enable (supported): Switches the motor on or off; the torque-off stop is always available, even with guards on; Find servos (supported): Pings one ID or the whole bus, and reads each servo's model number and firmware; Many servos at once (supported): Reads or writes the same registers of many servos in one transaction, with an outcome for each servo; ID, baud rate and status level (supported): Gives a servo its ID and baud rate, moves the bus to match, and sets which replies a servo returns; Reboot, reset and backup (guarded): Reboots a servo, resets its control table, clears the multi-turn count and stores or restores a backup; Hardware errors (supported): Decodes the error byte and the hardware error status, and latches an alert until it is cleared.",
+    "description": "Each card is one function of the DYNAMIXEL: an icon, its name and what it does for the application. The filled pill says how this driver covers it (legend below); the outlined pills are the chip registers behind it. The coverage table in the README gives the driver calls and the datasheet section of each card.",
+    "profile": "overview",
+    "width": 1200,
+    "source": "docs/hardware.yml",
+    "sources": [
+      "docs/hardware.yml",
+      "inc/dynamixel_uart_interface.hpp"
+    ]
+  },
   "chip-circuit-typical": {
     "title": "DYNAMIXEL: servo bus on an MCU's UART through a half-duplex stage",
-    "alt": "Schematic of the DYNAMIXEL servo bus on an mcu's uart through a half-duplex stage: the chip with U2 MCU, U3 Half-duplex stage, C1 capacitor 100 µF; the MCU wires carry the port hooks Write().",
+    "alt": "Schematic of the DYNAMIXEL servo bus on an mcu's uart through a half-duplex stage: the chip with U2 MCU (5 V), U3 74LVC2G241 buffers, R1 resistor 10 kΩ, R2 resistor 10 kΩ, R3 resistor 10 kΩ, C1 capacitor 100 µF; the MCU wires carry the port hooks Write().",
     "description": "A schematic. The MCU is on the left, each of its pins level with the chip pin it connects to; above each wire is the hook of the driver's port that drives or reads it. Supply pins point up to their supply and decoupling, ground pins down. Pins on the right carry the loads and the pins tied to a supply or ground; a cross marks a pin left open. A dot is a junction; wires that cross without a dot are not connected.",
     "profile": "detail",
-    "width": 1000,
+    "width": 1072,
+    "source": "docs/hardware.yml",
+    "sources": [
+      "docs/hardware.yml",
+      "inc/dynamixel_uart_interface.hpp"
+    ]
+  },
+  "chip-hero": {
+    "title": "DYNAMIXEL",
+    "alt": "Overview of the DYNAMIXEL, a family of smart servo actuators: each one has a motor, a gearbox, an absolute position sensor and a controller that runs its position, velocity or current loop, and all of them share one half-duplex data line, each with its own ID. A MCU talks to it over TTL or RS-485; it drives Motor and gear; it reads back Absolute encoder, Temperature, voltage, current. Headline figures: 10 to 14.8 V XM430-W350 supply, 12 V recommended; 4096 / rev position resolution, 12 bit; 4.5 Mbit/s fastest baud rate, from 9600; 253 IDs on one bus, 0 to 252; 4.1 N.m stall torque at 12 V.",
+    "description": "The DYNAMIXEL in the middle, drawn as its TTL servo package. On the left the MCU that runs the driver, joined to it by TTL or RS-485. To the right, what the chip drives, in the order the power flows. Below it, what the chip reads back. The tiles at the bottom are the headline numbers, each with the datasheet section and page it comes from.",
+    "profile": "overview",
+    "width": 1200,
     "source": "docs/hardware.yml",
     "sources": [
       "docs/hardware.yml",
@@ -41,6 +65,18 @@
     "description": "The DYNAMIXEL seen from the top, in its TTL servo package. Pin 1 is marked by the dot; the numbers run counter-clockwise from it. Each pad is coloured by the pin's electrical type (legend below). Next to it is the pin's name and, in mono, the hook of the driver's port that drives or reads it; a pin without a hook is not used by the driver.",
     "profile": "detail",
     "width": 760,
+    "source": "docs/hardware.yml",
+    "sources": [
+      "docs/hardware.yml",
+      "inc/dynamixel_uart_interface.hpp"
+    ]
+  },
+  "chip-wiring-typical": {
+    "title": "Wiring: servo bus on an MCU's UART through a half-duplex stage",
+    "alt": "Wiring of the DYNAMIXEL for the servo bus on an MCU's UART through a half-duplex stage: MCU (5 V) UART TX to 74LVC2G241 buffers 2A (Write()); MCU (5 V) UART RX to 74LVC2G241 buffers 1Y (Read()); MCU (5 V) GPIO (direction) to 74LVC2G241 buffers 1OE, 2OE (Write()); 74LVC2G241 buffers 2Y, 1A to DATA (Write() and Read()). Supplies, grounds and the support parts are listed under the drawing.",
+    "description": "The MCU (5 V) on the left, the DYNAMIXEL on the right of the parts between them (74LVC2G241 buffers). Each wire to the chip is coloured by the chip pin's electrical type and carries the net name and the chip pin number above it and, under it, the driver hooks that use it (and any part on the net). The boxes underneath list the supplies, the support parts and the pins this circuit leaves unconnected.",
+    "profile": "overview",
+    "width": 1200,
     "source": "docs/hardware.yml",
     "sources": [
       "docs/hardware.yml",
@@ -87,6 +123,57 @@
       "docs/model/one-call-through-the-layers.seq.yml"
     ],
     "kind": "seq",
+    "palette": 2,
+    "print": "landscape",
+    "adaptive": true,
+    "twin": false,
+    "font": ""
+  },
+  "servo-packet": {
+    "title": "Instruction and status packets",
+    "alt": "Field layout of a DYNAMIXEL protocol 2.0 instruction packet and the status packet that answers it: header and reserved byte, packet ID, length, instruction, the status packet's error byte, parameters and CRC.",
+    "description": "The two lanes are the instruction packet the Host sends and the status packet the Servo returns, each drawn from its first byte. Both start with FF FF FD and the reserved 00, then the packet ID, the two length bytes and the instruction, which is 0x55 in a status packet; the status packet adds the error byte, and both end with the parameters and the two CRC bytes.",
+    "profile": "phone",
+    "width": 640,
+    "source": "docs/model/servo-packet.timing.yml",
+    "sources": [
+      "docs/model/servo-packet.timing.yml"
+    ],
+    "kind": "timing",
+    "palette": 2,
+    "print": "landscape",
+    "adaptive": true,
+    "twin": true,
+    "font": ""
+  },
+  "uart-timing": {
+    "title": "Bytes on the DATA line",
+    "alt": "Two bytes on the half-duplex DATA line of a DYNAMIXEL bus: a start bit, eight data bits and one stop bit with no parity, and the longest gap allowed between the bytes of one instruction packet.",
+    "description": "The lane is DATA, left to right in time. The line idles high, the start bit pulls it low, the data bits D0 to D7 follow and the stop bit returns it high; after a gap the next byte of the packet starts. The table gives the bit rates of the reference servo and the longest gap between bytes before the servo drops the packet.",
+    "profile": "phone",
+    "width": 640,
+    "source": "docs/model/uart-timing.timing.yml",
+    "sources": [
+      "docs/model/uart-timing.timing.yml"
+    ],
+    "kind": "timing",
+    "palette": 2,
+    "print": "landscape",
+    "adaptive": true,
+    "twin": true,
+    "font": ""
+  },
+  "uart-topology": {
+    "title": "Servos on one DATA line",
+    "alt": "A DYNAMIXEL multidrop bus on which the MCU and several servos share one half-duplex DATA line and ground, each servo answering to its own ID, and the broadcast ID reaching all of them.",
+    "description": "The MCU on top and the servos under it connect to the rails DATA and GND on the right; the dashed card stands for the servos in between. Each servo has a unique ID, and a packet sent to the broadcast ID is executed by every servo.",
+    "profile": "phone",
+    "width": 640,
+    "source": "docs/model/uart-topology.topology.yml",
+    "sources": [
+      "docs/model/uart-topology.topology.yml"
+    ],
+    "kind": "topology",
     "palette": 2,
     "print": "landscape",
     "adaptive": true,

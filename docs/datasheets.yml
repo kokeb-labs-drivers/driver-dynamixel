@@ -88,18 +88,54 @@ topics:
     page: 1
     driver: "`UartInterface::Write()`, `Config::echo`, `EchoMode::Loopback`"
     docs: [hardware, porting]
+  - topic: "Unique IDs on one bus, factory ID 1"
+    doc: p2
+    section: 1.2 ID
+    page: 1
+    driver: "`Config::id`, `Ping()`, `BroadcastPing()`"
+    docs: [bus]
+  - topic: "8 data bits, 1 stop bit, no parity"
+    doc: p2
+    section: 1.3 DYNAMIXEL Protocol
+    page: 1
+    driver: "`UartInterface`"
+    docs: [bus, porting]
   - topic: Byte to byte time and the packet gap
     doc: p2
     section: 1.6 Byte to Byte Time
     page: 1
     driver: "`kInstructionByteGapMaxUsV2`, `Config::gap_timeout_us`"
-    docs: [porting, configuration, quickstart]
+    docs: [porting, configuration, quickstart, bus]
   - topic: Instruction packet layout
     doc: p2
     section: 2 Instruction Packet
     page: 1
     driver: "`protocol::FrameWriter`, `DYNAMIXEL::Read()`, `Write()`"
-    docs: [protocol, architecture]
+    docs: [protocol, architecture, bus]
+  - topic: "Packet ID range and the broadcast ID"
+    doc: p2
+    section: 2.3 Packet ID
+    page: 1
+    driver: "`kMaxIdV2`, `kBroadcastId`"
+    docs: [bus, protocol]
+  - topic: "Length field: parameters + 3"
+    doc: p2
+    section: 2.4 Length
+    page: 1
+    driver: "`protocol::FrameWriter`"
+    docs: [bus, protocol]
+  - topic: "CRC field: 16 bits, low byte first"
+    doc: p2
+    section: 2.7 CRC
+    page: 1
+    driver: "`protocol::Crc16()`"
+    docs: [bus, protocol]
+  - topic: "Status packet layout"
+    doc: p2
+    section: 3 Status Packet
+    page: 1
+    driver: "`protocol::Scan()`, `GetLastReply()`"
+    docs: [bus, protocol]
   - topic: Status packet, error byte and alert bit
     doc: p2
     section: 3 Status Packet; 3.2 Error
@@ -154,6 +190,24 @@ topics:
     page: 1
     driver: "`protocol::Checksum1()`, `protocol::FrameWriter`, `Protocol::V1`"
     docs: [protocol, architecture]
+  - topic: "Protocol 1.0 instruction packet"
+    doc: p1
+    section: 2 Instruction Packet
+    page: 1
+    driver: "`protocol::FrameWriter`, `Protocol::V1`"
+    docs: [bus]
+  - topic: "Protocol 1.0 packet ID range"
+    doc: p1
+    section: 2.2 Packet ID
+    page: 1
+    driver: "`kMaxIdV1`"
+    docs: [bus]
+  - topic: "Protocol 1.0 byte to byte time"
+    doc: p1
+    section: 1.6 Byte to Byte Time
+    page: 1
+    driver: "`Config::gap_timeout_us`"
+    docs: [bus]
   - topic: Protocol 1.0 instructions
     doc: p1
     section: 4 Instruction Details (Ping to Bulk Read)
@@ -177,13 +231,13 @@ topics:
     section: 1 Specifications
     page: 1
     driver: "`kMaxBaudRate`, `kMaxIdV2`, `Info()`"
-    docs: [hardware, control-tables]
+    docs: [hardware, control-tables, bus]
   - topic: Connector, power and communication circuit
     doc: xm430
     section: 4.5 Connector Information; 4.6 Communication Circuit
     page: 1
     driver: "`UartInterface`, `EchoMode`"
-    docs: [hardware, platforms]
+    docs: [hardware, platforms, bus]
   - topic: Control table, AX / RX / DX series (protocol 1.0)
     doc: ax12
     section: 2 Control Table; 2.2 EEPROM Area; 2.3 RAM Area

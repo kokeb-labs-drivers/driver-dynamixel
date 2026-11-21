@@ -32,6 +32,16 @@ refs:
   ping: {doc: p2, section: "5.1 Ping (0x01)", page: 1}
   sync: {doc: p2, section: "5.10 Sync Read (0x82)", page: 1}
   reset: {doc: p2, section: "5.6 Factory Reset (0x06)", page: 1}
+  p2idnote: {doc: p2, section: "1.2 ID", page: 1}
+  p2proto: {doc: p2, section: "1.3 DYNAMIXEL Protocol", page: 1}
+  p2pkt: {doc: p2, section: "2 Instruction Packet", page: 1}
+  p2id: {doc: p2, section: "2.3 Packet ID", page: 1}
+  p2len: {doc: p2, section: "2.4 Length", page: 1}
+  p2crc: {doc: p2, section: "2.7 CRC", page: 1}
+  p2status: {doc: p2, section: "3 Status Packet", page: 1}
+  p1pkt: {doc: p1, section: "2 Instruction Packet", page: 1}
+  p1id: {doc: p1, section: "2.2 Packet ID", page: 1}
+  p1gap: {doc: p1, section: "1.6 Byte to Byte Time", page: 1}
 
 package:
   type: "TTL servo"

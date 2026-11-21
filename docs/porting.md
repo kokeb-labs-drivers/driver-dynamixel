@@ -7,6 +7,7 @@ page lists the hooks, the rules a port follows and how to check it.
 ??? abstract "Datasheet sections this page relies on"
 
     - Half duplex line and Tx/Rx direction: ROBOTIS e-Manual, DYNAMIXEL Protocol 2.0 web page, no revision mark, 1.4 Half Duplex; 1.5 Tx, Rx Direction, p. 1
+    - 8 data bits, 1 stop bit, no parity: ROBOTIS e-Manual, DYNAMIXEL Protocol 2.0 web page, no revision mark, 1.3 DYNAMIXEL Protocol, p. 1
     - Byte to byte time and the packet gap: ROBOTIS e-Manual, DYNAMIXEL Protocol 2.0 web page, no revision mark, 1.6 Byte to Byte Time, p. 1
     - Connector and half-duplex circuit, protocol 1.0 servos: ROBOTIS e-Manual, AX-12A web page, no revision mark, 5.2 Connector Information; 5.4 Communication Circuit, p. 1
 

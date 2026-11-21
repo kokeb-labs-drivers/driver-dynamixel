@@ -7,7 +7,13 @@ alt: >-
   One call through the layers: your code calls ReadRegister({1, X430}, PresentPosition), the core exchanges frames
   with the chip through your port and returns the result to your code.
 reads: >-
-  Participants, left to right: Your code, DYNAMIXEL<Port> and Your port. The steps run from top to bottom. Your code sends ReadRegister({1, X430}, PresentPosition) to DYNAMIXEL<Port>. A note over DYNAMIXEL<Port> says: table lookup: address 132, 4 bytes. DYNAMIXEL<Port> sends Write(instruction packet) to Your port. Your port returns true (last stop bit sent) to DYNAMIXEL<Port>. DYNAMIXEL<Port> sends Read(buffer, max, reply_timeout_us) to Your port. Your port returns n bytes to DYNAMIXEL<Port>. A note over DYNAMIXEL<Port> says: Scan: header, length, instruction, CRC-16. A note over DYNAMIXEL<Port> says: error byte, ID, parameter count. DYNAMIXEL<Port> returns Result<int32_t>{2048, Ok} to Your code.
+  Participants, left to right: Your code, DYNAMIXEL<Port> and Your port. The steps run from top to bottom. Your code
+  sends ReadRegister({1, X430}, PresentPosition) to DYNAMIXEL<Port>. A note over DYNAMIXEL<Port> says: table lookup:
+  address 132, 4 bytes. DYNAMIXEL<Port> sends Write(instruction packet) to Your port. Your port returns true (last
+  stop bit sent) to DYNAMIXEL<Port>. DYNAMIXEL<Port> sends Read(buffer, max, reply_timeout_us) to Your port. Your port
+  returns n bytes to DYNAMIXEL<Port>. A note over DYNAMIXEL<Port> says: Scan: header, length, instruction, CRC-16. A
+  note over DYNAMIXEL<Port> says: error byte, ID, parameter count. DYNAMIXEL<Port> returns Result<int32_t>{2048, Ok}
+  to Your code.
 print: landscape
 sources:
   - docs/model/one-call-through-the-layers.seq.yml

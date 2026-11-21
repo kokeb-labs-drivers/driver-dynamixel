@@ -28,8 +28,14 @@ are the datasheet's own (the printed page numbers).
 | Topic | Datasheet section | Page | In the driver | Explained on |
 | --- | --- | --- | --- | --- |
 | Half duplex line and Tx/Rx direction | e-Manual, DYNAMIXEL Protocol 2.0: 1.4 Half Duplex; 1.5 Tx, Rx Direction | p. 1 | `UartInterface::Write()`, `Config::echo`, `EchoMode::Loopback` | [Hardware](hardware.md), [Porting](porting.md) |
-| Byte to byte time and the packet gap | e-Manual, DYNAMIXEL Protocol 2.0: 1.6 Byte to Byte Time | p. 1 | `kInstructionByteGapMaxUsV2`, `Config::gap_timeout_us` | [Porting](porting.md), [Configuration](configuration.md), [Quickstart](quickstart.md) |
-| Instruction packet layout | e-Manual, DYNAMIXEL Protocol 2.0: 2 Instruction Packet | p. 1 | `protocol::FrameWriter`, `DYNAMIXEL::Read()`, `Write()` | [Protocol](protocol.md), [Architecture](architecture.md) |
+| Unique IDs on one bus, factory ID 1 | e-Manual, DYNAMIXEL Protocol 2.0: 1.2 ID | p. 1 | `Config::id`, `Ping()`, `BroadcastPing()` | [On the bus](bus.md) |
+| 8 data bits, 1 stop bit, no parity | e-Manual, DYNAMIXEL Protocol 2.0: 1.3 DYNAMIXEL Protocol | p. 1 | `UartInterface` | [On the bus](bus.md), [Porting](porting.md) |
+| Byte to byte time and the packet gap | e-Manual, DYNAMIXEL Protocol 2.0: 1.6 Byte to Byte Time | p. 1 | `kInstructionByteGapMaxUsV2`, `Config::gap_timeout_us` | [Porting](porting.md), [Configuration](configuration.md), [Quickstart](quickstart.md), [On the bus](bus.md) |
+| Instruction packet layout | e-Manual, DYNAMIXEL Protocol 2.0: 2 Instruction Packet | p. 1 | `protocol::FrameWriter`, `DYNAMIXEL::Read()`, `Write()` | [Protocol](protocol.md), [Architecture](architecture.md), [On the bus](bus.md) |
+| Packet ID range and the broadcast ID | e-Manual, DYNAMIXEL Protocol 2.0: 2.3 Packet ID | p. 1 | `kMaxIdV2`, `kBroadcastId` | [On the bus](bus.md), [Protocol](protocol.md) |
+| Length field: parameters + 3 | e-Manual, DYNAMIXEL Protocol 2.0: 2.4 Length | p. 1 | `protocol::FrameWriter` | [On the bus](bus.md), [Protocol](protocol.md) |
+| CRC field: 16 bits, low byte first | e-Manual, DYNAMIXEL Protocol 2.0: 2.7 CRC | p. 1 | `protocol::Crc16()` | [On the bus](bus.md), [Protocol](protocol.md) |
+| Status packet layout | e-Manual, DYNAMIXEL Protocol 2.0: 3 Status Packet | p. 1 | `protocol::Scan()`, `GetLastReply()` | [On the bus](bus.md), [Protocol](protocol.md) |
 | Status packet, error byte and alert bit | e-Manual, DYNAMIXEL Protocol 2.0: 3 Status Packet; 3.2 Error | p. 1 | `Protocol2Error`, `Error::DeviceError`, `Error::DeviceFault`, `GetLastReply()` | [API guide](api-guide.md), [Troubleshooting](troubleshooting.md), [Protocol](protocol.md) |
 | Response policy and the broadcast ID | e-Manual, DYNAMIXEL Protocol 2.0: 3.4 Response Policy | p. 1 | `Config::status_return`, `StatusReturn`, `BroadcastPing()` | [Configuration](configuration.md), [Protocol](protocol.md) |
 | Packet process, header and byte stuffing | e-Manual, DYNAMIXEL Protocol 2.0: 4 Packet Process | p. 1 | `protocol::Scan()`, `protocol::Destuff()`, `DYNAMIXEL::Resync()` | [Protocol](protocol.md), [Architecture](architecture.md), [Contract](contract.md) |
@@ -38,12 +44,15 @@ are the datasheet's own (the printed page numbers).
 | Sync Read, Sync Write, Fast Sync Read | e-Manual, DYNAMIXEL Protocol 2.0: 5.10 Sync Read; 5.11 Sync Write; 5.12 Fast Sync Read | p. 1 | `SyncRead()`, `SyncWrite()`, `FastSyncRead()` | [API guide](api-guide.md), [Protocol](protocol.md) |
 | Bulk Read, Bulk Write, Fast Bulk Read | e-Manual, DYNAMIXEL Protocol 2.0: 5.13 Bulk Read; 5.14 Bulk Write; 5.15 Fast Bulk Read | p. 1 | `BulkRead()`, `BulkWrite()`, `FastBulkRead()` | [API guide](api-guide.md), [Protocol](protocol.md) |
 | Protocol 1.0 packets and checksum | e-Manual, DYNAMIXEL Protocol 1.0: 2 Instruction Packet; 2.6 Checksum; 3 Status Packet; 3.2 Checksum | p. 1 | `protocol::Checksum1()`, `protocol::FrameWriter`, `Protocol::V1` | [Protocol](protocol.md), [Architecture](architecture.md) |
+| Protocol 1.0 instruction packet | e-Manual, DYNAMIXEL Protocol 1.0: 2 Instruction Packet | p. 1 | `protocol::FrameWriter`, `Protocol::V1` | [On the bus](bus.md) |
+| Protocol 1.0 packet ID range | e-Manual, DYNAMIXEL Protocol 1.0: 2.2 Packet ID | p. 1 | `kMaxIdV1` | [On the bus](bus.md) |
+| Protocol 1.0 byte to byte time | e-Manual, DYNAMIXEL Protocol 1.0: 1.6 Byte to Byte Time | p. 1 | `Config::gap_timeout_us` | [On the bus](bus.md) |
 | Protocol 1.0 instructions | e-Manual, DYNAMIXEL Protocol 1.0: 4 Instruction Details (Ping to Bulk Read) | p. 1 | `Ping()`, `Read()`, `Write()`, `RegWrite()`, `Action()`, `FactoryReset()`, `Reboot()`, `SyncWrite()`, `BulkRead()` | [API guide](api-guide.md), [Protocol](protocol.md) |
 | Protocol 1.0 error byte | e-Manual, DYNAMIXEL Protocol 1.0: 3.1 Error | p. 1 | `p1_error`, `Error::DeviceError`, `Error::DeviceFault` | [Troubleshooting](troubleshooting.md), [Protocol](protocol.md) |
 | CRC-16 of protocol 2.0 packets | e-Manual, CRC Calculation: CRC Calculation | p. 1 | `protocol::Crc16()`, `Error::Crc` | [Protocol](protocol.md), [Architecture](architecture.md) |
 | Control table, X series (addresses, sizes, units) | e-Manual, XM430-W350: 2 Control Table; 2.1 Control Table of EEPROM Area; 2.2 Control Table of RAM Area | p. 1 | `Reg`, `Lookup()`, `Family::X430`, `ReadRegister()`, `WriteRegister()` | [Control tables](control-tables.md), [API guide](api-guide.md), [Quickstart](quickstart.md) |
-| Specifications, baud rates and ID range | e-Manual, XM430-W350: 1 Specifications | p. 1 | `kMaxBaudRate`, `kMaxIdV2`, `Info()` | [Hardware](hardware.md), [Control tables](control-tables.md) |
-| Connector, power and communication circuit | e-Manual, XM430-W350: 4.5 Connector Information; 4.6 Communication Circuit | p. 1 | `UartInterface`, `EchoMode` | [Hardware](hardware.md), [Platforms](platforms.md) |
+| Specifications, baud rates and ID range | e-Manual, XM430-W350: 1 Specifications | p. 1 | `kMaxBaudRate`, `kMaxIdV2`, `Info()` | [Hardware](hardware.md), [Control tables](control-tables.md), [On the bus](bus.md) |
+| Connector, power and communication circuit | e-Manual, XM430-W350: 4.5 Connector Information; 4.6 Communication Circuit | p. 1 | `UartInterface`, `EchoMode` | [Hardware](hardware.md), [Platforms](platforms.md), [On the bus](bus.md) |
 | Control table, AX / RX / DX series (protocol 1.0) | e-Manual, AX-12A: 2 Control Table; 2.2 EEPROM Area; 2.3 RAM Area | p. 1 | `Family::AxRxDx`, `Lookup()`, `LegacyBusPreset()` | [Control tables](control-tables.md), [API guide](api-guide.md) |
 | Connector and half-duplex circuit, protocol 1.0 servos | e-Manual, AX-12A: 5.2 Connector Information; 5.4 Communication Circuit | p. 1 | `EchoMode::Loopback`, `LegacyBusPreset()` | [Hardware](hardware.md), [Porting](porting.md) |
 | Control table, XL-320 | e-Manual, XL-320: 2 Control Table; 2.2 EEPROM Area; 2.3 RAM Area | p. 1 | `Family::Xl320`, `Lookup()` | [Control tables](control-tables.md) |
