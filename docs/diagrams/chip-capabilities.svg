@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1068" viewBox="0 0 1200 1068" role="img" aria-labelledby="chip-capabilities-title chip-capabilities-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+<title id="chip-capabilities-title">What the DYNAMIXEL does</title>
+<desc id="chip-capabilities-desc">Capability map of the DYNAMIXEL: Position control (supported): Moves to a goal position in counts, within the position limits and the profile velocity and acceleration; Velocity, current and PWM modes (supported): Selects the operating mode and sets a velocity, current or PWM goal, by register name with units; Feedback (supported): Reads position, velocity, load or current, voltage and temperature in one call; Torque enable (supported): Switches the motor on or off; the torque-off stop is always available, even with guards on; Find servos (supported): Pings one ID or the whole bus, and reads each servo's model number and firmware; Many servos at once (supported): Reads or writes the same registers of many servos in one transaction, with an outcome for each servo; ID, baud rate and status level (supported): Gives a servo its ID and baud rate, moves the bus to match, and sets which replies a servo returns; Reboot, reset and backup (guarded): Reboots a servo, resets its control table, clears the multi-turn count and stores or restores a backup; Hardware errors (supported): Decodes the error byte and the hardware error status, and latches an alert until it is cleared.</desc>
+<rect x="0.5" y="0.5" width="1199" height="1067" rx="16" fill="#FFFFFF" stroke="#E2E7EE"/>
+<text x="32" y="46.8" font-size="16" font-weight="700" letter-spacing="1.2" fill="#7A360E">CAPABILITIES</text>
+<text x="32" y="85.6" font-size="32" font-weight="700" fill="#0E1726">What the DYNAMIXEL does</text>
+<text x="32" y="115.4" font-size="18" fill="#566070">One card per function of the chip, with how this driver covers it and the registers behind it.</text>
+<rect x="32" y="131.4" width="1136" height="1" fill="#E2E7EE"/>
+<rect x="32" y="149.4" width="365.3" height="283.9" rx="12" fill="#FFFFFF" stroke="#C9D1DB" stroke-width="1"/>
+<rect x="417.3" y="149.4" width="365.3" height="283.9" rx="12" fill="#FFFFFF" stroke="#C9D1DB" stroke-width="1"/>
+<rect x="802.7" y="149.4" width="365.3" height="283.9" rx="12" fill="#FFFFFF" stroke="#C9D1DB" stroke-width="1"/>
+<rect x="32" y="453.3" width="365.3" height="249.9" rx="12" fill="#FFFFFF" stroke="#C9D1DB" stroke-width="1"/>
+<rect x="417.3" y="453.3" width="365.3" height="249.9" rx="12" fill="#FFFFFF" stroke="#C9D1DB" stroke-width="1"/>
+<rect x="802.7" y="453.3" width="365.3" height="249.9" rx="12" fill="#FFFFFF" stroke="#C9D1DB" stroke-width="1"/>
+<rect x="32" y="723.3" width="365.3" height="249.9" rx="12" fill="#FFFFFF" stroke="#C9D1DB" stroke-width="1"/>
+<rect x="417.3" y="723.3" width="365.3" height="249.9" rx="12" fill="#FFFFFF" stroke="#C9D1DB" stroke-width="1"/>
+<rect x="802.7" y="723.3" width="365.3" height="249.9" rx="12" fill="#FFFFFF" stroke="#C9D1DB" stroke-width="1"/>
+<circle cx="78" cy="195.4" r="28" fill="#FBEFE6" stroke="#E9C3A6" stroke-width="1.2"/>
+<path d="M78 185.3 A10.1 10.1 0 0 1 88.1 195.4" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M88.1 195.4 A10.1 10.1 0 0 1 78 205.5" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M78 205.5 A10.1 10.1 0 0 1 67.9 195.4" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M64.3 191.8 L67.9 196.1 L71.9 192.2" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="120" y="201.4" font-size="20" font-weight="700" fill="#0E1726">Position control</text>
+<text x="50" y="249.8" font-size="17" fill="#2B3442">Moves to a goal position in counts,</text>
+<text x="50" y="274.5" font-size="17" fill="#2B3442">within the position limits and the</text>
+<text x="50" y="299.1" font-size="17" fill="#2B3442">profile velocity and acceleration</text>
+<rect x="50" y="317.7" width="103.4" height="26" rx="13" fill="#14532D"/>
+<text x="58" y="335.8" font-size="16" font-weight="700" fill="#FFFFFF">Supported</text>
+<rect x="161.4" y="317.7" width="120.8" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="169.4" y="335.8" font-size="16" font-weight="700" fill="#334155">GoalPosition</text>
+<rect x="50" y="351.7" width="154.7" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="58" y="369.8" font-size="16" font-weight="700" fill="#334155">MinPositionLimit</text>
+<rect x="212.7" y="351.7" width="159.2" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="220.7" y="369.8" font-size="16" font-weight="700" fill="#334155">MaxPositionLimit</text>
+<rect x="50" y="385.7" width="85.1" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="58" y="403.8" font-size="16" font-weight="700" fill="#334155">+2 more</text>
+<circle cx="463.3" cy="195.4" r="28" fill="#FBEFE6" stroke="#E9C3A6" stroke-width="1.2"/>
+<path d="M450.3 195.4 L476.4 195.4" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M450.3 195.4 L451.4 193.2 L452.5 191.1 L453.6 189.3 L454.7 187.9 L455.7 187 L456.8 186.7 L457.9 187 L459 187.9 L460.1 189.3 L461.2 191.1 L462.2 193.2 L463.3 195.4 L464.4 197.6 L465.5 199.7 L466.6 201.5 L467.7 202.9 L468.8 203.8 L469.8 204.1 L470.9 203.8 L472 202.9 L473.1 201.5 L474.2 199.7 L475.3 197.6 L476.4 195.4" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="505.3" y="188.4" font-size="20" font-weight="700" fill="#0E1726">Velocity, current and</text>
+<text x="505.3" y="214.4" font-size="20" font-weight="700" fill="#0E1726">PWM modes</text>
+<text x="435.3" y="249.8" font-size="17" fill="#2B3442">Selects the operating mode and sets a</text>
+<text x="435.3" y="274.5" font-size="17" fill="#2B3442">velocity, current or PWM goal, by</text>
+<text x="435.3" y="299.1" font-size="17" fill="#2B3442">register name with units</text>
+<rect x="435.3" y="317.7" width="103.4" height="26" rx="13" fill="#14532D"/>
+<text x="443.3" y="335.8" font-size="16" font-weight="700" fill="#FFFFFF">Supported</text>
+<rect x="546.7" y="317.7" width="145.7" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="554.7" y="335.8" font-size="16" font-weight="700" fill="#334155">OperatingMode</text>
+<rect x="435.3" y="351.7" width="122.3" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="443.3" y="369.8" font-size="16" font-weight="700" fill="#334155">GoalVelocity</text>
+<rect x="565.7" y="351.7" width="117.4" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="573.7" y="369.8" font-size="16" font-weight="700" fill="#334155">GoalCurrent</text>
+<rect x="435.3" y="385.7" width="94.5" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="443.3" y="403.8" font-size="16" font-weight="700" fill="#334155">GoalPwm</text>
+<circle cx="848.7" cy="195.4" r="28" fill="#FBEFE6" stroke="#E9C3A6" stroke-width="1.2"/>
+<path d="M837.1 201.2 A11.6 11.6 0 0 1 860.2 201.2" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M848.7 201.2 L855.2 192.5" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="848.7" cy="201.2" r="2.6" fill="#9A4A17"/>
+<path d="M835.6 206.2 L861.7 206.2" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="890.7" y="201.4" font-size="20" font-weight="700" fill="#0E1726">Feedback</text>
+<text x="820.7" y="249.8" font-size="17" fill="#2B3442">Reads position, velocity, load or</text>
+<text x="820.7" y="274.5" font-size="17" fill="#2B3442">current, voltage and temperature in</text>
+<text x="820.7" y="299.1" font-size="17" fill="#2B3442">one call</text>
+<rect x="820.7" y="317.7" width="103.4" height="26" rx="13" fill="#14532D"/>
+<text x="828.7" y="335.8" font-size="16" font-weight="700" fill="#FFFFFF">Supported</text>
+<rect x="932" y="317.7" width="147.6" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="940" y="335.8" font-size="16" font-weight="700" fill="#334155">PresentPosition</text>
+<rect x="820.7" y="351.7" width="149.1" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="828.7" y="369.8" font-size="16" font-weight="700" fill="#334155">PresentVelocity</text>
+<rect x="977.8" y="351.7" width="144.2" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="985.8" y="369.8" font-size="16" font-weight="700" fill="#334155">PresentCurrent</text>
+<rect x="820.7" y="385.7" width="85.1" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="828.7" y="403.8" font-size="16" font-weight="700" fill="#334155">+2 more</text>
+<circle cx="78" cy="499.3" r="28" fill="#FBEFE6" stroke="#E9C3A6" stroke-width="1.2"/>
+<circle cx="78" cy="499.3" r="13" fill="none" stroke="#9A4A17" stroke-width="2.5"/>
+<path d="M72.9 494.3 L83.1 494.3 L83.1 504.4 L72.9 504.4 Z" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="120" y="505.3" font-size="20" font-weight="700" fill="#0E1726">Torque enable</text>
+<text x="50" y="553.8" font-size="17" fill="#2B3442">Switches the motor on or off; the</text>
+<text x="50" y="578.4" font-size="17" fill="#2B3442">torque-off stop is always available,</text>
+<text x="50" y="603.1" font-size="17" fill="#2B3442">even with guards on</text>
+<rect x="50" y="621.6" width="103.4" height="26" rx="13" fill="#14532D"/>
+<text x="58" y="639.8" font-size="16" font-weight="700" fill="#FFFFFF">Supported</text>
+<rect x="161.4" y="621.6" width="132.1" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="169.4" y="639.8" font-size="16" font-weight="700" fill="#334155">TorqueEnable</text>
+<circle cx="463.3" cy="499.3" r="28" fill="#FBEFE6" stroke="#E9C3A6" stroke-width="1.2"/>
+<path d="M451.8 487.8 L463.3 487.8 L474.9 499.3 L463.3 510.9 L451.8 499.3 Z" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="458.3" cy="494.3" r="2.3" fill="#9A4A17"/>
+<text x="505.3" y="505.3" font-size="20" font-weight="700" fill="#0E1726">Find servos</text>
+<text x="435.3" y="553.8" font-size="17" fill="#2B3442">Pings one ID or the whole bus, and</text>
+<text x="435.3" y="578.4" font-size="17" fill="#2B3442">reads each servo's model number and</text>
+<text x="435.3" y="603.1" font-size="17" fill="#2B3442">firmware</text>
+<rect x="435.3" y="621.6" width="103.4" height="26" rx="13" fill="#14532D"/>
+<text x="443.3" y="639.8" font-size="16" font-weight="700" fill="#FFFFFF">Supported</text>
+<rect x="546.7" y="621.6" width="134.3" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="554.7" y="639.8" font-size="16" font-weight="700" fill="#334155">ModelNumber</text>
+<rect x="435.3" y="655.6" width="158.9" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="443.3" y="673.8" font-size="16" font-weight="700" fill="#334155">FirmwareVersion</text>
+<circle cx="848.7" cy="499.3" r="28" fill="#FBEFE6" stroke="#E9C3A6" stroke-width="1.2"/>
+<path d="M834.2 495 L841.4 495 L841.4 503.7 L834.2 503.7 Z" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M845 495 L852.3 495 L852.3 503.7 L845 503.7 Z" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M855.9 495 L863.1 495 L863.1 503.7 L855.9 503.7 Z" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M841.4 499.3 L845 499.3" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M852.3 499.3 L855.9 499.3" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="890.7" y="505.3" font-size="20" font-weight="700" fill="#0E1726">Many servos at once</text>
+<text x="820.7" y="553.8" font-size="17" fill="#2B3442">Reads or writes the same registers of</text>
+<text x="820.7" y="578.4" font-size="17" fill="#2B3442">many servos in one transaction, with</text>
+<text x="820.7" y="603.1" font-size="17" fill="#2B3442">an outcome for each servo</text>
+<rect x="820.7" y="621.6" width="103.4" height="26" rx="13" fill="#14532D"/>
+<text x="828.7" y="639.8" font-size="16" font-weight="700" fill="#FFFFFF">Supported</text>
+<circle cx="78" cy="769.3" r="28" fill="#FBEFE6" stroke="#E9C3A6" stroke-width="1.2"/>
+<path d="M66.4 762.1 L89.6 762.1" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="73.7" cy="762.1" r="3.2" fill="none" stroke="#9A4A17" stroke-width="2.5"/>
+<path d="M66.4 769.3 L89.6 769.3" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="82.3" cy="769.3" r="3.2" fill="none" stroke="#9A4A17" stroke-width="2.5"/>
+<path d="M66.4 776.5 L89.6 776.5" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="71.5" cy="776.5" r="3.2" fill="none" stroke="#9A4A17" stroke-width="2.5"/>
+<text x="120" y="762.3" font-size="20" font-weight="700" fill="#0E1726">ID, baud rate and status</text>
+<text x="120" y="788.3" font-size="20" font-weight="700" fill="#0E1726">level</text>
+<text x="50" y="823.8" font-size="17" fill="#2B3442">Gives a servo its ID and baud rate,</text>
+<text x="50" y="848.4" font-size="17" fill="#2B3442">moves the bus to match, and sets</text>
+<text x="50" y="873" font-size="17" fill="#2B3442">which replies a servo returns</text>
+<rect x="50" y="891.6" width="103.4" height="26" rx="13" fill="#14532D"/>
+<text x="58" y="909.7" font-size="16" font-weight="700" fill="#FFFFFF">Supported</text>
+<rect x="161.4" y="891.6" width="31.5" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="169.4" y="909.7" font-size="16" font-weight="700" fill="#334155">Id</text>
+<rect x="200.8" y="891.6" width="95.6" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="208.8" y="909.7" font-size="16" font-weight="700" fill="#334155">BaudRate</text>
+<rect x="50" y="925.6" width="169.5" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="58" y="943.7" font-size="16" font-weight="700" fill="#334155">StatusReturnLevel</text>
+<circle cx="463.3" cy="769.3" r="28" fill="#FBEFE6" stroke="#E9C3A6" stroke-width="1.2"/>
+<path d="M454.7 767.9 L472 767.9 L472 780.9 L454.7 780.9 Z" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M458.3 767.9 L458.3 763.5" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M458.3 763.5 A5.1 5.1 0 0 1 468.4 763.5" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M468.4 763.5 L468.4 767.9" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="463.3" cy="774.4" r="2.2" fill="#9A4A17"/>
+<text x="505.3" y="762.3" font-size="20" font-weight="700" fill="#0E1726">Reboot, reset and</text>
+<text x="505.3" y="788.3" font-size="20" font-weight="700" fill="#0E1726">backup</text>
+<text x="435.3" y="823.8" font-size="17" fill="#2B3442">Reboots a servo, resets its control</text>
+<text x="435.3" y="848.4" font-size="17" fill="#2B3442">table, clears the multi-turn count and</text>
+<text x="435.3" y="873" font-size="17" fill="#2B3442">stores or restores a backup</text>
+<rect x="435.3" y="891.6" width="87.5" height="26" rx="13" fill="#8A3C0B"/>
+<text x="443.3" y="909.7" font-size="16" font-weight="700" fill="#FFFFFF">Guarded</text>
+<circle cx="848.7" cy="769.3" r="28" fill="#FBEFE6" stroke="#E9C3A6" stroke-width="1.2"/>
+<path d="M848.7 757 L862.4 780.9 L834.9 780.9 Z" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M848.7 765.7 L848.7 772.2" fill="none" stroke="#9A4A17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="848.7" cy="776.5" r="2" fill="#9A4A17"/>
+<text x="890.7" y="775.3" font-size="20" font-weight="700" fill="#0E1726">Hardware errors</text>
+<text x="820.7" y="823.8" font-size="17" fill="#2B3442">Decodes the error byte and the</text>
+<text x="820.7" y="848.4" font-size="17" fill="#2B3442">hardware error status, and latches an</text>
+<text x="820.7" y="873" font-size="17" fill="#2B3442">alert until it is cleared</text>
+<rect x="820.7" y="891.6" width="103.4" height="26" rx="13" fill="#14532D"/>
+<text x="828.7" y="909.7" font-size="16" font-weight="700" fill="#FFFFFF">Supported</text>
+<rect x="932" y="891.6" width="192.2" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="940" y="909.7" font-size="16" font-weight="700" fill="#334155">HardwareErrorStatus</text>
+<rect x="820.7" y="925.6" width="100.5" height="26" rx="13" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1"/>
+<text x="828.7" y="943.7" font-size="16" font-weight="700" fill="#334155">Shutdown</text>
+<rect x="32" y="985.6" width="14" height="14" rx="4" fill="#EAF7EF" stroke="#15803D" stroke-width="1.4"/>
+<text x="54" y="1000.2" font-size="16" fill="#566070">Supported: the driver covers it and a host test checks it</text>
+<rect x="32" y="1017.6" width="14" height="14" rx="4" fill="#FFF5E3" stroke="#C26A05" stroke-width="1.4"/>
+<text x="54" y="1032.2" font-size="16" fill="#566070">Guarded: covered, behind an explicit acknowledgement because a wrong value can do harm</text>
+</svg>

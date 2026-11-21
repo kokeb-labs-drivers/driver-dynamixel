@@ -7,6 +7,10 @@ how a reply is found in the receive bytes and which instruction each protocol ha
 ??? abstract "Datasheet sections this page relies on"
 
     - Instruction packet layout: ROBOTIS e-Manual, DYNAMIXEL Protocol 2.0 web page, no revision mark, 2 Instruction Packet, p. 1
+    - Packet ID range and the broadcast ID: ROBOTIS e-Manual, DYNAMIXEL Protocol 2.0 web page, no revision mark, 2.3 Packet ID, p. 1
+    - Length field: parameters + 3: ROBOTIS e-Manual, DYNAMIXEL Protocol 2.0 web page, no revision mark, 2.4 Length, p. 1
+    - CRC field: 16 bits, low byte first: ROBOTIS e-Manual, DYNAMIXEL Protocol 2.0 web page, no revision mark, 2.7 CRC, p. 1
+    - Status packet layout: ROBOTIS e-Manual, DYNAMIXEL Protocol 2.0 web page, no revision mark, 3 Status Packet, p. 1
     - Status packet, error byte and alert bit: ROBOTIS e-Manual, DYNAMIXEL Protocol 2.0 web page, no revision mark, 3 Status Packet; 3.2 Error, p. 1
     - Response policy and the broadcast ID: ROBOTIS e-Manual, DYNAMIXEL Protocol 2.0 web page, no revision mark, 3.4 Response Policy, p. 1
     - Packet process, header and byte stuffing: ROBOTIS e-Manual, DYNAMIXEL Protocol 2.0 web page, no revision mark, 4 Packet Process, p. 1

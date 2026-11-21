@@ -1,0 +1,29 @@
+---
+# Model of the figure 'uart-topology'. Edit this file; `kokeb-docs figures` draws it. Never edit the SVGs.
+# Every ID and limit cites the e-Manual section it comes from (refs in docs/hardware.yml); `page: 1` stands for the
+# web page.
+kind: topology
+id: uart-topology
+title: Servos on one DATA line
+kicker: Several servos
+alt: >-
+  A DYNAMIXEL multidrop bus on which the MCU and several servos share one half-duplex DATA line and ground, each
+  servo answering to its own ID, and the broadcast ID reaching all of them.
+reads: >-
+  The MCU on top and the servos under it connect to the rails DATA and GND on the right; the dashed card stands for
+  the servos in between. Each servo has a unique ID, and a packet sent to the broadcast ID is executed by every servo.
+print: landscape
+sources:
+  - docs/model/uart-topology.topology.yml
+style: bus
+host: {label: MCU, detail: UART with a half-duplex direction switch}
+nodes:
+  - {label: Servo, address: ID 1, ref: p2id}
+  - {more: true, label: "…"}
+  - {label: Servo, address: ID up to 252, ref: p2id}
+shared: [DATA, GND]
+facts:
+  - {text: "IDs 0 to 252 in protocol 2.0, 0 to 253 in protocol 1.0; 254 is the broadcast ID", ref: p2id}
+  - {text: "Every servo on the bus needs a unique ID; a new servo has ID 1", ref: p2idnote}
+  - {text: "A broadcast packet returns status only for Ping, Sync Read and Bulk Read", ref: p2id}
+  - {text: "TTL connector: 1 GND, 2 VDD, 3 DATA", ref: pinout}

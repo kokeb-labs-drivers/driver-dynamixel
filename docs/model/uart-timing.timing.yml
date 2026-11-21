@@ -1,0 +1,36 @@
+---
+# Model of the figure 'uart-timing'. Edit this file; `kokeb-docs figures` draws it. Never edit the SVGs.
+# Every number is a param with the e-Manual section it comes from (refs in docs/hardware.yml). The e-Manual pages
+# have no printed page numbers: `page: 1` stands for the web page.
+kind: timing
+id: uart-timing
+title: Bytes on the DATA line
+kicker: On the bus
+alt: >-
+  Two bytes on the half-duplex DATA line of a DYNAMIXEL bus: a start bit, eight data bits and one stop bit with no
+  parity, and the longest gap allowed between the bytes of one instruction packet.
+reads: >-
+  The lane is DATA, left to right in time. The line idles high, the start bit pulls it low, the data bits D0 to D7
+  follow and the stop bit returns it high; after a gap the next byte of the packet starts. The table gives the bit
+  rates of the reference servo and the longest gap between bytes before the servo drops the packet.
+print: landscape
+sources:
+  - docs/model/uart-timing.timing.yml
+bus: uart
+signals:
+  - {id: data, label: DATA, wave: "10========1|0=", data: [D0, D1, D2, D3, D4, D5, D6, D7, D0]}
+groups:
+  - {from: 1, to: 2, label: start}
+  - {from: 2, to: 10, label: "8 data bits, no parity", ref: p2proto}
+  - {from: 10, to: 11, label: stop}
+  - {from: 12, to: 14, label: next byte}
+params:
+  - {id: baud, symbol: baud, label: "Bit rate of the XM430-W350", min: 9600, max: 4500000, unit: bit/s, ref: spec}
+  - {id: gap2, symbol: tgap, label: "Delay between bytes of an instruction packet, protocol 2.0", max: 1.5, unit: ms,
+     ref: gap}
+  - {id: gap1, symbol: tgap, label: "Delay between bytes of an instruction packet, protocol 1.0", max: 100, unit: ms,
+     ref: p1gap}
+marks:
+  - {param: gap2, signal: data, from: 11, to: 12}
+notes:
+  - {text: "Only one device drives DATA at a time: the host switches to receive after its last stop bit.", ref: duplex}
